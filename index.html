@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>H.S.M Store - Accessories</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Nice Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+      color: #222;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo .heart {
+      color: #e63946;
+      font-size: 1.5rem;
+    }
+
+    .top-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-wrapper input {
+      width: 100%;
+      padding: 10px 12px;
+      padding-right: 40px;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      outline: none;
+      font-size: 0.95rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .search-wrapper input:focus {
+      border-color: #e63946;
+      box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      color: #999;
+      pointer-events: none;
+    }
+
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .category-btn {
+      border: none;
+      background: #f3f3f3;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+      text-transform: capitalize;
+    }
+
+    .category-btn.active {
+      background: #e63946;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .category-btn:hover {
+      background: #e63946;
+      color: #fff;
+    }
+
+    main {
+      padding: 20px 16px 40px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 products next to each other */
+      gap: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .products-grid {
+        grid-template-columns: 1fr; /* 1 per row on very small screens */
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .top-controls {
+        max-width: 100%;
+      }
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .product-image-wrapper {
+      position: relative;
+      padding-top: 72%;
+      overflow: hidden;
+    }
+
+    .product-image-wrapper img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .product-card:hover .product-image-wrapper img {
+      transform: scale(1.06);
+    }
+
+    .product-category {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .product-body {
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .product-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .product-desc {
+      font-size: 0.8rem;
+      color: #666;
+      line-height: 1.4;
+      max-height: 3.2em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-foot {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 6px;
+    }
+
+    .product-price {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e63946;
+    }
+
+    .product-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .details-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: #222;
+      color: #fff;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .details-btn:hover {
+      background: #000;
+      transform: translateY(-1px);
+    }
+
+    .no-results {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #888;
+      padding: 10px 0 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      H.S.M Store
+      <span class="heart">♥</span>
+    </div>
+
+    <div class="top-controls">
+      <div class="search-wrapper">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search for accessories..."
+        />
+        <span class="search-icon">🔍</span>
+      </div>
+      <div class="categories" id="categoryButtons">
+        <!-- Top category buttons -->
+        <button class="category-btn active" data-category="All">All</button>
+        <button class="category-btn" data-category="Necklace">Necklace</button>
+        <button class="category-btn" data-category="Ring">Ring</button>
+        <button class="category-btn" data-category="Bracelet">Bracelet</button>
+        <button class="category-btn" data-category="Hand Chain">Hand Chain</button>
+        <button class="category-btn" data-category="Earrings">Earrings</button>
+        <button class="category-btn" data-category="Anklets">Anklets</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h2 class="section-title">Our Accessories</h2>
+    <div id="productsContainer" class="products-grid"></div>
+    <div id="noResults" class="no-results" style="display: none;">
+      No products found. Try a different search or category.
+    </div>
+  </main>
+
+  <footer>
+    © 2026 H.S.M Store – All rights reserved.
+  </footer>
+
+  <script>
+    // ========= PRODUCTS DATA =========
+    // NOTE:
+    // - Images are linked from your existing "H.S.M Store/Images/..." folder.
+    // - This index.html file is inside "Project H.S.M STORE".
+    //   So the image path goes one folder up: "../H.S.M Store/Images/...".
+    //
+    // TODO for you:
+    // - Change "price" for every product to the real price (number only; " L.E" is added automatically).
+    // - Change "shortDescription" to your own description text.
+    const products = [
+      // ========== NECKLACE ==========
+      {
+        id: "another-butterfly-necklace",
+        name: "Butterfly Necklace",
+        category: "Necklace",
+        price: 250,
+        image: "../H.S.M Store/Images/Necklace/Another Butterfly Necklace 1.jpeg",
+        shortDescription: "A delicate butterfly stainless steel necklace symbolizing freedom and transformation."
+      },
+      {
+        id: "butterfly-necklase",
+        name: "Butterfly Necklase",
+        category: "Necklace",
+        price: 250,
+        image: "../H.S.M Store/Images/Necklace/Butterfly Necklase 1.jpeg",
+        shortDescription: "Graceful butterfly design with a soft feminine touch, perfect for adding charm to any outfit."
+      },
+      {
+        id: "clover-necklace",
+        name: "Clover Necklace",
+        category: "Necklace",
+        price: 250,
+        image: "../H.S.M Store/Images/Necklace/Clover Necklace 1.jpeg",
+        shortDescription: "Lucky clover necklace for positivity and style."
+      },
+      {
+        id: "coin-necklace",
+        name: "Coin Necklace",
+        category: "Necklace",
+        price: 250,
+        image: "../H.S.M Store/Images/Necklace/Coin Necklace 1.jpeg",
+        shortDescription: "Minimal coin pendant necklace with a timeless and modern style.."
+      },
+      {
+        id: "colord-heart-necklace",
+        name: "Colored Heart Necklace",
+        category: "Necklace",
+        price: 250,
+        image: "../H.S.M Store/Images/Necklace/Colord Heart Necklace 1.jpeg",
+        shortDescription: "Beautiful colored heart necklace expressing love and warmth.."
+      },
+      {
+        id: "letter-necklace",
+        name: "Letter Necklace",
+        category: "Necklace",
+        price: 280,
+        image: "../H.S.M Store/Images/Necklace/Letter Necklace 1.jpeg",
+        shortDescription: "Personalized letter necklace that keeps your special initial close to your heart."
+      },
+      {
+        id: "Flower-necklace",
+        name: "Flower Necklace",
+        category: "Necklace",
+        price: 280,
+        image: "../H.S.M Store/Images/Necklace/Loly Flower Necklace.jpeg",
+        shortDescription: "..."
+      },
+      {
+        id: "palstine-necklace",
+        name: "Palstine Necklace",
+        category: "Necklace",
+        price: 200,
+        image: "../H.S.M Store/Images/Necklace/Palstine Necklace .jpeg",
+        shortDescription: "Palestine-inspired necklace symbolizing pride, identity, and strength."
+      },
+      {
+        id: "tree-necklass",
+        name: "Tree Necklass",
+        category: "Necklace",
+        price: 280,
+        image: "../H.S.M Store/Images/Necklace/Tree Necklass 1.jpeg",
+        shortDescription: "Tree of life necklace symbolizing growth, strength, and connection."
+      },
+
+      // ========== BRACELET ==========
+      {
+        id: "ayah-el-korsy-braclet",
+        name: "Ayah El Korsy Braclet",
+        category: "Bracelet",
+        price: 250,
+        image: "../H.S.M Store/Images/Braclets/ayah el korsy braclet.jpeg",
+        shortDescription: "Spiritual Ayah El Korsy bracelet with elegant engraved design."
+      },
+      {
+        id: "coin-braclet",
+        name: "Coin Braclet",
+        category: "Bracelet",
+        price: 200,
+        image: "../H.S.M Store/Images/Braclets/Coin Braclet 1.jpeg",
+        shortDescription: "Minimal coin bracelet with a modern and stylish finish."
+      },
+      {
+        id: "couples-braclet",
+        name: "Couples Braclet",
+        category: "Bracelet",
+        price: 250,
+        image: "../H.S.M Store/Images/Braclets/Couples Braclet .jpeg",
+        shortDescription: "Matching couples bracelet symbolizing love and unity."
+      },
+      {
+        id: "heart-braclet",
+        name: "Heart Braclet",
+        category: "Bracelet",
+        price: 200,
+        image: "../H.S.M Store/Images/Braclets/Heart Braclet 1.jpeg",
+        shortDescription: "Romantic heart bracelet with delicate feminine charm."
+      },
+      {
+        id: "second-couples-braclet",
+        name: " Couples Braclet",
+        category: "Bracelet",
+        price: 0,
+        image: "../H.S.M Store/Images/Braclets/Second Couples Braclet 1 .jpeg",
+        shortDescription: "Elegant couples bracelet set designed for lasting memories."
+      },
+
+      // ========== EARRINGS ==========
+      {
+        id: "butterfly-earrings",
+        name: "Butterfly Earrings",
+        category: "Earrings",
+        price: 150,
+        image: "../H.S.M Store/Images/Earrings/Butterfly Earrings 1.jpeg",
+        shortDescription: "Delicate butterfly earrings adding sparkle and femininity."
+      },
+      {
+        id: "colord-heart-earrings",
+        name: "Colored Heart Earrings",
+        category: "Earrings",
+        price: 150,
+        image: "../H.S.M Store/Images/Earrings/Colord Heart earrings 1.jpeg",
+        shortDescription: "Charming colored heart earrings full of warmth and style."
+      },
+      {
+        id: "earrings-collection",
+        name: "Earrings Collection",
+        category: "Earrings",
+        price: 250,
+        image: "../H.S.M Store/Images/Earrings/Earrings Collection 1 .jpeg",
+        shortDescription: "Elegant earrings collection offering versatile stylish designs."
+      },
+      {
+        id: "heart-earrings",
+        name: "Heart Earrings",
+        category: "Earrings",
+        price: 250,
+        image: "../H.S.M Store/Images/Earrings/Heart earrings 1.jpeg",
+        shortDescription: "Classic heart earrings symbolizing love and elegance."
+      },
+      {
+        id: "star-earrings",
+        name: "Star Earrings",
+        category: "Earrings",
+        price: 250,
+        image: "../H.S.M Store/Images/Earrings/Star Earrings 1.jpeg",
+        shortDescription: "Shiny star earrings that add sparkle and youthful charm."
+      },
+
+      // ========== HAND CHAINS ==========
+      {
+        id: "butterfly-hand-chain",
+        name: "Butterfly Hand Chain",
+        category: "Hand Chain",
+        price: 200,
+        image: "../H.S.M Store/Images/Handchains/Butterfly Hand Chain 1 .jpeg",
+        shortDescription: "Elegant butterfly hand chain combining ring and bracelet design."
+      },
+      {
+        id: "colord-hand-chain",
+        name: "Colored Hand Chain",
+        category: "Hand Chain",
+        price: 200,
+        image: "../H.S.M Store/Images/Handchains/Colord Hand Chain .jpeg",
+        shortDescription: "Stylish colored hand chain with modern elegance."
+      },
+      {
+        id: "stars-hand-chains",
+        name: "Stars Hand Chains",
+        category: "Hand Chain",
+        price: 0,
+        image: "../H.S.M Store/Images/Handchains/Stars Hand Chains .jpeg",
+        shortDescription: "Star-themed hand chain with delicate sparkle."
+      },
+
+      // ========== RINGS ==========
+      {
+        id: "first-rings",
+        name: "First Rings",
+        category: "Ring",
+        price: 100,
+        image: "../H.S.M Store/Images/Rings/First Rings .jpeg",
+        shortDescription: "Elegant modern rings perfect for everyday wear."
+      },
+      {
+        id: "second-rings",
+        name: "Second Rings",
+        category: "Ring",
+        price: 100,
+        image: "../H.S.M Store/Images/Rings/Second Rings .jpeg",
+        shortDescription: "Stylish ring with a bold and refined finish."
+      },
+      {
+        id: "third-rings",
+        name: "Third Rings",
+        category: "Ring",
+        price: 100,
+        image: "../H.S.M Store/Images/Rings/Third Rings .jpeg",
+        shortDescription: "Beautiful ring with a timeless elegant design."
+      },
+      {
+        id: "fourth-rings",
+        name: "Fourth Rings",
+        category: "Ring",
+        price: 100,
+        image: "../H.S.M Store/Images/Rings/Fourth Rings .jpeg",
+        shortDescription: "Minimal ring design with subtle luxury appeal."
+      },
+      {
+        id: "fifth-rings",
+        name: "Fifth Rings",
+        category: "Ring",
+        price: 100,
+        image: "../H.S.M Store/Images/Rings/Fifth Rings .jpeg",
+        shortDescription: "Modern ring blending simplicity and elegance."
+      },
+      {
+        id: "sixth-rings",
+        name: "Sixth Rings",
+        category: "Ring",
+        price:100,
+        image: "../H.S.M Store/Images/Rings/Sixth Rings .jpeg",
+        shortDescription: "Elegant everyday ring with smooth polished finish."
+      },
+      {
+        id: "seventh-rings",
+        name: "Seventh Rings",
+        category: "Ring",
+        price: 100,
+        image: "../H.S.M Store/Images/Rings/Seventh Rings .jpeg",
+        shortDescription: "Premium ring design with sophisticated charm."
+      }
+
+      // Anklets category is available on the site,
+      // but you don't have images yet in "Images/Anklets", so no products here for now.
+    ];
+
+    // ========= RENDERING =========
+    const productsContainer = document.getElementById("productsContainer");
+    const noResultsEl = document.getElementById("noResults");
+    const searchInput = document.getElementById("searchInput");
+    const categoryButtons = document.querySelectorAll(".category-btn");
+
+    let activeCategory = "All";
+
+    function createProductCard(product) {
+      const card = document.createElement("a");
+      card.className = "product-card product-link";
+      // Detail page: the file is "<id>.html" in the same folder as this index.html
+      card.href = product.id + ".html";
+
+      card.innerHTML = `
+        <div class="product-image-wrapper">
+          <img src="${product.image}" alt="${product.name}" />
+          <div class="product-category">${product.category}</div>
+        </div>
+        <div class="product-body">
+          <div class="product-title">${product.name}</div>
+          <div class="product-desc">${product.shortDescription}</div>
+          <div class="product-foot">
+            <div class="product-price">${product.price} L.E</div>
+            <button type="button" class="details-btn">View</button>
+          </div>
+        </div>
+      `;
+      return card;
+    }
+
+    function renderProducts() {
+      const searchText = searchInput.value.trim().toLowerCase();
+      productsContainer.innerHTML = "";
+
+      const filtered = products.filter((p) => {
+        const matchesCategory =
+          activeCategory === "All" || p.category === activeCategory;
+
+        const haystack =
+          (p.name + " " + p.shortDescription + " " + p.category).toLowerCase();
+        const matchesSearch = haystack.includes(searchText);
+
+        return matchesCategory && matchesSearch;
+      });
+
+      if (!filtered.length) {
+        noResultsEl.style.display = "block";
+        return;
+      } else {
+        noResultsEl.style.display = "none";
+      }
+
+      filtered.forEach((p) => {
+        productsContainer.appendChild(createProductCard(p));
+      });
+    }
+
+    // Category click listeners
+    categoryButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        categoryButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeCategory = btn.getAttribute("data-category");
+        renderProducts();
+      });
+    });
+
+    // Search listener
+    searchInput.addEventListener("input", () => {
+      renderProducts();
+    });
+
+    // First render
+    renderProducts();
+  </script>
+</body>
+</html>
+
