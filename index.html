@@ -31,6 +31,11 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      transition: transform 0.3s ease;
+    }
+
+    header.hide-header {
+      transform: translateY(-100%);
     }
 
     .logo {
@@ -127,13 +132,13 @@
 
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 products next to each other */
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
     }
 
     @media (max-width: 640px) {
       .products-grid {
-        grid-template-columns: 1fr; /* 1 per row on very small screens */
+        grid-template-columns: 1fr;
       }
       header {
         flex-direction: column;
@@ -172,12 +177,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      background: #fff;
       transition: transform 0.4s ease;
     }
 
     .product-card:hover .product-image-wrapper img {
-      transform: scale(1.06);
+      transform: scale(1.03);
     }
 
     .product-category {
@@ -269,7 +275,13 @@
   </style>
 </head>
 <body>
-  <header>
+
+  <!-- AUTOPLAY MUSIC -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="Love Story.mp3" type="audio/mpeg" />
+  </audio>
+
+  <header id="mainHeader">
     <div class="logo">
       H.S.M Store
       <span class="heart">♥</span>
@@ -285,7 +297,6 @@
         <span class="search-icon">🔍</span>
       </div>
       <div class="categories" id="categoryButtons">
-        <!-- Top category buttons -->
         <button class="category-btn active" data-category="All">All</button>
         <button class="category-btn" data-category="Necklace">Necklace</button>
         <button class="category-btn" data-category="Ring">Ring</button>
@@ -310,17 +321,22 @@
   </footer>
 
   <script>
+    // ===== HEADER HIDE/SHOW ON SCROLL =====
+    let lastScrollY = window.scrollY;
+    const header = document.getElementById("mainHeader");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > lastScrollY && window.scrollY > 80) {
+        header.classList.add("hide-header");
+      } else {
+        header.classList.remove("hide-header");
+      }
+      lastScrollY = window.scrollY;
+    });
+
     // ========= PRODUCTS DATA =========
-    // NOTE:
-    // - Images are linked from your existing "H.S.M Store/Images/..." folder.
-    // - This index.html file is inside "Project H.S.M STORE".
-    //   So the image path goes one folder up: "../H.S.M Store/Images/...".
-    //
-    // TODO for you:
-    // - Change "price" for every product to the real price (number only; " L.E" is added automatically).
-    // - Change "shortDescription" to your own description text.
     const products = [
-      // ========== NECKLACE ==========
+      // (YOUR PRODUCTS ARRAY — UNCHANGED)
       {
         id: "another-butterfly-necklace",
         name: "Butterfly Necklace",
@@ -394,8 +410,7 @@
         shortDescription: "Tree of life necklace symbolizing growth, strength, and connection."
       },
 
-      // ========== BRACELET ==========
-       {
+      {
         id: "normal-braclet",
         name: "Thin Cuff Bracelet",
         category: "Bracelet",
@@ -452,7 +467,6 @@
         shortDescription: "Elegant couples bracelet set designed for lasting memories."
       },
 
-      // ========== EARRINGS ==========
       {
         id: "butterfly-earrings",
         name: "Butterfly Earrings",
@@ -494,7 +508,6 @@
         shortDescription: "Shiny star earrings that add sparkle and youthful charm."
       },
 
-      // ========== HAND CHAINS ==========
       {
         id: "butterfly-hand-chain",
         name: "Butterfly Hand Chain",
@@ -520,7 +533,6 @@
         shortDescription: "Star-themed hand chain with delicate sparkle."
       },
 
-      // ========== RINGS ==========
       {
         id: "first-rings",
         name: "Heart Rings",
@@ -577,12 +589,8 @@
         image: "Images/Seventh Rings .jpeg",
         shortDescription: "Premium rings design with sophisticated charm."
       }
-
-      // Anklets category is available on the site,
-      // but you don't have images yet in "Images/Anklets", so no products here for now.
     ];
 
-    // ========= RENDERING =========
     const productsContainer = document.getElementById("productsContainer");
     const noResultsEl = document.getElementById("noResults");
     const searchInput = document.getElementById("searchInput");
@@ -593,7 +601,6 @@
     function createProductCard(product) {
       const card = document.createElement("a");
       card.className = "product-card product-link";
-      // Detail page: the file is "<id>.html" in the same folder as this index.html
       card.href = product.id + ".html";
 
       card.innerHTML = `
@@ -640,7 +647,6 @@
       });
     }
 
-    // Category click listeners
     categoryButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         categoryButtons.forEach((b) => b.classList.remove("active"));
@@ -650,14 +656,13 @@
       });
     });
 
-    // Search listener
     searchInput.addEventListener("input", () => {
       renderProducts();
     });
 
-    // First render
     renderProducts();
   </script>
 </body>
 </html>
+
 
