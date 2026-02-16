@@ -97,7 +97,6 @@
       pointer-events: none;
     }
 
-    /* FIXED MUSIC BUTTON STYLING */
     .music-toggle-btn {
       background: #f3f3f3;
       border: 1px solid #ddd;
@@ -339,6 +338,7 @@
         <button class="category-btn" data-category="Hand Chain">Hand Chain</button>
         <button class="category-btn" data-category="Earrings">Earrings</button>
         <button class="category-btn" data-category="Anklets">Anklets</button>
+        <button class="category-btn" data-category="Bundles">Bundles</button>
       </div>
     </div>
   </header>
@@ -356,7 +356,7 @@
   </footer>
 
   <script>
-    // ===== UPDATED MUSIC LOGIC =====
+    // ===== MUSIC LOGIC =====
     const music = document.getElementById("bgMusic");
     const musicBtn = document.getElementById("musicToggle");
     const musicIcon = document.getElementById("musicIcon");
@@ -369,19 +369,15 @@
         });
     }
 
-    // Try playing when page loads
     window.addEventListener('load', startMusic);
-
-    // CRITICAL: Browsers usually block sound until the user clicks ANYTHING.
-    // This will start the music the very second they click anywhere on your site.
     document.addEventListener('click', () => {
         if (music.paused && !music.dataset.manuallyPaused) {
             startMusic();
         }
-    }, { once: false }); // Set to false so it keeps trying until successful
+    }, { once: false });
 
     musicBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // Stops the general 'click' listener above from firing
+        e.stopPropagation();
         if (music.paused) {
             music.play();
             musicIcon.innerText = "🔊";
@@ -389,11 +385,11 @@
         } else {
             music.pause();
             musicIcon.innerText = "🔇";
-            music.dataset.manuallyPaused = "true"; // Remember user wanted it off
+            music.dataset.manuallyPaused = "true";
         }
     });
 
-    // ===== HEADER HIDE/SHOW ON SCROLL =====
+    // ===== HEADER SCROLL =====
     let lastScrollY = window.scrollY;
     const header = document.getElementById("mainHeader");
 
@@ -407,7 +403,14 @@
     });
 
     // ========= PRODUCTS DATA =========
+    /* HOW TO ADD PRODUCTS:
+       1. Copy a block below.
+       2. id: must be unique (use same name as the .html file).
+       3. category: must match one of the buttons exactly (Necklace, Ring, Bracelet, Bundles, etc).
+    */
+
     const products = [
+      // ===== NECKLACES SECTION =====
       {
         id: "another-butterfly-necklace",
         name: "Butterfly Necklace",
@@ -480,6 +483,8 @@
         image: "Images/Tree Necklass 1.jpeg",
         shortDescription: "Tree of life necklace symbolizing growth, strength, and connection."
       },
+
+      // ===== BRACELETS SECTION =====
       {
         id: "normal-braclet",
         name: "Thin Cuff Bracelet",
@@ -536,6 +541,8 @@
         image: "Images/Second Couples Braclet 1 .jpeg",
         shortDescription: "Elegant couples bracelet set designed for lasting memories."
       },
+
+      // ===== EARRINGS SECTION =====
       {
         id: "butterfly-earrings",
         name: "Butterfly Earrings",
@@ -576,6 +583,8 @@
         image: "Images/Star Earrings 1.jpeg",
         shortDescription: "Shiny star earrings that add sparkle and youthful charm."
       },
+
+      // ===== HAND CHAINS SECTION =====
       {
         id: "butterfly-hand-chain",
         name: "Butterfly Hand Chain",
@@ -608,6 +617,8 @@
         image: "Images/Stars Hand Chains .jpeg",
         shortDescription: "Star-themed hand chain with delicate sparkle."
       },
+
+      // ===== RINGS SECTION =====
       {
         id: "first-rings",
         name: "Heart Rings",
@@ -663,7 +674,18 @@
         price: 100,
         image: "Images/Seventh Rings .jpeg",
         shortDescription: "Premium rings design with sophisticated charm."
+      },
+
+      // ===== BUNDLES SECTION =====
+      {
+        id: "gift-bundle-1",
+        name: "Classic Gift Set",
+        category: "Bundles",
+        price: 500,
+        image: "Images/bundle-placeholder.jpeg",
+        shortDescription: "A perfect mix of our best-selling necklace and earrings."
       }
+      /* Add more bundles here */
     ];
 
     const productsContainer = document.getElementById("productsContainer");
