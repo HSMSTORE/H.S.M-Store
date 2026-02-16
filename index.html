@@ -90,19 +90,6 @@
       pointer-events: none;
     }
 
-  /* NEW: Music Button */
-    .music-btn {
-      border: none;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: #e63946;
-      color: #fff;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      white-space: nowrap;
-    }
     .categories {
       display: flex;
       flex-wrap: wrap;
@@ -285,14 +272,33 @@
       color: #888;
       padding: 10px 0 20px;
     }
+
+    /* ===== MUSIC BUTTON ===== */
+    #musicToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #e63946;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
 
   <!-- AUTOPLAY MUSIC -->
-  <audio id="bgMusic" autoplay loop>
+  <audio id="bgMusic" loop>
     <source src="Love Story.mp3" type="audio/mpeg" />
   </audio>
+
+  <!-- MUSIC BUTTON -->
+  <button id="musicToggle">Pause Music</button>
 
   <header id="mainHeader">
     <div class="logo">
@@ -345,6 +351,31 @@
         header.classList.remove("hide-header");
       }
       lastScrollY = window.scrollY;
+    });
+
+    // ===== MUSIC CONTROL =====
+    const music = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicToggle");
+    let musicStarted = false;
+
+    function startMusicOnce() {
+      if (!musicStarted) {
+        music.play().catch(() => {});
+        musicStarted = true;
+      }
+    }
+
+    window.addEventListener("scroll", startMusicOnce);
+    window.addEventListener("click", startMusicOnce);
+
+    musicBtn.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+        musicBtn.textContent = "Pause Music";
+      } else {
+        music.pause();
+        musicBtn.textContent = "Play Music";
+      }
     });
 
     // ========= PRODUCTS DATA =========
