@@ -97,7 +97,7 @@
       pointer-events: none;
     }
 
-    /* Music Button Styling */
+    /* FIXED MUSIC BUTTON STYLING */
     .music-toggle-btn {
       background: #f3f3f3;
       border: 1px solid #ddd;
@@ -111,6 +111,7 @@
       font-size: 1.2rem;
       transition: all 0.2s;
       flex-shrink: 0;
+      z-index: 100;
     }
 
     .music-toggle-btn:hover {
@@ -326,7 +327,7 @@
           <span class="search-icon">🔍</span>
         </div>
         <button id="musicToggle" class="music-toggle-btn" title="Toggle Music">
-          <span id="musicIcon">🎵</span>
+          <span id="musicIcon">🔇</span>
         </button>
       </div>
       
@@ -355,41 +356,40 @@
   </footer>
 
   <script>
-    // ===== MUSIC LOGIC =====
+    // ===== UPDATED MUSIC LOGIC =====
     const music = document.getElementById("bgMusic");
     const musicBtn = document.getElementById("musicToggle");
     const musicIcon = document.getElementById("musicIcon");
 
-    // Function to handle play attempt
-    function playMusic() {
+    function startMusic() {
         music.play().then(() => {
             musicIcon.innerText = "🔊";
         }).catch(() => {
-            console.log("Autoplay blocked by browser. Music will start on user interaction.");
+            console.log("Waiting for user interaction to start audio...");
         });
     }
 
-    // Try to play on load
-    window.addEventListener("load", playMusic);
+    // Try playing when page loads
+    window.addEventListener('load', startMusic);
 
-    // If blocked, play on the first click anywhere on the page
-    document.body.addEventListener("click", () => {
-        if (music.paused && music.getAttribute('data-manual-pause') !== 'true') {
-            playMusic();
+    // CRITICAL: Browsers usually block sound until the user clicks ANYTHING.
+    // This will start the music the very second they click anywhere on your site.
+    document.addEventListener('click', () => {
+        if (music.paused && !music.dataset.manuallyPaused) {
+            startMusic();
         }
-    }, { once: true });
+    }, { once: false }); // Set to false so it keeps trying until successful
 
-    // Toggle Button
     musicBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // Prevent the body click listener from firing
+        e.stopPropagation(); // Stops the general 'click' listener above from firing
         if (music.paused) {
             music.play();
             musicIcon.innerText = "🔊";
-            music.removeAttribute('data-manual-pause');
+            delete music.dataset.manuallyPaused;
         } else {
             music.pause();
             musicIcon.innerText = "🔇";
-            music.setAttribute('data-manual-pause', 'true');
+            music.dataset.manuallyPaused = "true"; // Remember user wanted it off
         }
     });
 
@@ -606,7 +606,7 @@
         category: "Ring",
         price: 150,
         image: "Images/First Rings .jpeg",
-        shortDescription: "A stunning colored heart ring with a radiant gem at its center sweet, bold, and full of love. The perfect little surprise to make her smile and feel truly special. 💖"
+        shortDescription: "A stunning colored heart ring with a radiant gem at its center sweet, bold, and full of love."
       },
       {
         id: "second-rings",
@@ -692,26 +692,17 @@
       productsContainer.innerHTML = "";
 
       const filtered = products.filter((p) => {
-        const matchesCategory =
-          activeCategory === "All" || p.category === activeCategory;
-
-        const haystack =
-          (p.name + " " + p.shortDescription + " " + p.category).toLowerCase();
-        const matchesSearch = haystack.includes(searchText);
-
-        return matchesCategory && matchesSearch;
+        const matchesCategory = activeCategory === "All" || p.category === activeCategory;
+        const haystack = (p.name + " " + p.shortDescription + " " + p.category).toLowerCase();
+        return matchesCategory && haystack.includes(searchText);
       });
 
       if (!filtered.length) {
         noResultsEl.style.display = "block";
-        return;
       } else {
         noResultsEl.style.display = "none";
+        filtered.forEach((p) => productsContainer.appendChild(createProductCard(p)));
       }
-
-      filtered.forEach((p) => {
-        productsContainer.appendChild(createProductCard(p));
-      });
     }
 
     categoryButtons.forEach((btn) => {
@@ -723,10 +714,7 @@
       });
     });
 
-    searchInput.addEventListener("input", () => {
-      renderProducts();
-    });
-
+    searchInput.addEventListener("input", renderProducts);
     renderProducts();
   </script>
 </body>
