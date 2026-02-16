@@ -272,33 +272,14 @@
       color: #888;
       padding: 10px 0 20px;
     }
-
-    /* ===== MUSIC BUTTON ===== */
-    #musicToggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #e63946;
-      color: white;
-      border: none;
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      z-index: 999;
-    }
   </style>
 </head>
 <body>
 
   <!-- AUTOPLAY MUSIC -->
-  <audio id="bgMusic" loop>
+  <audio id="bgMusic" autoplay loop>
     <source src="Love Story.mp3" type="audio/mpeg" />
   </audio>
-
-  <!-- MUSIC BUTTON -->
-  <button id="musicToggle">Pause Music</button>
 
   <header id="mainHeader">
     <div class="logo">
@@ -353,32 +334,337 @@
       lastScrollY = window.scrollY;
     });
 
-    // ===== MUSIC CONTROL =====
-    const music = document.getElementById("bgMusic");
-    const musicBtn = document.getElementById("musicToggle");
-    let musicStarted = false;
+    // ========= PRODUCTS DATA =========
+    const products = [
+      // (YOUR PRODUCTS ARRAY — UNCHANGED)
+      {
+        id: "another-butterfly-necklace",
+        name: "Butterfly Necklace",
+        category: "Necklace",
+        price: 250,
+        image: "Images/another-butterfly-necklace 1.jpeg",
+        shortDescription: "A delicate butterfly stainless steel necklace symbolizing freedom and transformation."
+      },
+      {
+        id: "butterfly-necklase",
+        name: "Butterfly Necklase",
+        category: "Necklace",
+        price: 250,
+        image: "Images/Butterfly Necklase 1.jpeg",
+        shortDescription: "Graceful butterfly design with a soft feminine touch, perfect for adding charm to any outfit."
+      },
+      {
+        id: "clover-necklace",
+        name: "Clover Necklace",
+        category: "Necklace",
+        price: 250,
+        image: "Images/Clover Necklace 1.jpeg",
+        shortDescription: "Lucky clover necklace for positivity and style."
+      },
+      {
+        id: "coin-necklace",
+        name: "Coin Necklace",
+        category: "Necklace",
+        price: 250,
+        image: "Images/Coin Necklace 1.jpeg",
+        shortDescription: "Minimal coin pendant necklace with a timeless and modern style.."
+      },
+      {
+        id: "colord-heart-necklace",
+        name: "Colored Heart Necklace",
+        category: "Necklace",
+        price: 250,
+        image: "Images/Colord Heart Necklace 1.jpeg",
+        shortDescription: "Beautiful colored heart necklace expressing love and warmth.."
+      },
+      {
+        id: "letter-necklace",
+        name: "Letter Necklace",
+        category: "Necklace",
+        price: 280,
+        image: "Images/Letter Necklace 1.jpeg",
+        shortDescription: "Personalized letter necklace that keeps your special initial close to your heart."
+      },
+      {
+        id: "flower-necklace",
+        name: "Flower Necklace",
+        category: "Necklace",
+        price: 280,
+        image: "Images/Loly Flower Necklace.jpeg",
+        shortDescription: "A delicate necklace adorned with tiny blossoms, resting softly along the collarbone—romantic, feminine, and inspired by nature’s quiet beauty. 🌸"
+      },
+      {
+        id: "palstine-necklace",
+        name: "Palstine Necklace",
+        category: "Necklace",
+        price: 200,
+        image: "Images/Palstine Necklace .jpeg",
+        shortDescription: "Palestine-inspired necklace symbolizing pride, identity, and strength."
+      },
+      {
+        id: "tree-necklass",
+        name: "Tree Necklass",
+        category: "Necklace",
+        price: 280,
+        image: "Images/Tree Necklass 1.jpeg",
+        shortDescription: "Tree of life necklace symbolizing growth, strength, and connection."
+      },
 
-    function startMusicOnce() {
-      if (!musicStarted) {
-        music.play().catch(() => {});
-        musicStarted = true;
+      {
+        id: "normal-braclet",
+        name: "Thin Cuff Bracelet",
+        category: "Bracelet",
+        price: 280,
+        image: "Images/Normal Braclet .jpeg",
+        shortDescription: "Elegant. Effortless. Timeless."
+      },
+      {
+        id: "ayah-el-korsy-braclet",
+        name: "Ayah El Korsy Braclet",
+        category: "Bracelet",
+        price: 250,
+        image: "Images/ayah el korsy braclet.jpeg",
+        shortDescription: "Spiritual Ayah El Korsy bracelet with elegant engraved design."
+      },
+      {
+        id: "coin-braclet",
+        name: "Coin Braclet",
+        category: "Bracelet",
+        price: 200,
+        image: "Images/Coin Braclet 1.jpeg",
+        shortDescription: "Minimal coin bracelet with a modern and stylish finish."
+      },
+      {
+        id: "couples-braclet",
+        name: "Couples Braclet",
+        category: "Bracelet",
+        price: 250,
+        image: "Images/Couples Braclet .jpeg",
+        shortDescription: "Matching couples bracelet symbolizing love and unity."
+      },
+      {
+        id: "heart-braclet",
+        name: "Heart Braclet",
+        category: "Bracelet",
+        price: 200,
+        image: "Images/Heart Braclet 2.jpeg",
+        shortDescription: "Romantic heart bracelet with delicate feminine charm."
+      },
+      {
+        id: "second-normal-braclet",
+        name: "Thick Cuff Bracelet",
+        category: "Bracelet",
+        price: 150,
+        image: "Images/Second Normal Braclet 1.jpeg",
+        shortDescription: "Bold Cuff Bracelet."
+      },
+      {
+        id: "second-couples-braclet",
+        name: " Couples Braclet",
+        category: "Bracelet",
+        price: 250,
+        image: "Images/Second Couples Braclet 1 .jpeg",
+        shortDescription: "Elegant couples bracelet set designed for lasting memories."
+      },
+
+      {
+        id: "butterfly-earrings",
+        name: "Butterfly Earrings",
+        category: "Earrings",
+        price: 150,
+        image: "Images/Butterfly Earrings 1.jpeg",
+        shortDescription: "Delicate butterfly earrings adding sparkle and femininity."
+      },
+      {
+        id: "colord-heart-earrings",
+        name: "Colored Heart Earrings",
+        category: "Earrings",
+        price: 150,
+        image: "Images/Colord Heart earrings 1.jpeg",
+        shortDescription: "Charming colored heart earrings full of warmth and style."
+      },
+      {
+        id: "earrings-collection",
+        name: "Earrings Collection",
+        category: "Earrings",
+        price: 250,
+        image: "Images/Earrings Collection 1 .jpeg",
+        shortDescription: "Elegant earrings collection offering versatile stylish designs."
+      },
+      {
+        id: "heart-earrings",
+        name: "Heart Earrings",
+        category: "Earrings",
+        price: 150,
+        image: "Images/Heart earrings 1.jpeg",
+        shortDescription: "Classic heart earrings symbolizing love and elegance."
+      },
+      {
+        id: "star-earrings",
+        name: "Star Earrings",
+        category: "Earrings",
+        price: 150,
+        image: "Images/Star Earrings 1.jpeg",
+        shortDescription: "Shiny star earrings that add sparkle and youthful charm."
+      },
+
+      {
+        id: "butterfly-hand-chain",
+        name: "Butterfly Hand Chain",
+        category: "Hand Chain",
+        price: 200,
+        image: "Images/Butterfly Hand Chain 1 .jpeg",
+        shortDescription: "Elegant butterfly hand chain combining ring and bracelet design."
+      },
+      {
+        id: "colord-hand-chain",
+        name: "Colored Hand Chain",
+        category: "Hand Chain",
+        price: 200,
+        image: "Images/Colord Hand Chain .jpeg",
+        shortDescription: "Stylish colored hand chain with modern elegance."
+      },
+      {
+        id: "stars-hand-chains",
+        name: "Stars Hand Chains",
+        category: "Hand Chain",
+        price: 200,
+        image: "Images/Stars Hand Chains .jpeg",
+        shortDescription: "Star-themed hand chain with delicate sparkle."
+      },
+
+      {
+        id: "first-rings",
+        name: "Heart Rings",
+        category: "Ring",
+        price: 150,
+        image: "Images/First Rings .jpeg",
+        shortDescription: "A stunning colored heart ring with a radiant gem at its center sweet, bold, and full of love. The perfect little surprise to make her smile and feel truly special. 💖"
+      },
+      {
+        id: "second-rings",
+        name: "Mixed Shape Rings Set",
+        category: "Ring",
+        price: 100,
+        image: "Images/Second Rings .jpeg",
+        shortDescription: "Stylish rings with a bold and refined finish."
+      },
+      {
+        id: "third-rings",
+        name: "Multi-Shape Ring Collection",
+        category: "Ring",
+        price: 100,
+        image: "Images/Third Rings .jpeg",
+        shortDescription: "Beautiful rings with a timeless elegant design."
+      },
+      {
+        id: "fourth-rings",
+        name: "Modern Muse Geometric Rings",
+        category: "Ring",
+        price: 100,
+        image: "Images/Fourth Rings .jpeg",
+        shortDescription: "Minimal rings design with subtle luxury appeal."
+      },
+      {
+        id: "fifth-rings",
+        name: "Timeless Shapes Ring Set",
+        category: "Ring",
+        price: 100,
+        image: "Images/Fifth Rings .jpeg",
+        shortDescription: "Modern rings blending simplicity and elegance."
+      },
+      {
+        id: "sixth-rings",
+        name: "The Statement Shapes Collection",
+        category: "Ring",
+        price:100,
+        image: "Images/Sixth Rings .jpeg",
+        shortDescription: "Elegant everyday rings with smooth polished finish."
+      },
+      {
+        id: "seventh-rings",
+        name: "Elegant Forms Ring Edition",
+        category: "Ring",
+        price: 100,
+        image: "Images/Seventh Rings .jpeg",
+        shortDescription: "Premium rings design with sophisticated charm."
       }
+    ];
+
+    const productsContainer = document.getElementById("productsContainer");
+    const noResultsEl = document.getElementById("noResults");
+    const searchInput = document.getElementById("searchInput");
+    const categoryButtons = document.querySelectorAll(".category-btn");
+
+    let activeCategory = "All";
+
+    function createProductCard(product) {
+      const card = document.createElement("a");
+      card.className = "product-card product-link";
+      card.href = product.id + ".html";
+
+      card.innerHTML = `
+        <div class="product-image-wrapper">
+          <img src="${product.image}" alt="${product.name}" />
+          <div class="product-category">${product.category}</div>
+        </div>
+        <div class="product-body">
+          <div class="product-title">${product.name}</div>
+          <div class="product-desc">${product.shortDescription}</div>
+          <div class="product-foot">
+            <div class="product-price">${product.price} L.E</div>
+            <button type="button" class="details-btn">View</button>
+          </div>
+        </div>
+      `;
+      return card;
     }
 
-    window.addEventListener("scroll", startMusicOnce);
-    window.addEventListener("click", startMusicOnce);
+    function renderProducts() {
+      const searchText = searchInput.value.trim().toLowerCase();
+      productsContainer.innerHTML = "";
 
-    musicBtn.addEventListener("click", () => {
-      if (music.paused) {
-        music.play();
-        musicBtn.textContent = "Pause Music";
+      const filtered = products.filter((p) => {
+        const matchesCategory =
+          activeCategory === "All" || p.category === activeCategory;
+
+        const haystack =
+          (p.name + " " + p.shortDescription + " " + p.category).toLowerCase();
+        const matchesSearch = haystack.includes(searchText);
+
+        return matchesCategory && matchesSearch;
+      });
+
+      if (!filtered.length) {
+        noResultsEl.style.display = "block";
+        return;
       } else {
-        music.pause();
-        musicBtn.textContent = "Play Music";
+        noResultsEl.style.display = "none";
       }
+
+      filtered.forEach((p) => {
+        productsContainer.appendChild(createProductCard(p));
+      });
+    }
+
+    categoryButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        categoryButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeCategory = btn.getAttribute("data-category");
+        renderProducts();
+      });
     });
 
-    // ========= PRODUCTS DATA =========
+    searchInput.addEventListener("input", () => {
+      renderProducts();
+    });
+
+    renderProducts();
+  </script>
+</body>
+</html>
+
 
 
 
