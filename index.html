@@ -661,6 +661,32 @@
     });
 
     renderProducts();
+    
+    // ===== MUSIC CONTROL =====
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicToggle");
+let musicStarted = false;
+
+function startMusicOnce() {
+  if (!musicStarted) {
+    music.play().catch(() => {});
+    musicStarted = true;
+  }
+}
+
+window.addEventListener("scroll", startMusicOnce);
+window.addEventListener("click", startMusicOnce);
+
+musicBtn.addEventListener("click", () => {
+  if (music.paused) {
+    music.play();
+    musicBtn.textContent = "Pause Music";
+  } else {
+    music.pause();
+    musicBtn.textContent = "Play Music";
+  }
+});
+
   </script>
 </body>
 </html>
