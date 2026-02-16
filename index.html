@@ -272,6 +272,22 @@
       color: #888;
       padding: 10px 0 20px;
     }
+
+    /* ===== MUSIC BUTTON ===== */
+    #musicToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #e63946;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
@@ -280,6 +296,9 @@
   <audio id="bgMusic" loop>
     <source src="Love Story.mp3" type="audio/mpeg" />
   </audio>
+
+  <!-- MUSIC BUTTON -->
+  <button id="musicToggle">Pause Music</button>
 
   <header id="mainHeader">
     <div class="logo">
@@ -321,18 +340,6 @@
   </footer>
 
   <script>
-    // ===== AUTO PLAY FIX =====
-    const music = document.getElementById("bgMusic");
-
-    function tryPlayMusic() {
-      music.play().catch(() => {});
-      document.removeEventListener("click", tryPlayMusic);
-      document.removeEventListener("scroll", tryPlayMusic);
-    }
-
-    document.addEventListener("click", tryPlayMusic);
-    document.addEventListener("scroll", tryPlayMusic);
-
     // ===== HEADER HIDE/SHOW ON SCROLL =====
     let lastScrollY = window.scrollY;
     const header = document.getElementById("mainHeader");
@@ -346,11 +353,33 @@
       lastScrollY = window.scrollY;
     });
 
+    // ===== MUSIC CONTROL =====
+    const music = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicToggle");
+    let musicStarted = false;
+
+    function startMusicOnce() {
+      if (!musicStarted) {
+        music.play().catch(() => {});
+        musicStarted = true;
+      }
+    }
+
+    window.addEventListener("scroll", startMusicOnce);
+    window.addEventListener("click", startMusicOnce);
+
+    musicBtn.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+        musicBtn.textContent = "Pause Music";
+      } else {
+        music.pause();
+        musicBtn.textContent = "Play Music";
+      }
+    });
+
     // ========= PRODUCTS DATA =========
-    const products = [/* unchanged */];
-  </script>
-</body>
-</html>
+
 
 
 
