@@ -403,45 +403,65 @@
     });
 
     // ========= PRODUCTS DATA =========
-    /* HOW TO ADD PRODUCTS:
-       1. Copy a block below.
-       2. id: must be unique (use same name as the .html file).
-       3. category: must match one of the buttons exactly (Necklace, Ring, Bracelet, Bundles, etc).
-    */
-
     const products = [
-      // ===== NECKLACES SECTION =====
+      // ===== BUNDLES =====
+      {
+        id: "heart-bundle",
+        name: "Eternal Heart Bundle",
+        category: "Bundles",
+        price: 500,
+        image: "Images/heart-bundle.jpeg",
+        shortDescription: "3-piece set featuring a heart ring, necklace, and bracelet in stainless steel."
+      },
+      {
+        id: "double-bundle",
+        name: "Glistening Square Bundle",
+        category: "Bundles",
+        price: 350,
+        image: "Images/double-bundle.jpeg",
+        shortDescription: "Premium square-gem necklace and matching bracelet duo."
+      },
+      {
+        id: "first-bundle",
+        name: "Classic Gift Set Bundle",
+        category: "Bundles",
+        price: 500,
+        image: "Images/first-bundle.jpeg",
+        shortDescription: "A curated mix of our best-selling necklace, bracelet, and rings."
+      },
+
+      // ===== NECKLACES =====
+      {
+        id: "golden-rose-necklace",
+        name: "Vintage Golden Rose Necklace",
+        category: "Necklace",
+        price: 280,
+        image: "Images/golden-rose-necklace.jpeg",
+        shortDescription: "Elegant oval pendant with a delicate rose inlay in gold finish."
+      },
+      {
+        id: "one-letter-necklace",
+        name: "Arabic Calligraphy Letter Necklace",
+        category: "Necklace",
+        price: 280,
+        image: "Images/one-letter-necklace.jpeg",
+        shortDescription: "Personalized Arabic letter pendant crafted from stainless steel."
+      },
       {
         id: "another-butterfly-necklace",
         name: "Butterfly Necklace",
         category: "Necklace",
         price: 250,
         image: "Images/another-butterfly-necklace 1.jpeg",
-        shortDescription: "A delicate butterfly stainless steel necklace symbolizing freedom and transformation."
+        shortDescription: "A delicate butterfly stainless steel necklace symbolizing freedom."
       },
-      {
-       id: "golden-rose-necklace",
-       name: "Vintage Golden Rose Necklace",
-       category: "Necklace",
-       price: 280,
-       image: "Images/golden-rose-necklace.jpeg",
-       shortDescription: "An elegant oval pendant with a delicate rose inlay."
-      },
-      {
-      id: "one-letter-necklace",
-      name: "Arabic Calligraphy Letter Necklace",
-      category: "Necklace",
-      price: 280,
-      image: "Images/one-letter-necklace.jpeg",
-     shortDescription: "Personalized elegance featuring beautiful Arabic letter pendants."
-      }
       {
         id: "butterfly-necklase",
         name: "Butterfly Necklase",
         category: "Necklace",
         price: 250,
         image: "Images/Butterfly Necklase 1.jpeg",
-        shortDescription: "Graceful butterfly design with a soft feminine touch, perfect for adding charm to any outfit."
+        shortDescription: "Graceful butterfly design with a soft feminine touch."
       },
       {
         id: "clover-necklace",
@@ -457,7 +477,7 @@
         category: "Necklace",
         price: 250,
         image: "Images/Coin Necklace 1.jpeg",
-        shortDescription: "Minimal coin pendant necklace with a timeless and modern style.."
+        shortDescription: "Minimal coin pendant necklace with a timeless modern style."
       },
       {
         id: "colord-heart-necklace",
@@ -465,7 +485,7 @@
         category: "Necklace",
         price: 250,
         image: "Images/Colord Heart Necklace 1.jpeg",
-        shortDescription: "Beautiful colored heart necklace expressing love and warmth.."
+        shortDescription: "Beautiful colored heart necklace expressing love and warmth."
       },
       {
         id: "letter-necklace",
@@ -473,7 +493,7 @@
         category: "Necklace",
         price: 280,
         image: "Images/Letter Necklace 1.jpeg",
-        shortDescription: "Personalized letter necklace that keeps your special initial close to your heart."
+        shortDescription: "Personalized letter necklace to keep special initials close."
       },
       {
         id: "Flower-necklace",
@@ -481,7 +501,7 @@
         category: "Necklace",
         price: 280,
         image: "Images/Loly Flower Necklace.jpeg",
-        shortDescription: "A delicate necklace adorned with tiny blossoms, resting softly along the collarbone—romantic, feminine, and inspired by nature’s quiet beauty. 🌸"
+        shortDescription: "A delicate necklace adorned with tiny romantic blossoms."
       },
       {
         id: "palstine-necklace",
@@ -489,7 +509,7 @@
         category: "Necklace",
         price: 200,
         image: "Images/Palstine Necklace .jpeg",
-        shortDescription: "Palestine-inspired necklace symbolizing pride, identity, and strength."
+        shortDescription: "Palestine-inspired necklace symbolizing pride and strength."
       },
       {
         id: "tree-necklass",
@@ -497,17 +517,17 @@
         category: "Necklace",
         price: 280,
         image: "Images/Tree Necklass 1.jpeg",
-        shortDescription: "Tree of life necklace symbolizing growth, strength, and connection."
+        shortDescription: "Tree of life necklace symbolizing growth and connection."
       },
 
-      // ===== BRACELETS SECTION =====
+      // ===== BRACELETS =====
       {
         id: "normal-braclet",
         name: "Thin Cuff Bracelet",
         category: "Bracelet",
         price: 280,
         image: "Images/Normal Braclet .jpeg",
-        shortDescription: "Elegant. Effortless. Timeless."
+        shortDescription: "Elegant, effortless, and timeless cuff design."
       },
       {
         id: "ayah-el-korsy-braclet",
@@ -515,7 +535,7 @@
         category: "Bracelet",
         price: 250,
         image: "Images/ayah el korsy braclet.jpeg",
-        shortDescription: "Spiritual Ayah El Korsy bracelet with elegant engraved design."
+        shortDescription: "Spiritual Ayah El Korsy bracelet with engraved design."
       },
       {
         id: "coin-braclet",
@@ -523,7 +543,7 @@
         category: "Bracelet",
         price: 200,
         image: "Images/Coin Braclet 1.jpeg",
-        shortDescription: "Minimal coin bracelet with a modern and stylish finish."
+        shortDescription: "Minimal coin bracelet with a modern stylish finish."
       },
       {
         id: "couples-braclet",
@@ -547,18 +567,10 @@
         category: "Bracelet",
         price: 150,
         image: "Images/Second Normal Braclet 1.jpeg",
-        shortDescription: "Bold Cuff Bracelet."
-      },
-      {
-        id: "second-couples-braclet",
-        name: " Couples Braclet",
-        category: "Bracelet",
-        price: 250,
-        image: "Images/Second Couples Braclet 1 .jpeg",
-        shortDescription: "Elegant couples bracelet set designed for lasting memories."
+        shortDescription: "Bold cuff bracelet for a statement look."
       },
 
-      // ===== EARRINGS SECTION =====
+      // ===== EARRINGS =====
       {
         id: "butterfly-earrings",
         name: "Butterfly Earrings",
@@ -573,75 +585,35 @@
         category: "Earrings",
         price: 150,
         image: "Images/Colord Heart earrings 1.jpeg",
-        shortDescription: "Charming colored heart earrings full of warmth and style."
-      },
-      {
-        id: "earrings-collection",
-        name: "Earrings Collection",
-        category: "Earrings",
-        price: 250,
-        image: "Images/Earrings Collection 1 .jpeg",
-        shortDescription: "Elegant earrings collection offering versatile stylish designs."
-      },
-      {
-        id: "heart-earrings",
-        name: "Heart Earrings",
-        category: "Earrings",
-        price: 150,
-        image: "Images/Heart earrings 1.jpeg",
-        shortDescription: "Classic heart earrings symbolizing love and elegance."
-      },
-      {
-        id: "star-earrings",
-        name: "Star Earrings",
-        category: "Earrings",
-        price: 150,
-        image: "Images/Star Earrings 1.jpeg",
-        shortDescription: "Shiny star earrings that add sparkle and youthful charm."
+        shortDescription: "Charming colored heart earrings full of style."
       },
 
-      // ===== HAND CHAINS SECTION =====
+      // ===== HAND CHAINS =====
       {
         id: "butterfly-hand-chain",
         name: "Butterfly Hand Chain",
         category: "Hand Chain",
         price: 200,
         image: "Images/Butterfly Hand Chain 1 .jpeg",
-        shortDescription: "Elegant butterfly hand chain combining ring and bracelet design."
+        shortDescription: "Elegant butterfly hand chain combining ring and bracelet."
       },
       {
-        id: "colord-hand-chain",
-        name: "Colored Hand Chain",
-        category: "Hand Chain",
-        price: 200,
-        image: "Images/Colord Hand Chain .jpeg",
-        shortDescription: "Stylish colored hand chain with modern elegance."
-      },
-       {
         id: "simple-handchain",
         name: "Simple Hand Chain",
         category: "Hand Chain",
         price: 200,
         image: "Images/simple-handchain.jpeg",
-        shortDescription: "Stylish Simple hand chain."
-      },
-      {
-        id: "stars-hand-chains",
-        name: "Stars Hand Chains",
-        category: "Hand Chain",
-        price: 200,
-        image: "Images/Stars Hand Chains .jpeg",
-        shortDescription: "Star-themed hand chain with delicate sparkle."
+        shortDescription: "Stylish and minimal stainless steel hand chain."
       },
 
-      // ===== RINGS SECTION =====
+      // ===== RINGS =====
       {
         id: "first-rings",
         name: "Heart Rings",
         category: "Ring",
         price: 150,
         image: "Images/First Rings .jpeg",
-        shortDescription: "A stunning colored heart ring with a radiant gem at its center sweet, bold, and full of love."
+        shortDescription: "Stunning heart ring with a radiant gem center."
       },
       {
         id: "second-rings",
@@ -650,74 +622,7 @@
         price: 100,
         image: "Images/Second Rings .jpeg",
         shortDescription: "Stylish rings with a bold and refined finish."
-      },
-      {
-        id: "third-rings",
-        name: "Multi-Shape Ring Collection",
-        category: "Ring",
-        price: 100,
-        image: "Images/Third Rings .jpeg",
-        shortDescription: "Beautiful rings with a timeless elegant design."
-      },
-      {
-        id: "fourth-rings",
-        name: "Modern Muse Geometric Rings",
-        category: "Ring",
-        price: 100,
-        image: "Images/Fourth Rings .jpeg",
-        shortDescription: "Minimal rings design with subtle luxury appeal."
-      },
-      {
-        id: "fifth-rings",
-        name: "Timeless Shapes Ring Set",
-        category: "Ring",
-        price: 100,
-        image: "Images/Fifth Rings .jpeg",
-        shortDescription: "Modern rings blending simplicity and elegance."
-      },
-      {
-        id: "sixth-rings",
-        name: "The Statement Shapes Collection",
-        category: "Ring",
-        price:100,
-        image: "Images/Sixth Rings .jpeg",
-        shortDescription: "Elegant everyday rings with smooth polished finish."
-      },
-      {
-        id: "seventh-rings",
-        name: "Elegant Forms Ring Edition",
-        category: "Ring",
-        price: 100,
-        image: "Images/Seventh Rings .jpeg",
-        shortDescription: "Premium rings design with sophisticated charm."
-      },
-
-      // ===== BUNDLES SECTION =====
-      {
-        id: "first-bundle",
-        name: "Classic Gift Set Bundle",
-        category: "Bundles",
-        price: 500,
-        image: "Images/first-bundle.jpeg",
-        shortDescription: "A perfect mix of our best-selling necklace,Bracelet and Rings."
       }
-      {
-  id: "heart-bundle",
-  name: "Eternal Heart Bundle",
-  category: "Bundles",
-  price: 500,
-  image: "Images/heart-bundle.jpeg",
-  shortDescription: "A romantic 3-piece set featuring a heart ring, necklace, and bracelet."
-},
-{
-  id: "double-bundle",
-  name: "Glistening Square Bundle",
-  category: "Bundles",
-  price: 350,
-  image: "Images/double-bundle.jpeg",
-  shortDescription: "Sophisticated duo featuring a square-gem necklace and matching bracelet."
-},
-      /* Add more bundles here */
     ];
 
     const productsContainer = document.getElementById("productsContainer");
