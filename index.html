@@ -42,9 +42,12 @@
     .product-card:hover { transform: translateY(-5px); }
     .card-img-wrap { padding-top: 100%; position: relative; }
     .card-img-wrap img { position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover; }
-    .card-body { padding: 12px; text-align: center; }
-    .card-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; height: 2.4em; overflow: hidden; }
-    .card-price { color: var(--gold); font-weight: 600; }
+    
+    /* Fixed Card Body to prevent price covering name */
+    .card-body { padding: 15px 10px; text-align: center; display: flex; flex-direction: column; gap: 8px; min-height: 100px; }
+    .card-title { font-size: 0.85rem; font-weight: 600; line-height: 1.4; height: 2.8em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .card-price { color: var(--gold); font-weight: 600; font-size: 1rem; margin-top: auto; }
+    
     .sale-tag { position: absolute; top: 10px; right: 10px; background: var(--red); color: #fff; padding: 2px 8px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; z-index: 5; }
 
     .detail-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; }
@@ -122,36 +125,36 @@
   </div>
 </div>
 
-<footer>© 2026 H.S.M Store – Luxury Accessories</footer>
+<footer id="mainFooter">© 2026 H.S.M Store – Luxury Accessories</footer>
 
 <script>
   const products = [
-    { id: "heart-bundle", name: "Eternal Heart Bundle", category: "Bundles", price: 380, image: "Images/heart-bundle .jpeg", extraImages: [], sale: true, desc: "A luxurious gift set featuring our signature Heart Necklace and matching bracelet. Crafted from high-grade stainless steel to ensure a lifetime of shine. ✨\n\n- Waterproof & Tarnish-free\n- Perfect for Anniversary or Birthday gifts." },
-    { id: "double-bundle", name: "Glistening Square Bundle", category: "Bundles", price: 450, image: "Images/double-bundle.jpeg", extraImages: [], sale: true, desc: "Elegant geometric design meets high-end luxury. This bundle features a square-cut crystal pendant and matching earrings for a bold, sophisticated look." },
-    { id: "first-bundle", name: "Classic Gift Set Bundle", category: "Bundles", price: 500, image: "Images/first-bundle.jpeg", extraImages: [], desc: "Our ultimate starter pack. This set includes 3 essential pieces that transition perfectly from morning to night. Timeless and durable." },
-    { id: "golden-rose-necklace", name: "Vintage Golden Rose Necklace", category: "Necklace", price: 280, image: "Images/golden-rose-necklace.jpeg", extraImages: [], desc: "A romantic piece featuring an intricately detailed rose. The vintage gold finish provides a warm, classic glow that complements any skin tone." },
-    { id: "one-letter-necklace", name: "Arabic Calligraphy Letter Necklace", category: "Necklace", price: 280, image: "Images/one-letter-necklace.jpeg", extraImages: [], desc: "Personalize your style with our Arabic Letter necklace. A stunning blend of cultural heritage and modern jewelry design." },
-    { id: "another-butterfly-necklace", name: "Butterfly Necklace", category: "Necklace", price: 250, image: "Images/another-butterfly-necklace 1.jpeg", extraImages: [], desc: "Fly away with style. This butterfly pendant represents freedom and beauty, suspended on a delicate tarnish-free chain." },
-    { id: "butterfly-necklase", name: "Butterfly Necklace Pro", category: "Necklace", price: 250, image: "Images/Butterfly Necklase 1.jpeg", extraImages: ["Images/Butterfly Necklase 2.jpeg", "Images/Butterfly Necklase 3.jpeg"], desc: "Double-layered butterfly design for extra sparkle. This piece features micro-set stones that catch the light from every angle." },
-    { id: "clover-necklace", name: "Clover Necklace", category: "Necklace", price: 250, image: "Images/Clover Necklace 1.jpeg", extraImages: ["Images/Clover Necklace 2.jpeg", "Images/Clover Necklace 3.jpeg", "Images/Clover Necklace 4.jpeg"], desc: "The iconic clover design seen everywhere! Made from premium materials, this necklace is both lightweight and incredibly stylish. 🍀" },
-    { id: "coin-necklace", name: "Coin Necklace", category: "Necklace", price: 250, image: "Images/Coin Necklace 1.jpeg", extraImages: ["Images/Coin Necklace 2.jpeg", "Images/Coin Necklace 3.jpeg", "Images/Coin Necklace 4.jpeg"], desc: "Inspired by ancient coins, this necklace brings a touch of history to your modern wardrobe. A perfect layering piece." },
-    { id: "colord-heart-necklace", name: "Colored Heart Necklace", category: "Necklace", price: 250, image: "Images/Colord Heart Necklace 1.jpeg", extraImages: ["Images/Colord Heart Necklace 2.jpeg", "Images/Colord Heart Necklace 3.jpeg"], desc: "Add a pop of color to your day! This heart pendant features vibrant hues and a glossy finish. Durable enough for daily wear." },
-    { id: "letter-necklace", name: "Letter Necklace", category: "Necklace", price: 280, image: "Images/Letter Necklace 1.jpeg", extraImages: ["Images/Letter Necklace 2 .jpeg", "Images/Letter Necklace 3 .jpeg"], desc: "Simple, elegant, and personal. Carry your initial (or a loved one's) everywhere you go on a fine, adjustable chain." },
-    { id: "Flower-necklace", name: "Flower Necklace", category: "Necklace", price: 280, image: "Images/Loly Flower Necklace.jpeg", extraImages: [], desc: "Blooming with beauty. This flower-themed necklace features delicate petals and a center crystal for a fresh, spring-time look all year." },
-    { id: "palstine-necklace", name: "Palestine Necklace", category: "Necklace", price: 200, image: "Images/Palstine Necklace .jpeg", extraImages: [], desc: "A meaningful piece representing heritage and strength. Expertly crafted map pendant on a sturdy stainless steel chain." },
-    { id: "tree-necklass", name: "Tree Necklace", category: "Necklace", price: 280, image: "Images/Tree Necklass 1.jpeg", extraImages: ["Images/Tree Necklass 2.jpeg", "Images/Tree Necklass 3.jpeg"], desc: "The Tree of Life represents growth and connection. A beautifully detailed pendant that makes a thoughtful gift for family or friends." },
-    { id: "normal-braclet", name: "Thin Cuff Bracelet", category: "Bracelet", price: 280, image: "Images/Normal Braclet .jpeg", extraImages: [], desc: "Minimalist perfection. This thin cuff bracelet is flexible yet strong, designed to stack with your favorite watch or other bracelets." },
-    { id: "ayah-el-korsy-braclet", name: "Ayah El Korsy Bracelet", category: "Bracelet", price: 250, image: "Images/ayah el korsy braclet.jpeg", extraImages: ["Images/ayah el korsy braclet 2 .jpeg"], desc: "A spiritual and beautiful piece engraved with Ayah El Korsy. This bracelet serves as a reminder of protection and faith." },
-    { id: "coin-braclet", name: "Coin Bracelet", category: "Bracelet", price: 200, image: "Images/Coin Braclet 1.jpeg", extraImages: ["Images/Coin Braclet 2.jpeg"], desc: "Matching our coin necklace, this bracelet features dangling coin charms that create a soft shimmer with every movement." },
-    { id: "couples-braclet", name: "Couples Bracelet Set", category: "Bracelet", price: 250, image: "Images/Couples Braclet .jpeg", extraImages: ["Images/Couples Braclet 2 .jpeg", "Images/Couples Braclet 3 .jpeg"], desc: "The perfect symbol of your bond. This set includes two matching bracelets designed to be shared between partners or best friends." },
-    { id: "heart-braclet", name: "Heart Bracelet", category: "Bracelet", price: 200, image: "Images/Heart Braclet 2.jpeg", extraImages: ["Images/Heart Braclet 1.jpeg", "Images/Heart Braclet 3.jpeg"], desc: "Sweet and simple. A delicate chain featuring a polished heart charm. Adjustable length to fit all wrist sizes perfectly." },
-    { id: "second-normal-braclet", name: "Thick Cuff Bracelet", category: "Bracelet", price: 150, image: "Images/Second Normal Braclet 1.jpeg", extraImages: ["Images/Second Normal Braclet 2.jpeg"], desc: "Make a statement. This bold, thick cuff adds an edgy touch to any outfit. Made from high-quality alloy for a lightweight feel." },
-    { id: "butterfly-earrings", name: "Butterfly Earrings", category: "Earrings", price: 150, image: "Images/Butterfly Earrings 1.jpeg", extraImages: [], desc: "Delicate butterflies for your ears. These lightweight studs are perfect for everyday wear and sensitive skin." },
-    { id: "colord-heart-earrings", name: "Colored Heart Earrings", category: "Earrings", price: 150, image: "Images/Colord Heart earrings 1.jpeg", extraImages: ["Images/Colord Heart earrings 2.jpeg", "Images/Colord Heart earrings 3.jpeg"], desc: "Vibrant and fun! These heart earrings bring a youthful energy to your accessory collection. Available in multiple colors." },
-    { id: "butterfly-hand-chain", name: "Butterfly Hand Chain", category: "Hand Chain", price: 200, image: "Images/Butterfly Hand Chain 1 .jpeg", extraImages: ["Images/Butterfly Hand Chain 2 .jpeg"], desc: "A stunning hand-piece that connects from your finger to your wrist. Decorated with delicate butterflies for a magical look." },
-    { id: "simple-handchain", name: "Simple Hand Chain", category: "Hand Chain", price: 200, image: "Images/simple-handchain.jpeg", extraImages: [], desc: "Elegant minimalism. A thin, glistening chain that highlights the hand's natural grace. Perfect for formal dinners." },
-    { id: "first-rings", name: "Heart Rings Set", category: "Ring", price: 150, image: "Images/First Rings .jpeg", extraImages: [], desc: "A set of stackable rings featuring heart motifs. Mix and match them to create your own unique style." },
-    { id: "second-rings", name: "Mixed Shape Rings Set", category: "Ring", price: 100, image: "Images/Second Rings .jpeg", extraImages: ["Images/Third Rings .jpeg", "Images/Fourth Rings .jpeg", "Images/Fifth Rings .jpeg", "Images/Sixth Rings .jpeg", "Images/Seventh Rings .jpeg"], desc: "The ultimate ring collection! This multi-piece set includes various shapes and textures to give you endless styling options." }
+    { id: "heart-bundle", name: "Eternal Heart Bundle", category: "Bundles", price: 380, image: "Images/heart-bundle .jpeg", extraImages: [], sale: true, desc: "The ultimate expression of love! 💖 This bundle includes our premium heart necklace and matching bracelet. Crafted from high-grade stainless steel to ensure a lifetime of shine. ✨\n\n- Waterproof & Tarnish-free 💧\n- Perfect for gifts! 🎁" },
+    { id: "double-bundle", name: "Glistening Square Bundle", category: "Bundles", price: 450, image: "Images/double-bundle.jpeg", extraImages: [], sale: true, desc: "Modern elegance in every detail! 💎 Featuring geometric square designs encrusted with micro-crystals. A bold yet sophisticated choice for formal occasions. ✨" },
+    { id: "first-bundle", name: "Classic Gift Set Bundle", category: "Bundles", price: 500, image: "Images/first-bundle.jpeg", extraImages: [], desc: "Our most exclusive starter pack! 🎁 Includes three essential pieces designed to be worn together or separately. Timeless design meets modern durability. 💍" },
+    { id: "golden-rose-necklace", name: "Vintage Golden Rose Necklace", category: "Necklace", price: 280, image: "Images/golden-rose-necklace.jpeg", extraImages: [], desc: "A romantic piece for a delicate look! 🌹 Features an intricately detailed rose on a fine golden chain. The vintage gold finish provides a classic glow. ✨" },
+    { id: "one-letter-necklace", name: "Arabic Calligraphy Letter Necklace", category: "Necklace", price: 280, image: "Images/one-letter-necklace.jpeg", extraImages: [], desc: "Celebrate your identity with stunning art! 🖋️ A beautiful blend of cultural heritage and modern jewelry design. High-polish finish. 💎" },
+    { id: "another-butterfly-necklace", name: "Butterfly Necklace", category: "Necklace", price: 250, image: "Images/another-butterfly-necklace 1.jpeg", extraImages: [], desc: "Fly away with style! 🦋 This butterfly pendant represents freedom and beauty, suspended on a delicate tarnish-free chain. ✨" },
+    { id: "butterfly-necklase", name: "Butterfly Necklace Pro", category: "Necklace", price: 250, image: "Images/Butterfly Necklase 1.jpeg", extraImages: ["Images/Butterfly Necklase 2.jpeg", "Images/Butterfly Necklase 3.jpeg"], desc: "Double-layered butterfly design for extra sparkle! ✨ Features micro-set stones that catch the light from every angle. 🦋" },
+    { id: "clover-necklace", name: "Clover Necklace", category: "Necklace", price: 250, image: "Images/Clover Necklace 1.jpeg", extraImages: ["Images/Clover Necklace 2.jpeg", "Images/Clover Necklace 3.jpeg", "Images/Clover Necklace 4.jpeg"], desc: "Bring good luck everywhere you go! 🍀 This iconic design is a fashion essential. Made from premium, lightweight materials. ✨" },
+    { id: "coin-necklace", name: "Coin Necklace", category: "Necklace", price: 250, image: "Images/Coin Necklace 1.jpeg", extraImages: ["Images/Coin Necklace 2.jpeg", "Images/Coin Necklace 3.jpeg", "Images/Coin Necklace 4.jpeg"], desc: "Vintage vibes for modern days! 🪙 Inspired by ancient coins, this necklace is the perfect layering piece for any outfit. 💎" },
+    { id: "colord-heart-necklace", name: "Colored Heart Necklace", category: "Necklace", price: 250, image: "Images/Colord Heart Necklace 1.jpeg", extraImages: ["Images/Colord Heart Necklace 2.jpeg", "Images/Colord Heart Necklace 3.jpeg"], desc: "Add a pop of love and color! ❤️ This heart pendant features vibrant hues and a glossy finish. Durable and sweet. ✨" },
+    { id: "letter-necklace", name: "Letter Necklace", category: "Necklace", price: 280, image: "Images/Letter Necklace 1.jpeg", extraImages: ["Images/Letter Necklace 2 .jpeg", "Images/Letter Necklace 3 .jpeg"], desc: "Simple, elegant, and personal! 🔠 Carry your initial (or a loved one's) everywhere you go on a fine, adjustable chain. 💎" },
+    { id: "Flower-necklace", name: "Flower Necklace", category: "Necklace", price: 280, image: "Images/Loly Flower Necklace.jpeg", extraImages: [], desc: "Blooming with luxury! 🌸 This flower-themed necklace features delicate petals and a center crystal for a fresh look. ✨" },
+    { id: "palstine-necklace", name: "Palestine Necklace", category: "Necklace", price: 200, image: "Images/Palstine Necklace .jpeg", extraImages: [], desc: "A meaningful piece representing heritage! 🇵🇸 Expertly crafted map pendant on a sturdy, high-quality stainless steel chain. ✨" },
+    { id: "tree-necklass", name: "Tree Necklace", category: "Necklace", price: 280, image: "Images/Tree Necklass 1.jpeg", extraImages: ["Images/Tree Necklass 2.jpeg", "Images/Tree Necklass 3.jpeg"], desc: "Symbol of growth and connection! 🌳 A beautifully detailed Tree of Life pendant that makes a thoughtful gift for family. 🎁" },
+    { id: "normal-braclet", name: "Thin Cuff Bracelet", category: "Bracelet", price: 280, image: "Images/Normal Braclet .jpeg", extraImages: ["Images/Second Normal Braclet 2.jpeg"], desc: "Minimalist perfection for your wrist! ✨ This thin cuff is flexible yet strong, perfect for stacking with other jewelry. 💍" },
+    { id: "ayah-el-korsy-braclet", name: "Ayah El Korsy Bracelet", category: "Bracelet", price: 250, image: "Images/ayah el korsy braclet.jpeg", extraImages: ["Images/ayah el korsy braclet 2 .jpeg"], desc: "A spiritual and beautiful reminder! ✨ Engraved with Ayah El Korsy, this bracelet serves as a symbol of protection and faith. 🛡️" },
+    { id: "coin-braclet", name: "Coin Bracelet", category: "Bracelet", price: 200, image: "Images/Coin Braclet 1.jpeg", extraImages: ["Images/Coin Braclet 2.jpeg"], desc: "Soft shimmer with every move! 🪙 Features dangling coin charms that create a beautiful effect on your wrist. ✨" },
+    { id: "couples-braclet", name: "Couples Bracelet Set", category: "Bracelet", price: 250, image: "Images/Couples Braclet .jpeg", extraImages: ["Images/Couples Braclet 2 .jpeg", "Images/Couples Braclet 3 .jpeg"], desc: "The perfect symbol of your bond! 👩‍❤️‍👨 Includes two matching bracelets designed to be shared. A gift that stays close. 🎁" },
+    { id: "heart-braclet", name: "Heart Bracelet", category: "Bracelet", price: 200, image: "Images/Heart Braclet 2.jpeg", extraImages: ["Images/Heart Braclet 1.jpeg", "Images/Heart Braclet 3.jpeg"], desc: "Sweet and simple elegance! ❤️ A delicate chain featuring a polished heart charm. Adjustable length for a perfect fit. ✨" },
+    { id: "second-normal-braclet", name: "Thick Cuff Bracelet", category: "Bracelet", price: 150, image: "Images/Second Normal Braclet 1.jpeg", extraImages: ["Images/Second Normal Braclet 2.jpeg"], desc: "Make a bold statement! 💍 This thick cuff adds an edgy touch to any outfit. Lightweight and comfortable for all-day wear. ✨" },
+    { id: "butterfly-earrings", name: "Butterfly Earrings", category: "Earrings", price: 150, image: "Images/Butterfly Earrings 1.jpeg", extraImages: [], desc: "Delicate butterflies for a subtle glow! 🦋 These lightweight studs are perfect for everyday wear and sensitive skin. ✨" },
+    { id: "colord-heart-earrings", name: "Colored Heart Earrings", category: "Earrings", price: 150, image: "Images/Colord Heart earrings 1.jpeg", extraImages: ["Images/Colord Heart earrings 2.jpeg", "Images/Colord Heart earrings 3.jpeg"], desc: "Vibrant, fun, and lovely! ❤️ These heart earrings bring a youthful energy to your accessory collection. 🌈" },
+    { id: "butterfly-hand-chain", name: "Butterfly Hand Chain", category: "Hand Chain", price: 200, image: "Images/Butterfly Hand Chain 1 .jpeg", extraImages: ["Images/Butterfly Hand Chain 2 .jpeg"], desc: "A stunning piece for a magical look! 🦋 This hand-piece connects from finger to wrist. Truly a unique conversation starter. ✨" },
+    { id: "simple-handchain", name: "Simple Hand Chain", category: "Hand Chain", price: 200, image: "Images/simple-handchain.jpeg", extraImages: [], desc: "Elegant minimalism at its best! ✨ A thin, glistening chain that highlights the hand's natural grace. Perfect for formal events. 💍" },
+    { id: "first-rings", name: "Heart Rings Set", category: "Ring", price: 150, image: "Images/First Rings .jpeg", extraImages: [], desc: "Stack up the love! ❤️ A set of stackable rings featuring heart motifs. Mix and match to create your own unique style. 💍" },
+    { id: "second-rings", name: "Mixed Shape Rings Set", category: "Ring", price: 100, image: "Images/Second Rings .jpeg", extraImages: ["Images/Third Rings .jpeg", "Images/Fourth Rings .jpeg", "Images/Fifth Rings .jpeg", "Images/Sixth Rings .jpeg", "Images/Seventh Rings .jpeg"], desc: "Endless styling options! 💍 This multi-piece set includes various shapes to fit every finger and every mood. ✨" }
   ];
 
   let activeCat = 'All';
@@ -182,15 +185,24 @@
     const p = products.find(i => i.id === id);
     document.getElementById('gallery-view').style.display = 'none';
     document.getElementById('detail-view').style.display = 'block';
+    document.getElementById('mainFooter').style.display = 'none'; // Footer disappears
+
     document.getElementById('d-title').innerText = p.name;
     document.getElementById('d-cat').innerText = p.category;
     document.getElementById('d-price').innerText = p.price + " L.E";
     document.getElementById('d-desc').innerText = p.desc;
     document.getElementById('d-wa').href = `https://wa.link/0nmis5?text=Hi!%20I%20want%20to%20order%20the%20${encodeURIComponent(p.name)}`;
+    
     currentPhotos = [p.image, ...(p.extraImages || [])];
     slideIdx = 0;
     updateSlider();
     window.scrollTo(0,0);
+  }
+
+  function showGallery() {
+    document.getElementById('gallery-view').style.display = 'block';
+    document.getElementById('detail-view').style.display = 'none';
+    document.getElementById('mainFooter').style.display = 'block'; // Footer reappears
   }
 
   function updateSlider() {
@@ -207,11 +219,6 @@
     document.getElementById('track').style.transform = `translateX(-${slideIdx * 100}%)`;
     const d = document.querySelectorAll('.dot');
     d.forEach((dot, i) => dot.classList.toggle('active', i === slideIdx));
-  }
-
-  function showGallery() {
-    document.getElementById('gallery-view').style.display = 'block';
-    document.getElementById('detail-view').style.display = 'none';
   }
 
   function setCat(cat, btn) {
