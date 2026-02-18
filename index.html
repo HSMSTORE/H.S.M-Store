@@ -159,15 +159,18 @@
       font-weight: 600;
     }
 
+    /* FORCED 2 COLUMNS ON ALL SCREENS */
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
     }
 
     @media (max-width: 640px) {
       .products-grid {
-        grid-template-columns: 1fr;
+        /* Keeps it at 2 columns for mobile */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px; /* Slights smaller gap for mobile */
       }
       header {
         flex-direction: column;
@@ -176,6 +179,13 @@
       }
       .top-controls {
         max-width: 100%;
+      }
+      /* Adjust padding for product body on mobile to save space */
+      .product-body {
+        padding: 8px 10px 10px !important;
+      }
+      .product-title {
+        font-size: 0.85rem !important;
       }
     }
 
@@ -221,8 +231,8 @@
       left: 10px;
       background: rgba(0, 0, 0, 0.65);
       color: #fff;
-      font-size: 0.7rem;
-      padding: 4px 10px;
+      font-size: 0.6rem;
+      padding: 3px 8px;
       border-radius: 999px;
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -242,10 +252,10 @@
     }
 
     .product-desc {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #666;
-      line-height: 1.4;
-      max-height: 3.2em;
+      line-height: 1.3;
+      max-height: 2.6em;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -260,7 +270,7 @@
     }
 
     .product-price {
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: #e63946;
     }
@@ -276,8 +286,8 @@
     .details-btn {
       border-radius: 999px;
       border: none;
-      padding: 6px 12px;
-      font-size: 0.8rem;
+      padding: 5px 10px;
+      font-size: 0.7rem;
       cursor: pointer;
       background: #222;
       color: #fff;
@@ -404,14 +414,13 @@
 
     // ========= PRODUCTS DATA =========
     const products = [
-      // ===== BUNDLES =====
       {
         id: "heart-bundle",
         name: "Eternal Heart Bundle",
         category: "Bundles",
         price: 500,
         image: "Images/heart-bundle .jpeg",
-        shortDescription: "3-piece set featuring a heart ring, necklace, and bracelet in stainless steel."
+        shortDescription: "3-piece set featuring a heart ring, necklace, and bracelet."
       },
       {
         id: "double-bundle",
@@ -427,17 +436,15 @@
         category: "Bundles",
         price: 500,
         image: "Images/first-bundle.jpeg",
-        shortDescription: "A curated mix of our best-selling necklace, bracelet, and rings."
+        shortDescription: "A curated mix of our best-selling jewelry."
       },
-
-      // ===== NECKLACES =====
       {
         id: "golden-rose-necklace",
         name: "Vintage Golden Rose Necklace",
         category: "Necklace",
         price: 280,
         image: "Images/golden-rose-necklace.jpeg",
-        shortDescription: "Elegant oval pendant with a delicate rose inlay in gold finish."
+        shortDescription: "Elegant oval pendant with a delicate rose inlay."
       },
       {
         id: "one-letter-necklace",
@@ -445,7 +452,7 @@
         category: "Necklace",
         price: 280,
         image: "Images/one-letter-necklace.jpeg",
-        shortDescription: "Personalized Arabic letter pendant crafted from stainless steel."
+        shortDescription: "Personalized Arabic letter pendant."
       },
       {
         id: "another-butterfly-necklace",
@@ -453,7 +460,7 @@
         category: "Necklace",
         price: 250,
         image: "Images/another-butterfly-necklace 1.jpeg",
-        shortDescription: "A delicate butterfly stainless steel necklace symbolizing freedom."
+        shortDescription: "A delicate butterfly stainless steel necklace."
       },
       {
         id: "butterfly-necklase",
@@ -469,7 +476,7 @@
         category: "Necklace",
         price: 250,
         image: "Images/Clover Necklace 1.jpeg",
-        shortDescription: "Lucky clover necklace for positivity and style."
+        shortDescription: "Lucky clover necklace for positivity."
       },
       {
         id: "coin-necklace",
@@ -477,7 +484,7 @@
         category: "Necklace",
         price: 250,
         image: "Images/Coin Necklace 1.jpeg",
-        shortDescription: "Minimal coin pendant necklace with a timeless modern style."
+        shortDescription: "Minimal coin pendant necklace."
       },
       {
         id: "colord-heart-necklace",
@@ -485,7 +492,7 @@
         category: "Necklace",
         price: 250,
         image: "Images/Colord Heart Necklace 1.jpeg",
-        shortDescription: "Beautiful colored heart necklace expressing love and warmth."
+        shortDescription: "Beautiful colored heart necklace."
       },
       {
         id: "letter-necklace",
@@ -493,7 +500,7 @@
         category: "Necklace",
         price: 280,
         image: "Images/Letter Necklace 1.jpeg",
-        shortDescription: "Personalized letter necklace to keep special initials close."
+        shortDescription: "Personalized letter necklace."
       },
       {
         id: "Flower-necklace",
@@ -501,7 +508,7 @@
         category: "Necklace",
         price: 280,
         image: "Images/Loly Flower Necklace.jpeg",
-        shortDescription: "A delicate necklace adorned with tiny romantic blossoms."
+        shortDescription: "A delicate necklace with blossoms."
       },
       {
         id: "palstine-necklace",
@@ -509,7 +516,7 @@
         category: "Necklace",
         price: 200,
         image: "Images/Palstine Necklace .jpeg",
-        shortDescription: "Palestine-inspired necklace symbolizing pride and strength."
+        shortDescription: "Palestine-inspired necklace."
       },
       {
         id: "tree-necklass",
@@ -517,17 +524,15 @@
         category: "Necklace",
         price: 280,
         image: "Images/Tree Necklass 1.jpeg",
-        shortDescription: "Tree of life necklace symbolizing growth and connection."
+        shortDescription: "Tree of life necklace."
       },
-
-      // ===== BRACELETS =====
       {
         id: "normal-braclet",
         name: "Thin Cuff Bracelet",
         category: "Bracelet",
         price: 280,
         image: "Images/Normal Braclet .jpeg",
-        shortDescription: "Elegant, effortless, and timeless cuff design."
+        shortDescription: "Elegant and timeless cuff design."
       },
       {
         id: "ayah-el-korsy-braclet",
@@ -535,7 +540,7 @@
         category: "Bracelet",
         price: 250,
         image: "Images/ayah el korsy braclet.jpeg",
-        shortDescription: "Spiritual Ayah El Korsy bracelet with engraved design."
+        shortDescription: "Spiritual Ayah El Korsy bracelet."
       },
       {
         id: "coin-braclet",
@@ -543,7 +548,7 @@
         category: "Bracelet",
         price: 200,
         image: "Images/Coin Braclet 1.jpeg",
-        shortDescription: "Minimal coin bracelet with a modern stylish finish."
+        shortDescription: "Minimal coin bracelet."
       },
       {
         id: "couples-braclet",
@@ -551,7 +556,7 @@
         category: "Bracelet",
         price: 250,
         image: "Images/Couples Braclet .jpeg",
-        shortDescription: "Matching couples bracelet symbolizing love and unity."
+        shortDescription: "Matching couples bracelet."
       },
       {
         id: "heart-braclet",
@@ -559,7 +564,7 @@
         category: "Bracelet",
         price: 200,
         image: "Images/Heart Braclet 2.jpeg",
-        shortDescription: "Romantic heart bracelet with delicate feminine charm."
+        shortDescription: "Romantic heart bracelet."
       },
       {
         id: "second-normal-braclet",
@@ -567,17 +572,15 @@
         category: "Bracelet",
         price: 150,
         image: "Images/Second Normal Braclet 1.jpeg",
-        shortDescription: "Bold cuff bracelet for a statement look."
+        shortDescription: "Bold cuff bracelet."
       },
-
-      // ===== EARRINGS =====
       {
         id: "butterfly-earrings",
         name: "Butterfly Earrings",
         category: "Earrings",
         price: 150,
         image: "Images/Butterfly Earrings 1.jpeg",
-        shortDescription: "Delicate butterfly earrings adding sparkle and femininity."
+        shortDescription: "Delicate butterfly earrings."
       },
       {
         id: "colord-heart-earrings",
@@ -585,17 +588,15 @@
         category: "Earrings",
         price: 150,
         image: "Images/Colord Heart earrings 1.jpeg",
-        shortDescription: "Charming colored heart earrings full of style."
+        shortDescription: "Charming colored heart earrings."
       },
-
-      // ===== HAND CHAINS =====
       {
         id: "butterfly-hand-chain",
         name: "Butterfly Hand Chain",
         category: "Hand Chain",
         price: 200,
         image: "Images/Butterfly Hand Chain 1 .jpeg",
-        shortDescription: "Elegant butterfly hand chain combining ring and bracelet."
+        shortDescription: "Elegant butterfly hand chain."
       },
       {
         id: "simple-handchain",
@@ -603,17 +604,15 @@
         category: "Hand Chain",
         price: 200,
         image: "Images/simple-handchain.jpeg",
-        shortDescription: "Stylish and minimal stainless steel hand chain."
+        shortDescription: "Stylish and minimal hand chain."
       },
-
-      // ===== RINGS =====
       {
         id: "first-rings",
         name: "Heart Rings",
         category: "Ring",
         price: 150,
         image: "Images/First Rings .jpeg",
-        shortDescription: "Stunning heart ring with a radiant gem center."
+        shortDescription: "Stunning heart ring."
       },
       {
         id: "second-rings",
@@ -621,7 +620,7 @@
         category: "Ring",
         price: 100,
         image: "Images/Second Rings .jpeg",
-        shortDescription: "Stylish rings with a bold and refined finish."
+        shortDescription: "Stylish rings with a bold finish."
       }
     ];
 
