@@ -44,4 +44,29 @@
       </div>
       <div class="slider-controls">
         <button class="nav-btn" id="prevBtn">‹</button>
-        <div class="dots" id
+        <div class="dots" id="dots" style="display:flex; gap:5px;"></div>
+        <button class="nav-btn" id="nextBtn">›</button>
+      </div>
+    </section>
+    <section class="info">
+      <span style="color:#e63946; font-size:0.7rem; font-weight:bold; text-transform:uppercase;">Necklace</span>
+      <div class="product-name">Necklace Flower</div>
+      <div class="price-container"><span class="current-price">250 L.E</span></div>
+      <div style="font-weight:600; font-size:0.9rem;">Description</div>
+      <div class="description-text">This Flower stainless steel necklace represents growth and new beginnings. Made with high-quality stainless steel for lasting shine and strength.</div>
+      <a class="whatsapp-btn" href="https://wa.link/0nmis5?text=Hi%20I%20want%20to%20order%20the%20Necklace%20Flower" target="_blank">Order on WhatsApp</a>
+    </section>
+  </main>
+  <footer>© 2026 H.S.M Store – All rights reserved.</footer>
+  <script>
+    const slidesEl = document.getElementById("slides");
+    const dotsContainer = document.getElementById("dots");
+    const slides = slidesEl.querySelectorAll("img");
+    let currentIndex = 0;
+    slides.forEach((_, i) => { const dot = document.createElement("div"); dot.className = "dot" + (i === 0 ? " active" : ""); dotsContainer.appendChild(dot); });
+    function update(idx) { currentIndex = (idx + slides.length) % slides.length; slidesEl.style.transform = `translateX(-${currentIndex * 100}%)`; document.querySelectorAll(".dot").forEach((d, i) => d.classList.toggle("active", i === currentIndex)); }
+    document.getElementById("prevBtn").onclick = () => update(currentIndex - 1);
+    document.getElementById("nextBtn").onclick = () => update(currentIndex + 1);
+  </script>
+</body>
+</html>
