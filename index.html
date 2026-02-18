@@ -2,327 +2,246 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>H.S.M Store - Accessories</title>
+  <title>H.S.M Store - Luxury Accessories</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    :root { --gold: #b8860b; --red: #e63946; --dark: #222; --bg: #fdfbfb; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Poppins", sans-serif; background: var(--bg); color: var(--dark); overflow-x: hidden; }
 
-    body {
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-      color: #222;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* --- HEADER --- */
     header {
-      padding: 12px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      transition: transform 0.3s ease;
+      padding: 12px 24px; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000;
+      transition: transform 0.3s;
     }
-
     header.hide-header { transform: translateY(-100%); }
-
-    .logo-container { display: flex; align-items: center; text-decoration: none; }
-    .main-logo { height: 65px; width: auto; transition: 0.3s; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
-    .main-logo:hover { transform: scale(1.05); }
-
-    .top-controls { display: flex; flex-direction: column; gap: 8px; max-width: 520px; width: 100%; }
+    .main-logo { height: 60px; cursor: pointer; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+    .top-controls { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 500px; }
     .search-row { display: flex; align-items: center; gap: 10px; }
-
     .search-wrapper { position: relative; flex: 1; }
-    .search-wrapper input {
-      width: 100%;
-      padding: 10px 15px;
-      border-radius: 999px;
-      border: 1px solid #ddd;
-      outline: none;
-      font-size: 0.9rem;
-    }
-    .search-wrapper input:focus { border-color: #d4af37; box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1); }
+    .search-wrapper input { width: 100%; padding: 10px 18px; border-radius: 999px; border: 1px solid #ddd; outline: none; }
+    .categories { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cat-btn { border: none; background: #eee; padding: 5px 12px; border-radius: 999px; font-size: 0.75rem; cursor: pointer; transition: 0.3s; }
+    .cat-btn.active { background: var(--dark); color: #fff; }
 
-    .music-toggle-btn {
-      background: #eee; border: none; width: 38px; height: 38px; border-radius: 50%;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 20px 15px; }
+    #detail-view { display: none; }
 
-    .categories { display: flex; flex-wrap: wrap; gap: 5px; }
-    .category-btn {
-      border: none; background: #f0f0f0; padding: 5px 12px; border-radius: 999px;
-      font-size: 0.75rem; cursor: pointer; transition: 0.2s;
-    }
-    .category-btn.active { background: #222; color: #fff; }
+    .marquee-container { background: #1a1a1a; padding: 12px 0; overflow: hidden; display: flex; border-bottom: 2px solid var(--gold); margin-bottom: 20px; }
+    .marquee-content { display: flex; animation: scroll 40s linear infinite; }
+    .marquee-item { display: flex; align-items: center; gap: 10px; background: #fff; margin: 0 10px; padding: 5px 15px; border-radius: 50px; white-space: nowrap; font-size: 0.8rem; font-weight: 600; }
+    .marquee-item img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
+    @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    /* --- MOVING STRIP (MARQUEE) --- */
-    .marquee-container {
-      background: #1a1a1a;
-      padding: 15px 0;
-      margin-bottom: 25px;
-      overflow: hidden;
-      display: flex;
-      white-space: nowrap;
-      border-bottom: 2px solid #d4af37;
-    }
+    .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(4, 1fr); } }
 
-    .marquee-content {
-      display: flex;
-      animation: scroll 40s linear infinite;
-    }
-
-    .marquee-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #fff;
-      margin: 0 15px;
-      padding: 6px 18px;
-      border-radius: 50px;
-      color: #222;
-      font-weight: 600;
-      font-size: 0.8rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    .marquee-item img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd; }
-
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* --- PRODUCT GRID --- */
-    main { padding: 20px 15px; max-width: 1100px; margin: 0 auto; }
-    .section-title { font-size: 1.1rem; letter-spacing: 2px; text-align: center; margin-bottom: 20px; text-transform: uppercase; font-weight: 600; }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .product-card {
-      background: #fff; border-radius: 12px; overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column;
-      text-decoration: none; color: inherit; position: relative;
-      transition: transform 0.2s;
-    }
-
+    .product-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; position: relative; }
     .product-card:hover { transform: translateY(-5px); }
+    .card-img-wrap { padding-top: 100%; position: relative; }
+    .card-img-wrap img { position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover; }
+    .card-body { padding: 12px; text-align: center; }
+    .card-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; height: 2.4em; overflow: hidden; }
+    .card-price { color: var(--gold); font-weight: 600; }
+    .sale-tag { position: absolute; top: 10px; right: 10px; background: var(--red); color: #fff; padding: 2px 8px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; z-index: 5; }
 
-    .sale-tag {
-      position: absolute; top: 10px; right: 10px; background: #e63946;
-      color: #fff; font-size: 0.65rem; font-weight: bold; padding: 4px 10px;
-      border-radius: 6px; z-index: 5; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-
-    .product-image-wrapper { padding-top: 100%; position: relative; background: #fff; }
-    .product-image-wrapper img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; }
-
-    .product-body { padding: 12px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
-    .product-title { font-size: 0.85rem; font-weight: 600; height: 2.4em; overflow: hidden; line-height: 1.2; }
-    .product-price { font-size: 1rem; font-weight: 600; color: #b8860b; }
+    .detail-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; }
+    @media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; } }
     
-    .view-btn { margin-top: auto; background: #222; color: #fff; border: none; padding: 8px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; }
+    .slider-box { background: #fff; border-radius: 20px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+    .slide-window { overflow: hidden; border-radius: 15px; position: relative; }
+    .slide-track { display: flex; transition: 0.4s ease-in-out; }
+    .slide-track img { width: 100%; flex-shrink: 0; object-fit: contain; max-height: 450px; background: #fff; }
+    
+    .slider-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 0 10px; }
+    .nav-circle { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #ddd; background: #fff; cursor: pointer; }
+    .dots { display: flex; gap: 6px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; }
+    .dot.active { background: var(--red); width: 16px; border-radius: 10px; }
 
-    footer { text-align: center; padding: 40px 0; font-size: 0.75rem; color: #888; background: #fff; margin-top: 40px; border-top: 1px solid #eee; }
+    .info-box { display: flex; flex-direction: column; gap: 15px; }
+    .detail-cat { font-size: 0.75rem; text-transform: uppercase; color: var(--red); font-weight: 600; background: #fff1f2; padding: 4px 12px; border-radius: 20px; width: fit-content; }
+    .detail-price { font-size: 1.6rem; font-weight: 600; color: var(--gold); }
+    .whatsapp-order { background: #25d366; color: #fff; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; box-shadow: 0 8px 20px rgba(37,211,102,0.3); transition: 0.3s; margin-top: 10px; }
+    .whatsapp-order:hover { transform: translateY(-3px); background: #1ebe5d; }
 
-    /* Mobile Logic */
-    @media (max-width: 640px) {
-      header { flex-direction: column; gap: 15px; padding: 15px; }
-      .main-logo { height: 55px; }
-      .products-grid { gap: 10px; }
-      .product-title { font-size: 0.8rem; }
-    }
+    footer { text-align: center; padding: 40px; color: #888; font-size: 0.8rem; margin-top: 40px; border-top: 1px solid #eee; background: #fff; }
   </style>
 </head>
 <body>
 
-  <audio id="bgMusic" loop>
-    <source src="Love Story.mp3" type="audio/mpeg" />
-  </audio>
+<audio id="bgMusic" loop><source src="Love Story.mp3" type="audio/mpeg"></audio>
 
-  <header id="mainHeader">
-    <a href="#" class="logo-container">
-      <img src="Images/hsmlogo.png" alt="H.S.M Store Logo" class="main-logo" />
-    </a>
-    <div class="top-controls">
-      <div class="search-row">
-        <div class="search-wrapper">
-          <input type="text" id="searchInput" placeholder="Search for accessories..." />
-        </div>
-        <button id="musicToggle" class="music-toggle-btn"><span id="musicIcon">🔇</span></button>
-      </div>
-      <div class="categories" id="categoryButtons">
-        <button class="category-btn active" data-category="All">All</button>
-        <button class="category-btn" data-category="Necklace">Necklace</button>
-        <button class="category-btn" data-category="Ring">Ring</button>
-        <button class="category-btn" data-category="Bracelet">Bracelet</button>
-        <button class="category-btn" data-category="Hand Chain">Hand Chain</button>
-        <button class="category-btn" data-category="Earrings">Earrings</button>
-        <button class="category-btn" data-category="Bundles">Bundles</button>
-      </div>
+<header id="mainHeader">
+  <img src="Images/hsmlogo.png" class="main-logo" onclick="showGallery()">
+  <div class="top-controls">
+    <div class="search-row">
+      <div class="search-wrapper"><input type="text" id="searchInput" placeholder="Search for jewelry..." oninput="render()"></div>
+      <button onclick="toggleMusic()" id="musicBtn" style="border:none; background:none; cursor:pointer; font-size:1.4rem;">🔇</button>
     </div>
-  </header>
+    <div class="categories" id="catList">
+      <button class="cat-btn active" onclick="setCat('All', this)">All</button>
+      <button class="cat-btn" onclick="setCat('Necklace', this)">Necklace</button>
+      <button class="cat-btn" onclick="setCat('Bracelet', this)">Bracelet</button>
+      <button class="cat-btn" onclick="setCat('Ring', this)">Ring</button>
+      <button class="cat-btn" onclick="setCat('Hand Chain', this)">Hand Chain</button>
+      <button class="cat-btn" onclick="setCat('Earrings', this)">Earrings</button>
+      <button class="cat-btn" onclick="setCat('Bundles', this)">Bundles</button>
+    </div>
+  </div>
+</header>
 
-  <div class="marquee-container" id="movingStrip">
-    <div class="marquee-content" id="marqueeList">
-      </div>
+<div class="container">
+  <div id="gallery-view">
+    <div class="marquee-container"><div class="marquee-content" id="marquee"></div></div>
+    <div class="products-grid" id="grid"></div>
+    <div id="noResults" style="display:none; text-align:center; padding:50px; color:#666;">No items found.</div>
   </div>
 
-  <main>
-    <h2 class="section-title">Exclusive Collection</h2>
-    <div id="productsContainer" class="products-grid"></div>
-    <div id="noResults" style="display:none; text-align:center; padding:50px; color:#666;">No items found matching your search.</div>
-  </main>
-
-  <footer>
-    <p>© 2026 H.S.M Store – Luxury Accessories</p>
-  </footer>
-
-  <script>
-    // --- MUSIC LOGIC ---
-    const music = document.getElementById("bgMusic");
-    const musicBtn = document.getElementById("musicToggle");
-    const musicIcon = document.getElementById("musicIcon");
-
-    // Play music on any user interaction (tabs, buttons, cards)
-    function handleAutoPlay() {
-      if (music.paused && !music.dataset.manuallyPaused) {
-        music.play().then(() => {
-          musicIcon.innerText = "🔊";
-        }).catch(() => {});
-      }
-    }
-
-    document.addEventListener('click', handleAutoPlay);
-
-    musicBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (music.paused) {
-        music.play();
-        musicIcon.innerText = "🔊";
-        delete music.dataset.manuallyPaused;
-      } else {
-        music.pause();
-        musicIcon.innerText = "🔇";
-        music.dataset.manuallyPaused = "true";
-      }
-    });
-
-    // --- PRODUCTS DATA ---
-    const products = [
-      { id: "heart-bundle", name: "Eternal Heart Bundle", category: "Bundles", price: 380, image: "Images/heart-bundle .jpeg", sale: true },
-      { id: "double-bundle", name: "Glistening Square Bundle", category: "Bundles", price: 450, image: "Images/double-bundle.jpeg", sale: true },
-      { id: "first-bundle", name: "Classic Gift Set Bundle", category: "Bundles", price: 500, image: "Images/first-bundle.jpeg" },
-      { id: "golden-rose-necklace", name: "Vintage Golden Rose Necklace", category: "Necklace", price: 280, image: "Images/golden-rose-necklace.jpeg" },
-      { id: "one-letter-necklace", name: "Arabic Calligraphy Letter Necklace", category: "Necklace", price: 280, image: "Images/one-letter-necklace.jpeg" },
-      { id: "another-butterfly-necklace", name: "Butterfly Necklace", category: "Necklace", price: 250, image: "Images/another-butterfly-necklace 1.jpeg" },
-      { id: "butterfly-necklase", name: "Butterfly Necklase", category: "Necklace", price: 250, image: "Images/Butterfly Necklase 1.jpeg" },
-      { id: "clover-necklace", name: "Clover Necklace", category: "Necklace", price: 250, image: "Images/Clover Necklace 1.jpeg" },
-      { id: "coin-necklace", name: "Coin Necklace", category: "Necklace", price: 250, image: "Images/Coin Necklace 1.jpeg" },
-      { id: "colord-heart-necklace", name: "Colored Heart Necklace", category: "Necklace", price: 250, image: "Images/Colord Heart Necklace 1.jpeg" },
-      { id: "letter-necklace", name: "Letter Necklace", category: "Necklace", price: 280, image: "Images/Letter Necklace 1.jpeg" },
-      { id: "Flower-necklace", name: "Flower Necklace", category: "Necklace", price: 280, image: "Images/Loly Flower Necklace.jpeg" },
-      { id: "palstine-necklace", name: "Palstine Necklace", category: "Necklace", price: 200, image: "Images/Palstine Necklace .jpeg" },
-      { id: "tree-necklass", name: "Tree Necklass", category: "Necklace", price: 280, image: "Images/Tree Necklass 1.jpeg" },
-      { id: "normal-braclet", name: "Thin Cuff Bracelet", category: "Bracelet", price: 280, image: "Images/Normal Braclet .jpeg" },
-      { id: "ayah-el-korsy-braclet", name: "Ayah El Korsy Braclet", category: "Bracelet", price: 250, image: "Images/ayah el korsy braclet.jpeg" },
-      { id: "coin-braclet", name: "Coin Braclet", category: "Bracelet", price: 200, image: "Images/Coin Braclet 1.jpeg" },
-      { id: "couples-braclet", name: "Couples Braclet", category: "Bracelet", price: 250, image: "Images/Couples Braclet .jpeg" },
-      { id: "heart-braclet", name: "Heart Braclet", category: "Bracelet", price: 200, image: "Images/Heart Braclet 2.jpeg" },
-      { id: "second-normal-braclet", name: "Thick Cuff Bracelet", category: "Bracelet", price: 150, image: "Images/Second Normal Braclet 1.jpeg" },
-      { id: "butterfly-earrings", name: "Butterfly Earrings", category: "Earrings", price: 150, image: "Images/Butterfly Earrings 1.jpeg" },
-      { id: "colord-heart-earrings", name: "Colored Heart Earrings", category: "Earrings", price: 150, image: "Images/Colord Heart earrings 1.jpeg" },
-      { id: "butterfly-hand-chain", name: "Butterfly Hand Chain", category: "Hand Chain", price: 200, image: "Images/Butterfly Hand Chain 1 .jpeg" },
-      { id: "simple-handchain", name: "Simple Hand Chain", category: "Hand Chain", price: 200, image: "Images/simple-handchain.jpeg" },
-      { id: "first-rings", name: "Heart Rings", category: "Ring", price: 150, image: "Images/First Rings .jpeg" },
-      { id: "second-rings", name: "Mixed Shape Rings Set", category: "Ring", price: 100, image: "Images/Second Rings .jpeg" }
-    ];
-
-    const container = document.getElementById("productsContainer");
-    const strip = document.getElementById("movingStrip");
-    const marqueeList = document.getElementById("marqueeList");
-    let activeCat = "All";
-
-    // --- RENDER MARQUEE STRIP ---
-    function buildMarquee() {
-      // Pick 8 random products to show in the strip
-      const marqueeItems = [...products].sort(() => 0.5 - Math.random()).slice(0, 8);
-      const content = marqueeItems.map(p => `
-        <div class="marquee-item">
-          <img src="${p.image}" alt="">
-          <span>${p.name}</span>
+  <div id="detail-view">
+    <button onclick="showGallery()" style="border:none; background:none; cursor:pointer; margin-bottom:20px; font-weight:600; color:#555;">← Back to Collection</button>
+    <div class="detail-layout">
+      <div class="slider-box">
+        <div class="slide-window"><div class="slide-track" id="track"></div></div>
+        <div class="slider-nav">
+          <button class="nav-circle" onclick="prevSlide()">‹</button>
+          <div class="dots" id="dots"></div>
+          <button class="nav-circle" onclick="nextSlide()">›</button>
         </div>
-      `).join('');
-      // Repeat content to ensure seamless loop
-      marqueeList.innerHTML = content + content + content;
-    }
+      </div>
+      <div class="info-box">
+        <span class="detail-cat" id="d-cat"></span>
+        <h1 id="d-title" style="font-size:1.8rem;"></h1>
+        <div class="detail-price" id="d-price"></div>
+        <p id="d-desc" style="line-height:1.7; color:#555; white-space:pre-line;"></p>
+        <a href="#" id="d-wa" class="whatsapp-order" target="_blank">🟢 Order via WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-    // --- RENDER PRODUCT GRID ---
-    function render() {
-      const term = document.getElementById("searchInput").value.toLowerCase();
-      container.innerHTML = "";
-      
-      // Only show the moving strip when 'All' is selected
-      strip.style.display = (activeCat === "All" && term === "") ? "flex" : "none";
+<footer>© 2026 H.S.M Store – Luxury Accessories</footer>
 
-      const filtered = products.filter(p => (activeCat === "All" || p.category === activeCat) && p.name.toLowerCase().includes(term));
-      document.getElementById("noResults").style.display = filtered.length ? "none" : "block";
+<script>
+  const products = [
+    { id: "heart-bundle", name: "Eternal Heart Bundle", category: "Bundles", price: 380, image: "Images/heart-bundle .jpeg", extraImages: [], sale: true, desc: "A luxurious gift set featuring our signature Heart Necklace and matching bracelet. Crafted from high-grade stainless steel to ensure a lifetime of shine. ✨\n\n- Waterproof & Tarnish-free\n- Perfect for Anniversary or Birthday gifts." },
+    { id: "double-bundle", name: "Glistening Square Bundle", category: "Bundles", price: 450, image: "Images/double-bundle.jpeg", extraImages: [], sale: true, desc: "Elegant geometric design meets high-end luxury. This bundle features a square-cut crystal pendant and matching earrings for a bold, sophisticated look." },
+    { id: "first-bundle", name: "Classic Gift Set Bundle", category: "Bundles", price: 500, image: "Images/first-bundle.jpeg", extraImages: [], desc: "Our ultimate starter pack. This set includes 3 essential pieces that transition perfectly from morning to night. Timeless and durable." },
+    { id: "golden-rose-necklace", name: "Vintage Golden Rose Necklace", category: "Necklace", price: 280, image: "Images/golden-rose-necklace.jpeg", extraImages: [], desc: "A romantic piece featuring an intricately detailed rose. The vintage gold finish provides a warm, classic glow that complements any skin tone." },
+    { id: "one-letter-necklace", name: "Arabic Calligraphy Letter Necklace", category: "Necklace", price: 280, image: "Images/one-letter-necklace.jpeg", extraImages: [], desc: "Personalize your style with our Arabic Letter necklace. A stunning blend of cultural heritage and modern jewelry design." },
+    { id: "another-butterfly-necklace", name: "Butterfly Necklace", category: "Necklace", price: 250, image: "Images/another-butterfly-necklace 1.jpeg", extraImages: [], desc: "Fly away with style. This butterfly pendant represents freedom and beauty, suspended on a delicate tarnish-free chain." },
+    { id: "butterfly-necklase", name: "Butterfly Necklace Pro", category: "Necklace", price: 250, image: "Images/Butterfly Necklase 1.jpeg", extraImages: ["Images/Butterfly Necklase 2.jpeg", "Images/Butterfly Necklase 3.jpeg"], desc: "Double-layered butterfly design for extra sparkle. This piece features micro-set stones that catch the light from every angle." },
+    { id: "clover-necklace", name: "Clover Necklace", category: "Necklace", price: 250, image: "Images/Clover Necklace 1.jpeg", extraImages: ["Images/Clover Necklace 2.jpeg", "Images/Clover Necklace 3.jpeg", "Images/Clover Necklace 4.jpeg"], desc: "The iconic clover design seen everywhere! Made from premium materials, this necklace is both lightweight and incredibly stylish. 🍀" },
+    { id: "coin-necklace", name: "Coin Necklace", category: "Necklace", price: 250, image: "Images/Coin Necklace 1.jpeg", extraImages: ["Images/Coin Necklace 2.jpeg", "Images/Coin Necklace 3.jpeg", "Images/Coin Necklace 4.jpeg"], desc: "Inspired by ancient coins, this necklace brings a touch of history to your modern wardrobe. A perfect layering piece." },
+    { id: "colord-heart-necklace", name: "Colored Heart Necklace", category: "Necklace", price: 250, image: "Images/Colord Heart Necklace 1.jpeg", extraImages: ["Images/Colord Heart Necklace 2.jpeg", "Images/Colord Heart Necklace 3.jpeg"], desc: "Add a pop of color to your day! This heart pendant features vibrant hues and a glossy finish. Durable enough for daily wear." },
+    { id: "letter-necklace", name: "Letter Necklace", category: "Necklace", price: 280, image: "Images/Letter Necklace 1.jpeg", extraImages: ["Images/Letter Necklace 2 .jpeg", "Images/Letter Necklace 3 .jpeg"], desc: "Simple, elegant, and personal. Carry your initial (or a loved one's) everywhere you go on a fine, adjustable chain." },
+    { id: "Flower-necklace", name: "Flower Necklace", category: "Necklace", price: 280, image: "Images/Loly Flower Necklace.jpeg", extraImages: [], desc: "Blooming with beauty. This flower-themed necklace features delicate petals and a center crystal for a fresh, spring-time look all year." },
+    { id: "palstine-necklace", name: "Palestine Necklace", category: "Necklace", price: 200, image: "Images/Palstine Necklace .jpeg", extraImages: [], desc: "A meaningful piece representing heritage and strength. Expertly crafted map pendant on a sturdy stainless steel chain." },
+    { id: "tree-necklass", name: "Tree Necklace", category: "Necklace", price: 280, image: "Images/Tree Necklass 1.jpeg", extraImages: ["Images/Tree Necklass 2.jpeg", "Images/Tree Necklass 3.jpeg"], desc: "The Tree of Life represents growth and connection. A beautifully detailed pendant that makes a thoughtful gift for family or friends." },
+    { id: "normal-braclet", name: "Thin Cuff Bracelet", category: "Bracelet", price: 280, image: "Images/Normal Braclet .jpeg", extraImages: [], desc: "Minimalist perfection. This thin cuff bracelet is flexible yet strong, designed to stack with your favorite watch or other bracelets." },
+    { id: "ayah-el-korsy-braclet", name: "Ayah El Korsy Bracelet", category: "Bracelet", price: 250, image: "Images/ayah el korsy braclet.jpeg", extraImages: ["Images/ayah el korsy braclet 2 .jpeg"], desc: "A spiritual and beautiful piece engraved with Ayah El Korsy. This bracelet serves as a reminder of protection and faith." },
+    { id: "coin-braclet", name: "Coin Bracelet", category: "Bracelet", price: 200, image: "Images/Coin Braclet 1.jpeg", extraImages: ["Images/Coin Braclet 2.jpeg"], desc: "Matching our coin necklace, this bracelet features dangling coin charms that create a soft shimmer with every movement." },
+    { id: "couples-braclet", name: "Couples Bracelet Set", category: "Bracelet", price: 250, image: "Images/Couples Braclet .jpeg", extraImages: ["Images/Couples Braclet 2 .jpeg", "Images/Couples Braclet 3 .jpeg"], desc: "The perfect symbol of your bond. This set includes two matching bracelets designed to be shared between partners or best friends." },
+    { id: "heart-braclet", name: "Heart Bracelet", category: "Bracelet", price: 200, image: "Images/Heart Braclet 2.jpeg", extraImages: ["Images/Heart Braclet 1.jpeg", "Images/Heart Braclet 3.jpeg"], desc: "Sweet and simple. A delicate chain featuring a polished heart charm. Adjustable length to fit all wrist sizes perfectly." },
+    { id: "second-normal-braclet", name: "Thick Cuff Bracelet", category: "Bracelet", price: 150, image: "Images/Second Normal Braclet 1.jpeg", extraImages: ["Images/Second Normal Braclet 2.jpeg"], desc: "Make a statement. This bold, thick cuff adds an edgy touch to any outfit. Made from high-quality alloy for a lightweight feel." },
+    { id: "butterfly-earrings", name: "Butterfly Earrings", category: "Earrings", price: 150, image: "Images/Butterfly Earrings 1.jpeg", extraImages: [], desc: "Delicate butterflies for your ears. These lightweight studs are perfect for everyday wear and sensitive skin." },
+    { id: "colord-heart-earrings", name: "Colored Heart Earrings", category: "Earrings", price: 150, image: "Images/Colord Heart earrings 1.jpeg", extraImages: ["Images/Colord Heart earrings 2.jpeg", "Images/Colord Heart earrings 3.jpeg"], desc: "Vibrant and fun! These heart earrings bring a youthful energy to your accessory collection. Available in multiple colors." },
+    { id: "butterfly-hand-chain", name: "Butterfly Hand Chain", category: "Hand Chain", price: 200, image: "Images/Butterfly Hand Chain 1 .jpeg", extraImages: ["Images/Butterfly Hand Chain 2 .jpeg"], desc: "A stunning hand-piece that connects from your finger to your wrist. Decorated with delicate butterflies for a magical look." },
+    { id: "simple-handchain", name: "Simple Hand Chain", category: "Hand Chain", price: 200, image: "Images/simple-handchain.jpeg", extraImages: [], desc: "Elegant minimalism. A thin, glistening chain that highlights the hand's natural grace. Perfect for formal dinners." },
+    { id: "first-rings", name: "Heart Rings Set", category: "Ring", price: 150, image: "Images/First Rings .jpeg", extraImages: [], desc: "A set of stackable rings featuring heart motifs. Mix and match them to create your own unique style." },
+    { id: "second-rings", name: "Mixed Shape Rings Set", category: "Ring", price: 100, image: "Images/Second Rings .jpeg", extraImages: ["Images/Third Rings .jpeg", "Images/Fourth Rings .jpeg", "Images/Fifth Rings .jpeg", "Images/Sixth Rings .jpeg", "Images/Seventh Rings .jpeg"], desc: "The ultimate ring collection! This multi-piece set includes various shapes and textures to give you endless styling options." }
+  ];
 
-      filtered.forEach(p => {
-        const card = document.createElement("a");
-        card.className = "product-card";
-        card.href = p.id + ".html";
-        card.innerHTML = `
+  let activeCat = 'All';
+  let slideIdx = 0;
+  let currentPhotos = [];
+
+  function render() {
+    const term = document.getElementById('searchInput').value.toLowerCase();
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    const filtered = products.filter(p => (activeCat === 'All' || p.category === activeCat) && p.name.toLowerCase().includes(term));
+    document.getElementById('noResults').style.display = filtered.length ? 'none' : 'block';
+    filtered.forEach(p => {
+      grid.innerHTML += `
+        <div class="product-card" onclick="showDetail('${p.id}')">
           ${p.sale ? '<div class="sale-tag">SALE</div>' : ''}
-          <div class="product-image-wrapper"><img src="${p.image}"></div>
-          <div class="product-body">
-            <div class="product-title">${p.name}</div>
-            <div class="product-price">${p.price} L.E</div>
-            <button class="view-btn">View Details</button>
+          <div class="card-img-wrap"><img src="${p.image}"></div>
+          <div class="card-body">
+            <div class="card-title">${p.name}</div>
+            <div class="card-price">${p.price} L.E</div>
           </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    // Category Switching
-    document.querySelectorAll(".category-btn").forEach(b => b.addEventListener("click", () => {
-      document.querySelectorAll(".category-btn").forEach(x => x.classList.remove("active"));
-      b.classList.add("active");
-      activeCat = b.dataset.category;
-      render();
-    }));
-
-    document.getElementById("searchInput").addEventListener("input", render);
-    
-    // Initial Load
-    buildMarquee();
-    render();
-
-    // Header scroll effect
-    let lastScrollY = window.scrollY;
-    window.addEventListener("scroll", () => {
-      const header = document.getElementById("mainHeader");
-      if (window.scrollY > lastScrollY && window.scrollY > 100) header.classList.add("hide-header");
-      else header.classList.remove("hide-header");
-      lastScrollY = window.scrollY;
+        </div>
+      `;
     });
-  </script>
+  }
+
+  function showDetail(id) {
+    const p = products.find(i => i.id === id);
+    document.getElementById('gallery-view').style.display = 'none';
+    document.getElementById('detail-view').style.display = 'block';
+    document.getElementById('d-title').innerText = p.name;
+    document.getElementById('d-cat').innerText = p.category;
+    document.getElementById('d-price').innerText = p.price + " L.E";
+    document.getElementById('d-desc').innerText = p.desc;
+    document.getElementById('d-wa').href = `https://wa.link/0nmis5?text=Hi!%20I%20want%20to%20order%20the%20${encodeURIComponent(p.name)}`;
+    currentPhotos = [p.image, ...(p.extraImages || [])];
+    slideIdx = 0;
+    updateSlider();
+    window.scrollTo(0,0);
+  }
+
+  function updateSlider() {
+    const track = document.getElementById('track');
+    const dots = document.getElementById('dots');
+    track.innerHTML = currentPhotos.map(img => `<img src="${img}">`).join('');
+    dots.innerHTML = currentPhotos.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
+    track.style.transform = `translateX(0%)`;
+  }
+
+  function nextSlide() { slideIdx = (slideIdx + 1) % currentPhotos.length; move(); }
+  function prevSlide() { slideIdx = (slideIdx - 1 + currentPhotos.length) % currentPhotos.length; move(); }
+  function move() {
+    document.getElementById('track').style.transform = `translateX(-${slideIdx * 100}%)`;
+    const d = document.querySelectorAll('.dot');
+    d.forEach((dot, i) => dot.classList.toggle('active', i === slideIdx));
+  }
+
+  function showGallery() {
+    document.getElementById('gallery-view').style.display = 'block';
+    document.getElementById('detail-view').style.display = 'none';
+  }
+
+  function setCat(cat, btn) {
+    activeCat = cat;
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+
+  const music = document.getElementById('bgMusic');
+  function toggleMusic() {
+    if(music.paused) { music.play(); document.getElementById('musicBtn').innerText = '🔊'; }
+    else { music.pause(); document.getElementById('musicBtn').innerText = '🔇'; }
+  }
+
+  // Header Hide Logic
+  let lastScrollY = window.scrollY;
+  window.addEventListener("scroll", () => {
+    const header = document.getElementById("mainHeader");
+    if (window.scrollY > lastScrollY && window.scrollY > 100) header.classList.add("hide-header");
+    else header.classList.remove("hide-header");
+    lastScrollY = window.scrollY;
+  });
+
+  // Marquee
+  const mq = document.getElementById('marquee');
+  const items = products.slice(0,10).map(p => `<div class="marquee-item"><img src="${p.image}"><span>${p.name}</span></div>`).join('');
+  mq.innerHTML = items + items + items;
+
+  render();
+</script>
 </body>
 </html>
