@@ -159,12 +159,15 @@
     { id: "loly-flower-necklace", name: "Loly Flower", category: "Necklace", price: 250, image: "Images/loly-flower-necklace.jpeg", extraImages: [], desc: "Sweet and sophisticated! 🌸 A beautiful loly flower pendant made of tarnish-free stainless steel. 💎" },
     { id: "earrings-collection", name: "Earrings Collections", category: "Earrings", price: 250, image: "Images/Earrings collection 1.jpeg", extraImages: ["Images/Earrings collection 2.jpeg", "Images/Earrings collection 3.jpeg", "Images/Earrings collection 4.jpeg", "Images/Earrings collection 5.jpeg", "Images/Earrings collection 6.jpeg"], desc: "Find your perfect pair! 🎀 A diverse collection of stainless steel earrings for every style. ✨" },
     { id: "star-earrings", name: "Star Earrings", category: "Earrings", price: 150, image: "Images/Star Earrings 1.jpeg", extraImages: [], desc: "Shine like a star! 🌟 Dainty star-shaped studs made from surgical-grade stainless steel. ✨" },
-    { id: "star-earrings 2", name: "Big Star Earrings", category: "Earrings", price: 150, image: "Images/Star Earrings 1.jpeg", extraImages: [], desc: "Make a statement under the stars! 🌟 Bold star design in polished stainless steel. ✨" },
+    { id: "star-earrings-2", name: "Big Star Earrings", category: "Earrings", price: 150, image: "Images/Star Earrings 1.jpeg", extraImages: [], desc: "Make a statement under the stars! 🌟 Bold star design in polished stainless steel. ✨" },
     { id: "white-butterfly-earrings", name: "White Butterfly Earrings", category: "Earrings", price: 250, image: "Images/white-butterfly-earrings.jpeg", extraImages: [], desc: "Pure elegance! 🦋 Beautiful white butterfly details set in high-quality stainless steel. ✨" },
     { id: "white-bundle", name: "White Bundle Collection", category: "Bundles", price: 300, image: "Images/white-bundle.jpeg", extraImages: [], sale: true, desc: "A clean, luxury look! ⚪ This bundle features our favorite white-themed stainless steel pieces. 💎" },
     { id: "random-shepe-rings", name: "Eye Catching Rings", category: "Ring", price: 150, image: "Images/random-shape-rings.jpeg", extraImages: [], desc: "Unique shapes for a unique look! 💍 Artistic stainless steel rings that draw every eye. ✨" },
     { id: "layered-necklace", name: "Three Layers Necklace", category: "Necklace", price: 250, image: "Images/layered-necklace.jpeg", extraImages: [], sale: true, desc: "Triple the style! ⛓️ Three perfectly matched stainless steel layers for a complete look. ✨" },
-    { id: "two-layered-necklace", name: "Two Layered Necklace", category: "Necklace", price: 250, image: "Images/two-layered-necklace.jpeg", extraImages: [], sale: true, desc: "Effortless chic! ⛓️ Two-tier stainless steel chain design that complements any outfit. ✨" }
+    { id: "two-layered-necklace", name: "Two Layered Necklace", category: "Necklace", price: 250, image: "Images/two-layered-necklace.jpeg", extraImages: [], sale: true, desc: "Effortless chic! ⛓️ Two-tier stainless steel chain design that complements any outfit. ✨" },
+    { id: "double-rings", name: "Single Ring Collection", category: "Ring", price: 150, image: "Images/Double Rings 1.jpeg", extraImages: ["Images/Double Rings 2.jpeg", "Images/Double Rings 3.jpeg", "Images/Double Rings 4.jpeg", "Images/Double Rings 5.jpeg", "Images/Double Rings 6.jpeg", "Images/Double Rings 7.jpeg"], sale: true, desc: "Choose your favorite shape! 💍 From hearts to modern geometry, find the piece that fits your mood. Crafted from high-grade stainless steel to ensure it stays tarnish-free. 🛡️" },
+    { id: "collection-braclets", name: "Bracelet Collection", category: "Bracelet", price: 200, image: "Images/collection-braclets 1.jpeg", extraImages: ["Images/collection-braclets 2.jpeg", "Images/collection-braclets 3.jpeg"], desc: "A stunning variety of charms! 💖 Mix and match your favorite designs in durable, waterproof stainless steel. ✨" },
+    { id: "silver-collection-braclets", name: "Silver Bracelets", category: "Bracelet", price: 200, image: "Images/silver-collection-braclets.jpeg", extraImages: ["Images/silver-collection-braclets 2.jpeg"], desc: "Cool silver tones for a crisp look! ❄️ These stainless steel bracelets offer a high-shine finish that never fades. 🛡️" }
   ];
 
   let activeCat = 'All';
@@ -245,6 +248,14 @@
     if(music.paused) { music.play(); document.getElementById('musicBtn').innerText = '🔊'; }
     else { music.pause(); document.getElementById('musicBtn').innerText = '🔇'; }
   }
+
+  // AUTO-PLAY SCRIPT: Plays music as soon as the user clicks anywhere on the page
+  document.body.addEventListener('click', function() {
+      if (music.paused) {
+          music.play();
+          document.getElementById('musicBtn').innerText = '🔊';
+      }
+  }, { once: true });
 
   let lastScrollY = window.scrollY;
   window.addEventListener("scroll", () => {
