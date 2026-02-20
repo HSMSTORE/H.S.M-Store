@@ -12,9 +12,9 @@
 
     header {
       padding: 12px 24px; display: flex; align-items: center; justify-content: space-between;
-      background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 1000;
-      transition: transform 0.3s;
+      transition: transform 0.4s ease-in-out;
     }
     header.hide-header { transform: translateY(-100%); }
     .main-logo { height: 60px; cursor: pointer; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
@@ -129,31 +129,42 @@
 <script>
   const products = [
     { id: "heart-bundle", name: "Eternal Heart Bundle", category: "Bundles", price: 380, image: "Images/heart-bundle .jpeg", extraImages: [], sale: true, desc: "The ultimate expression of love! 💖 This bundle includes our signature Heart Necklace and matching bracelet. Crafted from high-grade stainless steel. ✨\n\n- Waterproof & Tarnish-free 💧\n- Perfect for Anniversary gifts! 🎁" },
-    { id: "double-bundle", name: "Glistening Square Bundle", category: "Bundles", price: 450, image: "Images/double-bundle.jpeg", extraImages: [], sale: true, desc: "Modern elegance in every detail! 💎 Featuring geometric square designs encrusted with micro-crystals. ✨" },
-    { id: "first-bundle", name: "Classic Gift Set Bundle", category: "Bundles", price: 500, image: "Images/first-bundle.jpeg", extraImages: [], desc: "Our most exclusive starter pack! 🎁 Includes three essential pieces designed to be worn together. 💍" },
-    { id: "golden-rose-necklace", name: "Vintage Golden Rose Necklace", category: "Necklace", price: 280, image: "Images/golden-rose-necklace.jpeg", extraImages: [], desc: "A romantic piece for a delicate look! 🌹 Features an intricately detailed rose on a fine golden chain. ✨" },
-    { id: "one-letter-necklace", name: "Arabic Calligraphy Letter Necklace", category: "Necklace", price: 280, image: "Images/one-letter-necklace.jpeg", extraImages: [], desc: "Celebrate your identity with stunning art! 🖋️ A beautiful blend of cultural heritage and modern design. 💎" },
-    { id: "another-butterfly-necklace", name: "Butterfly Necklace", category: "Necklace", price: 250, image: "Images/another-butterfly-necklace 1.jpeg", extraImages: [], desc: "Fly away with style! 🦋 This butterfly pendant represents freedom and beauty. ✨" },
-    { id: "butterfly-necklase", name: "Butterfly Necklace Pro", category: "Necklace", price: 250, image: "Images/Butterfly Necklase 1.jpeg", extraImages: ["Images/Butterfly Necklase 2.jpeg", "Images/Butterfly Necklase 3.jpeg"], desc: "Double-layered butterfly design for extra sparkle! ✨ Features micro-set stones. 🦋" },
-    { id: "clover-necklace", name: "Clover Necklace", category: "Necklace", price: 250, image: "Images/Clover Necklace 1.jpeg", extraImages: ["Images/Clover Necklace 2.jpeg", "Images/Clover Necklace 3.jpeg", "Images/Clover Necklace 4.jpeg"], desc: "Bring good luck everywhere you go! 🍀 Fashion essential made from premium materials. ✨" },
-    { id: "coin-necklace", name: "Coin Necklace", category: "Necklace", price: 250, image: "Images/Coin Necklace 1.jpeg", extraImages: ["Images/Coin Necklace 2.jpeg", "Images/Coin Necklace 3.jpeg", "Images/Coin Necklace 4.jpeg"], desc: "Vintage vibes for modern days! 🪙 Inspired by ancient coins, the perfect layering piece. 💎" },
-    { id: "colord-heart-necklace", name: "Colored Heart Necklace", category: "Necklace", price: 250, image: "Images/Colord Heart Necklace 1.jpeg", extraImages: ["Images/Colord Heart Necklace 2.jpeg", "Images/Colord Heart Necklace 3.jpeg"], desc: "Add a pop of love and color! ❤️ Features vibrant hues and a glossy finish. ✨" },
-    { id: "letter-necklace", name: "Letter Necklace", category: "Necklace", price: 280, image: "Images/Letter Necklace 1.jpeg", extraImages: ["Images/Letter Necklace 2 .jpeg", "Images/Letter Necklace 3 .jpeg"], desc: "Simple, elegant, and personal! 🔠 Carry your initial everywhere you go. 💎" },
-    { id: "Flower-necklace", name: "Flower Necklace", category: "Necklace", price: 280, image: "Images/Loly Flower Necklace.jpeg", extraImages: [], desc: "Blooming with luxury! 🌸 Features delicate petals and a center crystal. ✨" },
-    { id: "palstine-necklace", name: "Palestine Necklace", category: "Necklace", price: 200, image: "Images/Palstine Necklace .jpeg", extraImages: [], desc: "A meaningful piece representing heritage! 🇵🇸 Expertly crafted map pendant. ✨" },
-    { id: "tree-necklass", name: "Tree Necklace", category: "Necklace", price: 280, image: "Images/Tree Necklass 1.jpeg", extraImages: ["Images/Tree Necklass 2.jpeg", "Images/Tree Necklass 3.jpeg"], desc: "Symbol of growth and connection! 🌳 Beautifully detailed Tree of Life pendant. 🎁" },
-    { id: "normal-braclet", name: "Thin Cuff Bracelet", category: "Bracelet", price: 280, image: "Images/Normal Braclet .jpeg", extraImages: ["Images/Second Normal Braclet 2.jpeg"], desc: "Minimalist perfection! ✨ Flexible yet strong, perfect for stacking. 💍" },
-    { id: "ayah-el-korsy-braclet", name: "Ayah El Korsy Bracelet", category: "Bracelet", price: 250, image: "Images/ayah el korsy braclet.jpeg", extraImages: ["Images/ayah el korsy braclet 2 .jpeg"], desc: "A spiritual and beautiful reminder! ✨ Engraved with Ayah El Korsy for protection. 🛡️" },
-    { id: "coin-braclet", name: "Coin Bracelet", category: "Bracelet", price: 200, image: "Images/Coin Braclet 1.jpeg", extraImages: ["Images/Coin Braclet 2.jpeg"], desc: "Soft shimmer with every move! 🪙 Features dangling coin charms. ✨" },
-    { id: "couples-braclet", name: "Couples Bracelet Set", category: "Bracelet", price: 250, image: "Images/Couples Braclet .jpeg", extraImages: ["Images/Couples Braclet 2 .jpeg", "Images/Couples Braclet 3 .jpeg"], desc: "The perfect symbol of your bond! 👩‍❤️‍👨 Includes two matching bracelets to share. 🎁" },
-    { id: "heart-braclet", name: "Heart Bracelet", category: "Bracelet", price: 200, image: "Images/Heart Braclet 2.jpeg", extraImages: ["Images/Heart Braclet 1.jpeg", "Images/Heart Braclet 3.jpeg"], desc: "Sweet and simple elegance! ❤️ Delicate chain featuring a polished heart charm. ✨" },
-    { id: "second-normal-braclet", name: "Thick Cuff Bracelet", category: "Bracelet", price: 150, image: "Images/Second Normal Braclet 1.jpeg", extraImages: ["Images/Second Normal Braclet 2.jpeg"], desc: "Make a bold statement! 💍 Bold thick cuff for an edgy touch. ✨" },
-    { id: "butterfly-earrings", name: "Butterfly Earrings", category: "Earrings", price: 150, image: "Images/Butterfly Earrings 1.jpeg", extraImages: [], desc: "Delicate butterflies for a subtle glow! 🦋 Lightweight studs for daily wear. ✨" },
-    { id: "colord-heart-earrings", name: "Colored Heart Earrings", category: "Earrings", price: 150, image: "Images/Colord Heart earrings 1.jpeg", extraImages: ["Images/Colord Heart earrings 2.jpeg", "Images/Colord Heart earrings 3.jpeg"], desc: "Vibrant, fun, and lovely! ❤️ Bring a youthful energy to your collection. 🌈" },
-    { id: "butterfly-hand-chain", name: "Butterfly Hand Chain", category: "Hand Chain", price: 200, image: "Images/Butterfly Hand Chain 1 .jpeg", extraImages: ["Images/Butterfly Hand Chain 2 .jpeg"], desc: "A stunning piece for a magical look! 🦋 Connects from finger to wrist. ✨" },
-    { id: "simple-handchain", name: "Simple Hand Chain", category: "Hand Chain", price: 200, image: "Images/simple-handchain.jpeg", extraImages: [], desc: "Elegant minimalism! ✨ Glistening chain that highlights the hand's grace. 💍" },
-    { id: "first-rings", name: "Heart Rings Set", category: "Ring", price: 150, image: "Images/First Rings .jpeg", extraImages: [], desc: "Stack up the love! ❤️ Set of stackable rings featuring heart motifs. 💍" },
-    { id: "second-rings", name: "Mixed Shape Rings Set", category: "Ring", price: 100, image: "Images/Second Rings .jpeg", extraImages: ["Images/Third Rings .jpeg", "Images/Fourth Rings .jpeg", "Images/Fifth Rings .jpeg", "Images/Sixth Rings .jpeg", "Images/Seventh Rings .jpeg"], desc: "Endless styling options! 💍 Multi-piece set for every mood. ✨" }
+    { id: "double-bundle", name: "Glistening Square Bundle", category: "Bundles", price: 450, image: "Images/double-bundle.jpeg", extraImages: ["Images/double-bundle 2.jpeg"], sale: true, desc: "Modern elegance in every detail! 💎 Featuring geometric square designs encrusted with micro-crystals. Crafted from premium stainless steel for a lasting shine. ✨" },
+    { id: "first-bundle", name: "Classic Gift Set Bundle", category: "Bundles", price: 500, image: "Images/first-bundle.jpeg", extraImages: [], desc: "Our most exclusive starter pack! 🎁 Includes three essential pieces designed to be worn together. All pieces are made from high-quality stainless steel. 💍" },
+    { id: "golden-rose-necklace", name: "Vintage Golden Rose Necklace", category: "Necklace", price: 280, image: "Images/golden-rose-necklace.jpeg", extraImages: [], desc: "A romantic piece for a delicate look! 🌹 Features an intricately detailed rose on a fine golden chain. Made of durable stainless steel. ✨" },
+    { id: "one-letter-necklace", name: "Arabic Calligraphy Letter Necklace", category: "Necklace", price: 280, image: "Images/one-letter-necklace.jpeg", extraImages: [], desc: "Celebrate your identity with stunning art! 🖋️ A beautiful blend of cultural heritage and modern design. Stainless steel and tarnish-free. 💎" },
+    { id: "another-butterfly-necklace", name: "Butterfly Necklace", category: "Necklace", price: 250, image: "Images/another-butterfly-necklace 1.jpeg", extraImages: [], desc: "Fly away with style! 🦋 This butterfly pendant represents freedom and beauty. Crafted from premium stainless steel. ✨" },
+    { id: "butterfly-necklase", name: "Butterfly Necklace Pro", category: "Necklace", price: 250, image: "Images/Butterfly Necklase 1.jpeg", extraImages: ["Images/Butterfly Necklase 2.jpeg", "Images/Butterfly Necklase 3.jpeg", "Images/Butterfly Necklace 4.jpeg" ], desc: "Double-layered butterfly design for extra sparkle! ✨ Features micro-set stones and high-quality stainless steel. 🦋" },
+    { id: "clover-necklace", name: "Clover Necklace", category: "Necklace", price: 250, image: "Images/Clover Necklace 1.jpeg", extraImages: ["Images/Clover Necklace 2.jpeg", "Images/Clover Necklace 3.jpeg", "Images/Clover Necklace 4.jpeg"], desc: "Bring good luck everywhere you go! 🍀 Fashion essential made from premium stainless steel materials. ✨" },
+    { id: "coin-necklace", name: "Coin Necklace", category: "Necklace", price: 250, image: "Images/Coin Necklace 1.jpeg", extraImages: ["Images/Coin Necklace 2.jpeg", "Images/Coin Necklace 3.jpeg", "Images/Coin Necklace 4.jpeg"], desc: "Vintage vibes for modern days! 🪙 Inspired by ancient coins, the perfect layering piece. 100% stainless steel. 💎" },
+    { id: "colord-heart-necklace", name: "Colored Heart Necklace", category: "Necklace", price: 250, image: "Images/Colord Heart Necklace 1.jpeg", extraImages: ["Images/Colord Heart Necklace 2.jpeg", "Images/Colord Heart Necklace 3.jpeg"], desc: "Add a pop of love and color! ❤️ Features vibrant hues and a glossy finish on a stainless steel chain. ✨" },
+    { id: "letter-necklace", name: "Letter Necklace", category: "Necklace", price: 280, image: "Images/Letter Necklace 1.jpeg", extraImages: ["Images/Letter Necklace 2 .jpeg", "Images/Letter Necklace 3 .jpeg"], desc: "Simple, elegant, and personal! 🔠 Carry your initial everywhere you go. Durable stainless steel build. 💎" },
+    { id: "Flower-necklace", name: "Flower Necklace", category: "Necklace", price: 280, image: "Images/Loly Flower Necklace.jpeg", extraImages: [], desc: "Blooming with luxury! 🌸 Features delicate petals and a center crystal. Stainless steel and tarnish-free. ✨" },
+    { id: "palstine-necklace", name: "Palestine Necklace", category: "Necklace", price: 200, image: "Images/Palstine Necklace .jpeg", extraImages: [], desc: "A meaningful piece representing heritage! 🇵🇸 Expertly crafted map pendant on a strong stainless steel chain. ✨" },
+    { id: "tree-necklass", name: "Tree Necklace", category: "Necklace", price: 280, image: "Images/Tree Necklass 1.jpeg", extraImages: ["Images/Tree Necklass 2.jpeg", "Images/Tree Necklass 3.jpeg"], desc: "Symbol of growth and connection! 🌳 Beautifully detailed Tree of Life pendant in stainless steel. 🎁" },
+    { id: "normal-braclet", name: "Thin Cuff Bracelet", category: "Bracelet", price: 280, image: "Images/Normal Braclet .jpeg", extraImages: ["Images/Second Normal Braclet 2.jpeg"], desc: "Minimalist perfection! ✨ Flexible yet strong stainless steel, perfect for stacking. 💍" },
+    { id: "ayah-el-korsy-braclet", name: "Ayah El Korsy Bracelet", category: "Bracelet", price: 250, image: "Images/ayah el korsy braclet.jpeg", extraImages: ["Images/ayah el korsy braclet 2 .jpeg"], desc: "A spiritual and beautiful reminder! ✨ Engraved with Ayah El Korsy on premium stainless steel. 🛡️" },
+    { id: "coin-braclet", name: "Coin Bracelet", category: "Bracelet", price: 200, image: "Images/Coin Braclet 1.jpeg", extraImages: ["Images/Coin Braclet 2.jpeg"], desc: "Soft shimmer with every move! 🪙 Features dangling coin charms. High-grade stainless steel. ✨" },
+    { id: "couples-braclet", name: "Couples Bracelet Set", category: "Bracelet", price: 250, image: "Images/Couples Braclet 3 .jpeg", extraImages: ["Images/Couples Braclet 2 .jpeg", "Images/Couples Braclet .jpeg"], desc: "The perfect symbol of your bond! 👩‍❤️‍👨 Includes two matching stainless steel bracelets to share. 🎁" },
+    { id: "heart-braclet", name: "Heart Bracelet", category: "Bracelet", price: 200, image: "Images/Heart Braclet 2.jpeg", extraImages: ["Images/Heart Braclet 1.jpeg", "Images/Heart Braclet 3.jpeg"], desc: "Sweet and simple elegance! ❤️ Delicate stainless steel chain featuring a polished heart charm. ✨" },
+    { id: "second-normal-braclet", name: "Thick Cuff Bracelet", category: "Bracelet", price: 150, image: "Images/Second Normal Braclet 1.jpeg", extraImages: ["Images/Second Normal Braclet 2.jpeg"], desc: "Make a bold statement! 💍 Bold thick cuff for an edgy touch. Crafted from heavy-duty stainless steel. ✨" },
+    { id: "butterfly-earrings", name: "Butterfly Earrings", category: "Earrings", price: 150, image: "Images/Butterfly Earrings 1.jpeg", extraImages: [], desc: "Delicate butterflies for a subtle glow! 🦋 Lightweight stainless steel studs for daily wear. ✨" },
+    { id: "colord-heart-earrings", name: "Colored Heart Earrings", category: "Earrings", price: 150, image: "Images/Colord Heart earrings 1.jpeg", extraImages: ["Images/Colord Heart earrings 2.jpeg", "Images/Colord Heart earrings 3.jpeg"], desc: "Vibrant, fun, and lovely! ❤️ Stainless steel heart earrings that bring a youthful energy. 🌈" },
+    { id: "butterfly-hand-chain", name: "Butterfly Hand Chain", category: "Hand Chain", price: 200, image: "Images/Butterfly Hand Chain 1 .jpeg", extraImages: ["Images/Butterfly Hand Chain 2 .jpeg"], desc: "A stunning piece for a magical look! 🦋 Connects from finger to wrist in shimmering stainless steel. ✨" },
+    { id: "simple-handchain", name: "Simple Hand Chain", category: "Hand Chain", price: 200, image: "Images/simple-handchain.jpeg", extraImages: [], desc: "Elegant minimalism! ✨ Glistening stainless steel chain that highlights the hand's grace. 💍" },
+    { id: "first-rings", name: "Heart Rings Set", category: "Ring", price: 150, image: "Images/First Rings .jpeg", extraImages: [], desc: "Stack up the love! ❤️ Set of stackable rings featuring heart motifs in stainless steel. 💍" },
+    { id: "star-necklace", name: "Star Necklace", category: "Necklace", price: 250, image: "Images/star-necklace.jpeg", extraImages: [], desc: "Catch the starlight! ✨ A delicate star pendant crafted from high-quality stainless steel. 🌟" },
+    { id: "second-rings", name: "Mixed Shape Rings Set", category: "Ring", price: 100, image: "Images/Second Rings .jpeg", extraImages: ["Images/Third Rings .jpeg", "Images/Fourth Rings .jpeg", "Images/Fifth Rings .jpeg", "Images/Sixth Rings .jpeg", "Images/Seventh Rings .jpeg"], desc: "Endless styling options! 💍 Multi-piece stainless steel set for every mood. ✨" },
+    { id: "butterfly-braclet", name: "Butterfly Bracelet", category: "Bracelet", price: 200, image: "Images/butterfly-braclet.jpeg", extraImages: [], desc: "A flutter of elegance on your wrist! 🦋 Shimmering butterfly charms on a stainless steel chain. ✨" },
+    { id: "loly-flower-necklace", name: "Loly Flower", category: "Necklace", price: 250, image: "Images/loly-flower-necklace.jpeg", extraImages: [], desc: "Sweet and sophisticated! 🌸 A beautiful loly flower pendant made of tarnish-free stainless steel. 💎" },
+    { id: "earrings-collection", name: "Earrings Collections", category: "Earrings", price: 250, image: "Images/Earrings collection 1.jpeg", extraImages: ["Images/Earrings collection 2.jpeg", "Images/Earrings collection 3.jpeg", "Images/Earrings collection 4.jpeg", "Images/Earrings collection 5.jpeg", "Images/Earrings collection 6.jpeg"], desc: "Find your perfect pair! 🎀 A diverse collection of stainless steel earrings for every style. ✨" },
+    { id: "star-earrings", name: "Star Earrings", category: "Earrings", price: 150, image: "Images/Star Earrings 1.jpeg", extraImages: [], desc: "Shine like a star! 🌟 Dainty star-shaped studs made from surgical-grade stainless steel. ✨" },
+    { id: "star-earrings 2", name: "Big Star Earrings", category: "Earrings", price: 150, image: "Images/Star Earrings 1.jpeg", extraImages: [], desc: "Make a statement under the stars! 🌟 Bold star design in polished stainless steel. ✨" },
+    { id: "white-butterfly-earrings", name: "White Butterfly Earrings", category: "Earrings", price: 250, image: "Images/white-butterfly-earrings.jpeg", extraImages: [], desc: "Pure elegance! 🦋 Beautiful white butterfly details set in high-quality stainless steel. ✨" },
+    { id: "white-bundle", name: "White Bundle Collection", category: "Bundles", price: 300, image: "Images/white-bundle.jpeg", extraImages: [], sale: true, desc: "A clean, luxury look! ⚪ This bundle features our favorite white-themed stainless steel pieces. 💎" },
+    { id: "random-shepe-rings", name: "Eye Catching Rings", category: "Ring", price: 150, image: "Images/random-shape-rings.jpeg", extraImages: [], desc: "Unique shapes for a unique look! 💍 Artistic stainless steel rings that draw every eye. ✨" },
+    { id: "layered-necklace", name: "Three Layers Necklace", category: "Necklace", price: 250, image: "Images/layered-necklace.jpeg", extraImages: [], sale: true, desc: "Triple the style! ⛓️ Three perfectly matched stainless steel layers for a complete look. ✨" },
+    { id: "two-layered-necklace", name: "Two Layered Necklace", category: "Necklace", price: 250, image: "Images/two-layered-necklace.jpeg", extraImages: [], sale: true, desc: "Effortless chic! ⛓️ Two-tier stainless steel chain design that complements any outfit. ✨" }
   ];
 
   let activeCat = 'All';
@@ -191,7 +202,6 @@
     document.getElementById('d-price').innerText = p.price + " L.E";
     document.getElementById('d-desc').innerText = p.desc;
 
-    // UPDATED WHATSAPP MESSAGE LOGIC
     const wpMessage = `Hi! I saw the ${p.name} for ${p.price} L.E on your website and I'd like to buy it! ✨`;
     document.getElementById('d-wa').href = `https://wa.link/0nmis5?text=${encodeURIComponent(wpMessage)}`;
     
@@ -236,7 +246,17 @@
     else { music.pause(); document.getElementById('musicBtn').innerText = '🔇'; }
   }
 
-  // Marquee
+  let lastScrollY = window.scrollY;
+  window.addEventListener("scroll", () => {
+    const header = document.getElementById("mainHeader");
+    if (window.scrollY > lastScrollY && window.scrollY > 150) {
+      header.classList.add("hide-header");
+    } else {
+      header.classList.remove("hide-header");
+    }
+    lastScrollY = window.scrollY;
+  });
+
   const mq = document.getElementById('marquee');
   const items = products.slice(0,10).map(p => `<div class="marquee-item"><img src="${p.image}"><span>${p.name}</span></div>`).join('');
   mq.innerHTML = items + items + items;
