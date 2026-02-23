@@ -47,10 +47,11 @@
     .card-title { font-size: 0.85rem; font-weight: 600; line-height: 1.4; height: 2.8em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; margin-bottom: 5px;}
     
     .price-stack { display: flex; flex-direction: column; align-items: center; margin-top: auto; }
-    .old-price { text-decoration: line-through; color: #a0a0a0; font-size: 0.8rem; }
+    .old-price { text-decoration: line-through; color: var(--red); font-size: 0.8rem; font-weight: bold; }
     .card-price { color: var(--gold); font-weight: 600; font-size: 1.1rem; }
     
     .sale-tag { position: absolute; top: 10px; right: 10px; background: var(--red); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; z-index: 5; box-shadow: 0 2px 6px rgba(230, 57, 70, 0.3); }
+    .stock-tag { position: absolute; top: 10px; left: 10px; background: #555; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; z-index: 5; }
 
     .detail-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; padding-top: 20px; }
     @media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; } }
@@ -70,9 +71,10 @@
     .detail-cat { font-size: 0.75rem; text-transform: uppercase; color: var(--red); font-weight: 600; background: #fff1f2; padding: 4px 12px; border-radius: 20px; width: fit-content; }
     .detail-price-box { display: flex; align-items: baseline; gap: 10px; }
     .detail-price { font-size: 1.8rem; font-weight: 600; color: var(--gold); }
-    .detail-old-price { font-size: 1.1rem; text-decoration: line-through; color: #aaa; }
+    .detail-old-price { font-size: 1.1rem; text-decoration: line-through; color: var(--red); font-weight: bold; }
     .whatsapp-order { background: #25d366; color: #fff; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; box-shadow: 0 8px 20px rgba(37,211,102,0.3); transition: 0.3s; margin-top: 10px; }
-    .whatsapp-order:hover { transform: translateY(-3px); background: #1ebe5d; }
+    .whatsapp-order.disabled { background: #ccc; cursor: not-allowed; box-shadow: none; pointer-events: none; }
+    .whatsapp-order:not(.disabled):hover { transform: translateY(-3px); background: #1ebe5d; }
 
     footer { text-align: center; padding: 40px; color: #888; font-size: 0.8rem; margin-top: 40px; border-top: 1px solid #eee; background: #fff; }
   </style>
@@ -123,7 +125,7 @@
         <h1 id="d-title" style="font-size:1.8rem;"></h1>
         <div class="detail-price-box" id="d-price-container"></div>
         <p id="d-desc" style="line-height:1.7; color:#555; white-space:pre-line;"></p>
-        <a href="#" id="d-wa" class="whatsapp-order" target="_blank">🟢 Order via WhatsApp</a>
+        <a href="#" id="d-wa" class="whatsapp-order">🟢 Order via WhatsApp</a>
       </div>
     </div>
   </div>
@@ -132,90 +134,119 @@
 <footer id="mainFooter">© 2026 H.S.M Store – Luxury Accessories</footer>
 
 <script>
-  const products = [
-    // === BUNDLES ===
-    { id: "heart-bundle", name: "Eternal Heart Bundle", category: "Bundles", price: 380, image: "Images/heart-bundle .jpeg", extraImages: [], sale: true, desc: "The ultimate expression of love! 💖" },
-    { id: "double-bundle", name: "Glistening Square Bundle", category: "Bundles", price: 450, image: "Images/double-bundle.jpeg", extraImages: ["Images/double-bundle 2.jpeg"], sale: true, desc: "Modern elegance in every detail! 💎" },
-    { id: "star-bundle", name: "Heavenly Star Bundle", category: "Bundles", price: 450, image: "Images/star-bundle", extraImages: [], sale: true, desc: "A bundle from the stars. ✨ Original Price: 600 L.E" },
-    { id: "white-heart-bundle", name: "White Heart Bundle", category: "Bundles", price: 380, image: "Images/white-heart-bundle", extraImages: [], sale: true, desc: "Pure love in white. 🤍" },
-    { id: "first-bundle", name: "Classic Gift Set Bundle", category: "Bundles", price: 500, image: "Images/first-bundle.jpeg", extraImages: [], desc: "Our most exclusive starter pack! 🎁" },
-    { id: "white-bundle", name: "White Bundle Collection", category: "Bundles", price: 300, image: "Images/white-bundle.jpeg", extraImages: [], sale: true, desc: "A clean, luxury look! ⚪" },
+  // Initial Product Data (raw list including collections)
+  const rawProducts = [
+    { id: "heart-bundle", name: "Eternal Heart Bundle", category: "Bundles", price: 380, image: "Images/heart-bundle .jpeg", sale: true, desc: "The ultimate expression of love! 💖" },
+    { id: "double-bundle", name: "Glistening Square Bundle", category: "Bundles", price: 450, image: "Images/double-bundle.jpeg", sale: true, desc: "Modern elegance in every detail! 💎" },
+    { id: "star-bundle", name: "Heavenly Star Bundle", category: "Bundles", price: 450, image: "Images/star-bundle", sale: true, desc: "A bundle from the stars. ✨" },
+    { id: "white-heart-bundle", name: "White Heart Bundle", category: "Bundles", price: 380, image: "Images/white-heart-bundle", sale: true, desc: "Pure love in white. 🤍" },
+    { id: "crystal-bundle", name: "Crystal Bundle Collection", category: "Bundles", price: 300, image: "Images/white-bundle.jpeg", sale: true, desc: "A clean, crystal luxury look! ⚪" },
+    { id: "first-bundle", name: "Classic Gift Set Bundle", category: "Bundles", price: 500, image: "Images/first-bundle.jpeg", desc: "Our most exclusive starter pack! 🎁" },
 
-    // === NECKLACES ===
-    { id: "silver-small-butterfly", name: "Silver Small Butterfly Necklace", category: "Necklace", price: 200, image: "Images/silver-small-butterfly-necklace.jpeg", extraImages: [], desc: "Elegant and petite butterfly pendant. ✨" },
-    { id: "simple-necklace", name: "Simple Classic Necklace", category: "Necklace", price: 250, image: "Images/simple-necklace.jpeg", extraImages: [], desc: "The beauty of simplicity! ✨" },
-    { id: "two-layered-butterfly-necklace", name: "Two-Layered Butterfly Necklace", category: "Necklace", price: 250, image: "Images/two-layered-butterfly-necklace.jpeg", extraImages: [], desc: "Double the charm! 🦋" },
-    { id: "white-two-layer-necklace", name: "White Two-Layer Necklace", category: "Necklace", price: 280, image: "Images/white-two-layer-necklace.jpeg", extraImages: [], desc: "Sophisticated contrast! ⚪" },
-    { id: "two-layer-coin-necklace", name: "Two-Layer Coin Necklace", category: "Necklace", price: 300, image: "Images/two-layer-coin-necklace.jpeg", extraImages: [], desc: "Vintage meets modern! 🪙" },
-    { id: "simple-modern-necklace", name: "Simple Modern Necklace", category: "Necklace", price: 250, image: "Images/simple-modern-necklace.jpeg", extraImages: [], desc: "Chic and contemporary. 🛡️" },
-    { id: "golden-rose-necklace", name: "Vintage Golden Rose Necklace", category: "Necklace", price: 280, image: "Images/golden-rose-necklace.jpeg", extraImages: [], desc: "Intricately detailed rose. 🌹" },
-    { id: "one-letter-necklace", name: "Arabic Calligraphy Letter Necklace", category: "Necklace", price: 280, image: "Images/one-letter-necklace.jpeg", extraImages: [], desc: "Cultural heritage meets modern design. 🖋️" },
-    { id: "another-butterfly-necklace", name: "Butterfly Necklace", category: "Necklace", price: 250, image: "Images/another-butterfly-necklace 1.jpeg", extraImages: [], desc: "Fly away with style! 🦋" },
+    { id: "ethereal-butterfly", name: "Ethereal Butterfly Necklace", category: "Necklace", price: 200, image: "Images/silver-small-butterfly-necklace.jpeg", desc: "A delicate touch of nature. ✨" },
+    { id: "simple-necklace", name: "Simple Classic Necklace", category: "Necklace", price: 250, image: "Images/simple-necklace.jpeg", desc: "The beauty of simplicity! ✨" },
+    { id: "two-layered-butterfly-necklace", name: "Two-Layered Butterfly Necklace", category: "Necklace", price: 250, image: "Images/two-layered-butterfly-necklace.jpeg", desc: "Double the charm! 🦋" },
+    { id: "white-two-layer-necklace", name: "White Two-Layer Necklace", category: "Necklace", price: 280, image: "Images/white-two-layer-necklace.jpeg", desc: "Sophisticated contrast! ⚪" },
+    { id: "two-layer-coin-necklace", name: "Two-Layer Coin Necklace", category: "Necklace", price: 300, image: "Images/two-layer-coin-necklace.jpeg", desc: "Vintage meets modern! 🪙" },
+    { id: "simple-modern-necklace", name: "Simple Modern Necklace", category: "Necklace", price: 250, image: "Images/simple-modern-necklace.jpeg", desc: "Chic and contemporary. 🛡️" },
+    { id: "golden-rose-necklace", name: "Vintage Golden Rose Necklace", category: "Necklace", price: 280, image: "Images/golden-rose-necklace.jpeg", desc: "Intricately detailed rose. 🌹" },
+    { id: "one-letter-necklace", name: "Arabic Calligraphy Letter Necklace", category: "Necklace", price: 280, image: "Images/one-letter-necklace.jpeg", desc: "Cultural heritage meets modern design. 🖋️" },
+    { id: "another-butterfly-necklace", name: "Butterfly Necklace", category: "Necklace", price: 250, image: "Images/another-butterfly-necklace 1.jpeg", desc: "Fly away with style! 🦋" },
     { id: "butterfly-necklase", name: "Butterfly Necklace Pro", category: "Necklace", price: 250, image: "Images/Butterfly Necklase 1.jpeg", extraImages: ["Images/Butterfly Necklase 2.jpeg", "Images/Butterfly Necklase 3.jpeg", "Images/Butterfly Necklace 4.jpeg" ], desc: "Double-layered sparkle! ✨" },
     { id: "clover-necklace", name: "Clover Necklace", category: "Necklace", price: 250, image: "Images/Clover Necklace 1.jpeg", extraImages: ["Images/Clover Necklace 2.jpeg", "Images/Clover Necklace 3.jpeg", "Images/Clover Necklace 4.jpeg"], desc: "Bring good luck everywhere! 🍀" },
     { id: "coin-necklace", name: "Coin Necklace", category: "Necklace", price: 250, image: "Images/Coin Necklace 1.jpeg", extraImages: ["Images/Coin Necklace 2.jpeg", "Images/Coin Necklace 3.jpeg", "Images/Coin Necklace 4.jpeg"], desc: "Vintage vibes! 🪙" },
     { id: "colord-heart-necklace", name: "Colored Heart Necklace", category: "Necklace", price: 250, image: "Images/Colord Heart Necklace 1.jpeg", extraImages: ["Images/Colord Heart Necklace 2.jpeg", "Images/Colord Heart Necklace 3.jpeg"], desc: "Add a pop of color! ❤️" },
     { id: "letter-necklace", name: "Letter Necklace", category: "Necklace", price: 280, image: "Images/Letter Necklace 1.jpeg", extraImages: ["Images/Letter Necklace 2 .jpeg", "Images/Letter Necklace 3 .jpeg"], desc: "Simple and personal! 🔠" },
-    { id: "Flower-necklace", name: "Flower Necklace", category: "Necklace", price: 280, image: "Images/Loly Flower Necklace.jpeg", extraImages: [], desc: "Blooming with luxury! 🌸" },
-    { id: "palstine-necklace", name: "Palestine Necklace", category: "Necklace", price: 200, image: "Images/Palstine Necklace .jpeg", extraImages: [], desc: "Meaningful heritage. 🇵🇸" },
+    { id: "Flower-necklace", name: "Flower Necklace", category: "Necklace", price: 280, image: "Images/Loly Flower Necklace.jpeg", desc: "Blooming with luxury! 🌸" },
+    { id: "palstine-necklace", name: "Palestine Necklace", category: "Necklace", price: 200, image: "Images/Palstine Necklace .jpeg", desc: "Meaningful heritage. 🇵🇸" },
     { id: "tree-necklass", name: "Tree Necklace", category: "Necklace", price: 280, image: "Images/Tree Necklass 1.jpeg", extraImages: ["Images/Tree Necklass 2.jpeg", "Images/Tree Necklass 3.jpeg"], desc: "Symbol of growth. 🌳" },
-    { id: "star-necklace-plain", name: "Star Necklace", category: "Necklace", price: 250, image: "Images/star-necklace.jpeg", extraImages: [], desc: "Delicate star pendant. 🌟" },
-    { id: "loly-flower-necklace", name: "Loly Flower", category: "Necklace", price: 250, image: "Images/loly-flower-necklace.jpeg", extraImages: [], desc: "Sweet and sophisticated! 🌸" },
-    { id: "layered-necklace", name: "Three Layers Butterfly Necklace", category: "Necklace", price: 250, image: "Images/layered-necklace.jpeg", extraImages: [], sale: true, desc: "Triple the style! ⛓️ ✨" },
-    { id: "two-layered-necklace", name: "Two Layers Heart Necklace", category: "Necklace", price: 250, image: "Images/two-layered-necklace.jpeg", extraImages: [], sale: true, desc: "Effortless chic. ✨" },
-    { id: "three-star-necklace", name: "Three Star Necklace", category: "Necklace", price: 200, image: "Images/three-star-necklace", extraImages: [], desc: "Triple celestial elegance. ✨" },
-    { id: "two-heart-necklace", name: "Two Heart Necklace", category: "Necklace", price: 200, image: "Images/two-heart-necklace", extraImages: [], desc: "Intertwined hearts. ❤️" },
+    { id: "star-necklace-plain", name: "Star Necklace", category: "Necklace", price: 250, image: "Images/star-necklace.jpeg", desc: "Delicate star pendant. 🌟" },
+    { id: "loly-flower-necklace", name: "Loly Flower", category: "Necklace", price: 250, image: "Images/loly-flower-necklace.jpeg", desc: "Sweet and sophisticated! 🌸" },
+    { id: "layered-necklace", name: "Three Layers Butterfly Necklace", category: "Necklace", price: 250, image: "Images/layered-necklace.jpeg", sale: true, desc: "Triple the style! ⛓️ ✨" },
+    { id: "two-layered-necklace", name: "Two Layers Heart Necklace", category: "Necklace", price: 250, image: "Images/two-layered-necklace.jpeg", sale: true, desc: "Effortless chic. ✨" },
+    { id: "three-star-necklace", name: "Three Star Necklace", category: "Necklace", price: 200, image: "Images/three-star-necklace", desc: "Triple celestial elegance. ✨" },
+    { id: "two-heart-necklace", name: "Two Heart Necklace", category: "Necklace", price: 200, image: "Images/two-heart-necklace", desc: "Intertwined hearts. ❤️" },
 
-    // === BRACELETS ===
     { id: "simple-bracelets", name: "Simple Bracelet Collection", category: "Bracelet", price: 200, image: "Images/simple-bracelets 1.jpeg", extraImages: ["Images/simple-bracelets 2.jpeg", "Images/simple-bracelets 3.jpeg", "Images/simple-bracelets 4.jpeg", "Images/simple-bracelets 5.jpeg"], desc: "Versatile and chic collection! 💖" },
-    { id: "watch-braclet", name: "Luxury Watch Bracelet", category: "Bracelet", price: 200, image: "Images/watch-braclet.jpeg", extraImages: [], desc: "Sophisticated design. ⌚" },
-    { id: "normal-braclet", name: "Thin Cuff Bracelet", category: "Bracelet", price: 280, image: "Images/Normal Braclet .jpeg", extraImages: ["Images/Second Normal Braclet 2.jpeg"], desc: "Minimalist perfection! ✨" },
+    { id: "watch-braclet", name: "Luxury Watch Bracelet", category: "Bracelet", price: 200, image: "Images/watch-braclet.jpeg", desc: "Sophisticated design. ⌚" },
+    { id: "normal-braclet", name: "Thin Cuff Bracelet", category: "Bracelet", price: 280, image: "Images/Normal Braclet .jpeg", desc: "Minimalist perfection! ✨" },
     { id: "ayah-el-korsy-braclet", name: "Ayah El Korsy Bracelet", category: "Bracelet", price: 250, image: "Images/ayah el korsy braclet.jpeg", extraImages: ["Images/ayah el korsy braclet 2 .jpeg"], sale: true, desc: "Spiritual reminder. 🛡️" },
     { id: "coin-braclet", name: "Coin Bracelet", category: "Bracelet", price: 200, image: "Images/Coin Braclet 1.jpeg", extraImages: ["Images/Coin Braclet 2.jpeg"], desc: "Soft shimmer. 🪙" },
     { id: "couples-braclet", name: "Couples Bracelet Set", category: "Bracelet", price: 250, image: "Images/Couples Braclet 3 .jpeg", extraImages: ["Images/Couples Braclet 2 .jpeg", "Images/Couples Braclet .jpeg"], desc: "The symbol of your bond! 👩‍❤️‍👨" },
     { id: "heart-braclet", name: "Heart Bracelet", category: "Bracelet", price: 200, image: "Images/Heart Braclet 2.jpeg", extraImages: ["Images/Heart Braclet 1.jpeg", "Images/Heart Braclet 3.jpeg"], desc: "Sweet polished heart. ❤️" },
     { id: "second-normal-braclet", name: "Thick Cuff Bracelet", category: "Bracelet", price: 150, image: "Images/Second Normal Braclet 1.jpeg", extraImages: ["Images/Second Normal Braclet 2.jpeg"], desc: "Bold thick cuff. ✨" },
-    { id: "butterfly-braclet", name: "Butterfly Bracelet", category: "Bracelet", price: 200, image: "Images/butterfly-braclet.jpeg", extraImages: [], desc: "Flutter of elegance. 🦋" },
+    { id: "butterfly-braclet", name: "Butterfly Bracelet", category: "Bracelet", price: 200, image: "Images/butterfly-braclet.jpeg", desc: "Flutter of elegance. 🦋" },
     { id: "collection-braclets", name: "Charm Bracelet Collection", category: "Bracelet", price: 200, image: "Images/collection-braclets 1.jpeg", extraImages: ["Images/collection-braclets 2.jpeg", "Images/collection-braclets 3.jpeg"], desc: "Mix and match. 🛡️" },
     { id: "silver-collection-braclets", name: "Silver Bracelets", category: "Bracelet", price: 200, image: "Images/silver-collection-braclets.jpeg", extraImages: ["Images/silver-collection-braclets 2.jpeg"], desc: "Cool silver tones. ❄️" },
-    { id: "black-watch-bracelet", name: "Black Watch Bracelet", category: "Bracelet", price: 200, image: "Images/black-watch-bracelet", extraImages: [], desc: "Sleek professional finish. ⌚" },
-    { id: "butterfly-ball-bracelet", name: "Butterfly Ball Bracelet", category: "Bracelet", price: 200, image: "Images/butterfly-ball-bracelet", extraImages: [], desc: "Unique ball design. ✨" },
+    { id: "black-watch-bracelet", name: "Black Watch Bracelet", category: "Bracelet", price: 200, image: "Images/black-watch-bracelet", desc: "Sleek professional finish. ⌚" },
+    { id: "butterfly-ball-bracelet", name: "Butterfly Ball Bracelet", category: "Bracelet", price: 200, image: "Images/butterfly-ball-bracelet", desc: "Unique ball design. ✨" },
     { id: "big-bracelets", name: "Big Bracelet Collection", category: "Bracelet", price: 250, image: "Images/big=bracelets 1", extraImages: ["Images/big=bracelets 2", "Images/big=bracelets 3", "Images/big=bracelets 4"], desc: "Bold luxury pieces. 💎" },
-    { id: "bow-bracelet", name: "Bow Bracelet", category: "Bracelet", price: 250, image: "Images/bow-bracelet", extraImages: [], desc: "Charming bow design. 🎀" },
-    { id: "white-circle-bracelet", name: "White Circle Bracelet", category: "Bracelet", price: 200, image: "Images/white-circle-bracelet", extraImages: [], desc: "Minimalist circle charm. ⚪" },
+    { id: "bow-bracelet", name: "Bow Bracelet", category: "Bracelet", price: 250, image: "Images/bow-bracelet", desc: "Charming bow design. 🎀" },
+    { id: "white-circle-bracelet", name: "White Circle Bracelet", category: "Bracelet", price: 200, image: "Images/white-circle-bracelet", desc: "Minimalist circle charm. ⚪" },
 
-    // === RINGS ===
-    { id: "first-rings", name: "Heart Rings Set", category: "Ring", price: 150, image: "Images/First Rings .jpeg", extraImages: [], desc: "Stackable heart rings. ❤️" },
+    { id: "first-rings", name: "Heart Rings Set", category: "Ring", price: 150, image: "Images/First Rings .jpeg", desc: "Stackable heart rings. ❤️" },
     { id: "second-rings", name: "Mixed Shape Rings Set", category: "Ring", price: 100, image: "Images/Second Rings .jpeg", extraImages: ["Images/Third Rings .jpeg", "Images/Fourth Rings .jpeg", "Images/Fifth Rings .jpeg", "Images/Sixth Rings .jpeg", "Images/Seventh Rings .jpeg"], desc: "Multi-piece set. 💍" },
-    { id: "random-shepe-rings", name: "Eye Catching Rings", category: "Ring", price: 150, image: "Images/random-shape-rings.jpeg", extraImages: [], desc: "Unique shapes. ✨" },
+    { id: "random-shepe-rings", name: "Eye Catching Rings", category: "Ring", price: 150, image: "Images/random-shape-rings.jpeg", desc: "Unique shapes. ✨" },
     { id: "double-rings", name: "Single Ring Collection", category: "Ring", price: 150, image: "Images/Double Rings 1.jpeg", extraImages: ["Images/Double Rings 2.jpeg", "Images/Double Rings 3.jpeg", "Images/Double Rings 4.jpeg", "Images/Double Rings 5.jpeg", "Images/Double Rings 6.jpeg", "Images/Double Rings 7.jpeg"], sale: true, desc: "Choose your favorite. 🛡️" },
 
-    // === HAND CHAINS ===
     { id: "butterfly-hand-chain", name: "Butterfly Hand Chain", category: "Hand Chain", price: 200, image: "Images/Butterfly Hand Chain 1 .jpeg", extraImages: ["Images/Butterfly Hand Chain 2 .jpeg"], desc: "Finger to wrist magic. 🦋" },
-    { id: "simple-handchain", name: "Simple Hand Chain", category: "Hand Chain", price: 200, image: "Images/simple-handchain.jpeg", extraImages: [], desc: "Glistening hand highlight. 💍" },
-    { id: "stars-hand-chain", name: "Stars Hand Chain", category: "Hand Chain", price: 200, image: "Images/Stars Hand Chains .jpeg", extraImages: [], desc: "Celestial star charms. 🌟" },
-    { id: "colored-hand-chain", name: "Colored Hand Chain", category: "Hand Chain", price: 200, image: "Images/Colord Hand Chain .jpeg", extraImages: [], desc: "Vibrant crystal accents. 🌈" },
+    { id: "simple-handchain", name: "Simple Hand Chain", category: "Hand Chain", price: 200, image: "Images/simple-handchain.jpeg", desc: "Glistening hand highlight. 💍" },
+    { id: "stars-hand-chain", name: "Stars Hand Chain", category: "Hand Chain", price: 200, image: "Images/Stars Hand Chains .jpeg", desc: "Celestial star charms. 🌟" },
+    { id: "colored-hand-chain", name: "Colored Hand Chain", category: "Hand Chain", price: 200, image: "Images/Colord Hand Chain .jpeg", desc: "Vibrant crystal accents. 🌈" },
 
-    // === EARRINGS ===
-    { id: "butterfly-earrings-coll", name: "Butterfly Earrings Collection", category: "Earrings", price: 200, image: "Images/butterfly-earrings", extraImages: [], desc: "Complete butterfly set. 🦋" },
-    { id: "rectangle-earrings-plain", name: "Rectangle Earrings", category: "Earrings", price: 200, image: "Images/rectangle-earrings", extraImages: [ "Images/rectangle-earrings 2.jpeg"], desc: "Sleek geometric studs. 📐" },
-    { id: "butterfly-earrings", name: "Butterfly Earrings", category: "Earrings", price: 150, image: "Images/Butterfly Earrings 1.jpeg", extraImages: [], desc: "Lightweight studs. 🦋" },
+    { id: "butterfly-earrings-coll", name: "Butterfly Earrings Collection", category: "Earrings", price: 200, image: "Images/butterfly-earrings", desc: "Complete butterfly set. 🦋" },
+    { id: "rectangle-earrings-plain", name: "Rectangle Earrings", category: "Earrings", price: 200, image: "Images/rectangle-earrings", outOfStock: true, desc: "Sleek geometric studs. Currently unavailable." },
+    { id: "butterfly-earrings", name: "Butterfly Earrings", category: "Earrings", price: 150, image: "Images/Butterfly Earrings 1.jpeg", desc: "Lightweight studs. 🦋" },
     { id: "colord-heart-earrings", name: "Colored Heart Earrings", category: "Earrings", price: 150, image: "Images/Colord Heart earrings 1.jpeg", extraImages: ["Images/Colord Heart earrings 2.jpeg", "Images/Colord Heart earrings 3.jpeg"], desc: "Youthful heart earrings. ❤️" },
     { id: "earrings-collection", name: "Earrings Collections", category: "Earrings", price: 250, image: "Images/Earrings Collection 1 .jpeg", extraImages: ["Images/Earrings Collection 2 .jpeg", "Images/Earrings Collection 3 .jpeg", "Images/Earrings Collection 4 .jpeg", "Images/Earrings Collection 5 .jpeg", "Images/Earrings Collection 6 .jpeg", "Images/Earrings Collection 7 .jpeg", "Images/Earrings Collection 8 .jpeg", "Images/Earrings Collection 9 .jpeg"], desc: "Find your perfect pair. 🎀" },
-    { id: "star-earrings", name: "Star Earrings", category: "Earrings", price: 150, image: "Images/Star Earrings 1.jpeg", extraImages: [], desc: "Dainty star-shaped studs. 🌟" },
-    { id: "star-earrings-2", name: "Big Star Earrings", category: "Earrings", price: 150, image: "Images/star-earrings.jpeg", extraImages: [], desc: "Bold statement! 🌟" },
-    { id: "white-butterfly-earrings", name: "White Butterfly Earrings", category: "Earrings", price: 250, image: "Images/white-butterfly-earrings.jpeg", extraImages: [], desc: "Pure white butterfly. 🦋" },
-    { id: "single-coin-earrings", name: "Single Coin Earrings", category: "Earrings", price: 150, image: "Images/single-coin-earrings", extraImages: [], desc: "Vintage coin style. 🪙" },
-    { id: "single-butterfly-earrings", name: "Single Butterfly Earrings", category: "Earrings", price: 150, image: "Images/single-butterfly-earrings", extraImages: [], desc: "Classic butterfly stud. 🦋" },
-    { id: "butterfly-ball-earrings", name: "Butterfly Ball Earrings", category: "Earrings", price: 150, image: "Images/butterfly-ball-earrings", extraImages: [], desc: "Playful wing design. ✨" }
+    { id: "star-earrings", name: "Star Earrings", category: "Earrings", price: 150, image: "Images/Star Earrings 1.jpeg", desc: "Dainty star-shaped studs. 🌟" },
+    { id: "star-earrings-2", name: "Big Star Earrings", category: "Earrings", price: 200, image: "Images/star-earrings.jpeg", desc: "Bold statement! 🌟" },
+    { id: "white-butterfly-earrings", name: "White Butterfly Earrings", category: "Earrings", price: 150, image: "Images/white-butterfly-earrings.jpeg", desc: "Pure white butterfly. 🦋" },
+    { id: "single-coin-earrings", name: "Single Coin Earrings", category: "Earrings", price: 150, image: "Images/single-coin-earrings", desc: "Vintage coin style. 🪙" },
+    { id: "single-butterfly-earrings", name: "Single Butterfly Earrings", category: "Earrings", price: 150, image: "Images/single-butterfly-earrings", desc: "Classic butterfly stud. 🦋" },
+    { id: "butterfly-ball-earrings", name: "Butterfly Ball Earrings", category: "Earrings", price: 150, image: "Images/butterfly-ball-earrings", desc: "Playful wing design. ✨" }
   ];
+
+  // Logic to process collections: Turn extra images into standalone products
+  let products = [];
+  const targetCollections = [
+    "earrings-collection", "big-bracelets", "simple-bracelets", 
+    "double-rings", "second-rings", "collection-braclets", 
+    "silver-collection-braclets", "heart-braclet", "coin-braclet",
+    "couples-braclet", "butterfly-necklase", "clover-necklace", 
+    "coin-necklace", "colord-heart-necklace", "letter-necklace", "tree-necklass",
+    "first-rings", "butterfly-hand-chain", "colord-heart-earrings"
+  ];
+
+  rawProducts.forEach(p => {
+    // Specialized removal for Thin Cuff Bracelet
+    if(p.id === "normal-braclet") {
+        p.extraImages = []; 
+    }
+
+    if (targetCollections.includes(p.id) && p.extraImages && p.extraImages.length > 0) {
+        // Add the main product
+        products.push({...p, extraImages: []});
+        // Add each extra image as a new product
+        p.extraImages.forEach((img, index) => {
+            products.push({
+                ...p,
+                id: `${p.id}-v${index}`,
+                name: `${p.name} - Version ${String.fromCharCode(65 + index)}`,
+                image: img,
+                extraImages: []
+            });
+        });
+    } else {
+        products.push(p);
+    }
+  });
 
   let activeCat = 'All';
   let slideIdx = 0;
   let currentPhotos = [];
 
   function getOldPrice(p) {
-    // If it's the star bundle specifically as requested (600), otherwise use +150 rule
     return (p.id === 'star-bundle') ? 600 : (p.price + 150);
   }
 
@@ -230,6 +261,7 @@
       const imgSrc = p.image.includes('.') ? p.image : p.image + ".jpeg";
       let saleHtml = '';
       let priceHtml = `<div class="card-price">${p.price} L.E</div>`;
+      let stockHtml = p.outOfStock ? `<div class="stock-tag">OUT OF STOCK</div>` : '';
 
       if(p.sale) {
         const oldPrice = getOldPrice(p);
@@ -245,6 +277,7 @@
       grid.innerHTML += `
         <div class="product-card" onclick="showDetail('${p.id}')">
           ${saleHtml}
+          ${stockHtml}
           <div class="card-img-wrap"><img src="${imgSrc}"></div>
           <div class="card-body">
             <div class="card-title">${p.name}</div>
@@ -277,8 +310,19 @@
     }
 
     document.getElementById('d-desc').innerText = p.desc;
-    const wpMessage = `Hi! I saw the ${p.name} for ${p.price} L.E on your website and I'd like to buy it! ✨`;
-    document.getElementById('d-wa').href = `https://wa.link/0nmis5?text=${encodeURIComponent(wpMessage)}`;
+    
+    // WhatsApp Automatic Message Generation
+    const waBtn = document.getElementById('d-wa');
+    if(p.outOfStock) {
+        waBtn.innerText = "❌ Out of Stock";
+        waBtn.classList.add('disabled');
+        waBtn.href = "#";
+    } else {
+        const wpMessage = `Hi! I would like to order the "${p.name}" (${p.price} L.E) from your H.S.M Store collection. ✨`;
+        waBtn.href = `https://wa.link/0nmis5?text=${encodeURIComponent(wpMessage)}`;
+        waBtn.innerText = "🟢 Order via WhatsApp";
+        waBtn.classList.remove('disabled');
+    }
     
     const mainImg = p.image.includes('.') ? p.image : p.image + ".jpeg";
     const extras = (p.extraImages || []).map(img => img.includes('.') ? img : img + ".jpeg");
@@ -303,8 +347,8 @@
     track.style.transform = `translateX(0%)`;
   }
 
-  function nextSlide() { slideIdx = (slideIdx + 1) % currentPhotos.length; move(); }
-  function prevSlide() { slideIdx = (slideIdx - 1 + currentPhotos.length) % currentPhotos.length; move(); }
+  function nextSlide() { if(currentPhotos.length > 1) { slideIdx = (slideIdx + 1) % currentPhotos.length; move(); } }
+  function prevSlide() { if(currentPhotos.length > 1) { slideIdx = (slideIdx - 1 + currentPhotos.length) % currentPhotos.length; move(); } }
   function move() {
     document.getElementById('track').style.transform = `translateX(-${slideIdx * 100}%)`;
     const d = document.querySelectorAll('.dot');
@@ -330,17 +374,6 @@
           document.getElementById('musicBtn').innerText = '🔊';
       }
   }, { once: true });
-
-  let lastScrollY = window.scrollY;
-  window.addEventListener("scroll", () => {
-    const header = document.getElementById("mainHeader");
-    if (window.scrollY > lastScrollY && window.scrollY > 150) {
-      header.classList.add("hide-header");
-    } else {
-      header.classList.remove("hide-header");
-    }
-    lastScrollY = window.scrollY;
-  });
 
   const mq = document.getElementById('marquee');
   const items = products.slice(0,10).map(p => {
