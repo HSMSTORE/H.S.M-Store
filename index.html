@@ -264,32 +264,39 @@
     });
   }
 
-  function showDetail(id) {
-    const p = products.find(i => i.id === id);
-    document.getElementById('mainHeader').style.display = 'none';
-    document.getElementById('gallery-view').style.display = 'none';
-    document.getElementById('detail-view').style.display = 'block';
+function showDetail(id) {
+  const p = products.find(i => i.id === id);
+  document.getElementById('mainHeader').style.display = 'none';
+  document.getElementById('gallery-view').style.display = 'none';
+  document.getElementById('detail-view').style.display = 'block';
 
-    document.getElementById('d-title').innerText = p.name;
-    document.getElementById('d-cat').innerText = p.category;
-    document.getElementById('d-desc').innerText = p.desc;
-    
-    const pBox = document.getElementById('d-price-container');
-    pBox.innerHTML = p.sale ? `<span class="detail-old-price">${getOldPrice(p)} L.E</span><span class="detail-price">${p.price} L.E</span>` : `<span class="detail-price">${p.price} L.E</span>`;
+  document.getElementById('d-title').innerText = p.name;
+  document.getElementById('d-cat').innerText = p.category;
+  document.getElementById('d-desc').innerText = p.desc;
+  
+  const pBox = document.getElementById('d-price-container');
+  pBox.innerHTML = p.sale 
+    ? `<span class="detail-old-price">${getOldPrice(p)} L.E</span><span class="detail-price">${p.price} L.E</span>` 
+    : `<span class="detail-price">${p.price} L.E</span>`;
 
-    const wa = document.getElementById('d-wa');
-    if(p.outOfStock) {
-      wa.innerText = "Out of Stock"; wa.classList.add('disabled');
-    } else {
-      const msg = `Hi! I'd like to order the "${p.name}" (${p.price} L.E) from H.S.M Store. ✨`;
-      wa.href = `https://wa.link/0nmis5?text=${encodeURIComponent(msg)}`;
-      wa.innerText = "🟢 Order via WhatsApp"; wa.classList.remove('disabled');
-    }
-
-    const mainImg = p.image.includes('.') ? p.image : p.image + ".jpeg";
-    currentPhotos = [mainImg, ...(p.extraImages || []).map(img => img.includes('.') ? img : img + ".jpeg")];
-    slideIdx = 0; updateSlider(); window.scrollTo(0,0);
+  const wa = document.getElementById('d-wa');
+  if(p.outOfStock) {
+    wa.innerText = "Out of Stock"; 
+    wa.classList.add('disabled');
+  } else {
+    const msg = `Hi! I'd like to order the "${p.name}" (${p.price} L.E) from H.S.M Store. ✨`;
+    const phoneNumber = "201020730112";
+    wa.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
+    wa.innerText = "🟢 Order via WhatsApp"; 
+    wa.classList.remove('disabled');
   }
+
+  const mainImg = p.image.includes('.') ? p.image : p.image + ".jpeg";
+  currentPhotos = [mainImg, ...(p.extraImages || []).map(img => img.includes('.') ? img : img + ".jpeg")];
+  slideIdx = 0; 
+  updateSlider(); 
+  window.scrollTo(0,0);
+}
 
   function showGallery() {
     document.getElementById('mainHeader').style.display = 'flex';
