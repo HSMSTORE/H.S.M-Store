@@ -142,6 +142,7 @@ const rawProducts = [
   name: "Eternal Heart Bundle", 
   category: "Bundles", 
   price: 300, 
+  originalPrice: 350,
   sale: true, 
   image: "Images/heart-bundle .jpeg", 
   desc: "The ultimate expression of love! Crafted from premium stainless steel to last a lifetime. 💖" 
@@ -151,6 +152,7 @@ const rawProducts = [
   name: "Glistening Square Bundle", 
   category: "Bundles", 
   price: 520, 
+  originalPrice: 640,
   sale: true, 
   image: "Images/double-bundle.jpeg", 
   extraImages: ["Images/double-bundle 2.jpeg"], 
@@ -161,6 +163,7 @@ const rawProducts = [
   name: "Heavenly Star Bundle", 
   category: "Bundles", 
   price: 460, 
+  originalPrice: 520,
   sale: true, 
   image: "Images/star-bundle.jpeg", 
   desc: "A bundle from the stars. Shine bright with this durable stainless steel set. ✨" 
@@ -260,6 +263,7 @@ const rawProducts = [
   name: "Butterfly Necklace", 
   category: "Necklace", 
   price: 150, 
+  originalPrice: 200,
   sale: true, 
   image: "Images/another-butterfly-necklace 1.jpeg", 
   desc: "Lightweight stainless steel wings. 🦋" 
@@ -269,6 +273,7 @@ const rawProducts = [
   name: "Butterfly Necklace Pro", 
   category: "Necklace", 
   price: 150, 
+  originalPrice: 200,
   sale: true, 
   image: "Images/Butterfly Necklase 1.jpeg", 
   extraImages: ["Images/Butterfly Necklase 2.jpeg", "Images/Butterfly Necklase 3.jpeg", "Images/Butterfly Necklace 4.jpeg"], 
@@ -357,6 +362,7 @@ const rawProducts = [
   name: "Three Layers Butterfly Necklace", 
   category: "Necklace", 
   price: 200, 
+  originalPrice: 250,
   sale: true, 
   image: "Images/layered-necklace.jpeg", 
   desc: "Triple the style! ✨" 
@@ -366,6 +372,7 @@ const rawProducts = [
   name: "Two Layers Heart Necklace", 
   category: "Necklace", 
   price: 200, 
+  originalPrice: 250,
   sale: true, 
   image: "Images/two-layered-necklace.jpeg", 
   desc: "Effortless chic. ✨" 
@@ -421,6 +428,17 @@ const rawProducts = [
   desc: "Shine from every angle. 🌟" 
 },
 { 
+  id: "second-couples-bracelet", 
+  name: "Braids Couples Bracelets", 
+  category: "Bracelets", 
+  price: 200,            // The New (Discounted) Price
+  originalPrice: 350,    // The Old (Manual) Price to be crossed out
+  sale: true, 
+  image: "Images/Second Couples Braclet 2 .jpeg",
+  extraImages: ["Images/Second Couples Braclet 3 .jpeg", "Images/Second Couples Braclet 1 .jpeg"], 
+  desc: "Stainless Steel Bracelet For Your Love ❤️ (Price Per set ) " 
+},
+{ 
   id: "silk-road-bracelet", 
   name: "Silk Road Bracelet", 
   category: "Bracelet", 
@@ -449,6 +467,7 @@ const rawProducts = [
   name: "Ayah El Korsy Bracelet", 
   category: "Bracelet", 
   price: 250, 
+  originalPrice: 400,
   sale: true, 
   image: "Images/ayah el korsy braclet.jpeg", 
   extraImages: ["Images/ayah el korsy braclet 2 .jpeg"], 
@@ -459,6 +478,7 @@ const rawProducts = [
   name: "Coin Bracelet", 
   category: "Bracelet", 
   price: 200, 
+  originalPrice: 250,
   sale: true, 
   image: "Images/Coin Braclet 1.jpeg", 
   extraImages: ["Images/Coin Braclet 2.jpeg"], 
@@ -468,7 +488,8 @@ const rawProducts = [
   id: "couples-bracelet-set", 
   name: "Couples Bracelet Set", 
   category: "Bracelet", 
-  price: 150, 
+  price: 200, 
+  originalPrice: 300,
   sale: true, 
   image: "Images/Couples Braclet 3 .jpeg", 
   extraImages: ["Images/Couples Braclet 2 .jpeg", "Images/Couples Braclet .jpeg"], 
@@ -488,6 +509,7 @@ const rawProducts = [
   name: "Thick Cuff Bracelet", 
   category: "Bracelet", 
   price: 500, 
+  originalPrice: 600,
   sale: true, 
   image: "Images/Second Normal Braclet 1.jpeg", 
   extraImages: ["Images/Second Normal Braclet 2.jpeg"], 
@@ -506,6 +528,7 @@ const rawProducts = [
   name: "Royal Charm Bracelet", 
   category: "Bracelet", 
   price: 400, 
+  originalPrice: 550,
   sale: true, 
   image: "Images/collection-braclets 1.jpeg", 
   desc: "Regal stainless charms. 👑" 
@@ -515,6 +538,7 @@ const rawProducts = [
   name: "Infinity Charm Piece", 
   category: "Bracelet", 
   price: 300, 
+  originalPrice: 400,
   sale: true, 
   image: "Images/collection-braclets 2.jpeg", 
   desc: "Unending style. ♾️" 
@@ -524,6 +548,7 @@ const rawProducts = [
   name: "Moonlight Charm", 
   category: "Bracelet", 
   price: 400, 
+  originalPrice: 450,
   sale: true, 
   image: "Images/collection-braclets 3.jpeg", 
   desc: "Glow of the moon. 🌙" 
@@ -533,6 +558,7 @@ const rawProducts = [
   name: "Silver Bracelets", 
   category: "Bracelet", 
   price: 400, 
+  originalPrice: 500,
   sale: true, 
   image: "Images/silver-collection-braclets.jpeg", 
   extraImages: ["Images/silver-collection-braclets 2.jpeg"], 
@@ -608,6 +634,7 @@ const rawProducts = [
   name: "Heart Rings", 
   category: "Ring", 
   price: 120, 
+  originalPrice: 200,
   sale: true, 
   image: "Images/heart-rings.jpeg", 
   extraImages: ["Images/First Rings .jpeg"], 
@@ -674,36 +701,40 @@ const rawProducts = [
   name: "Single Ring Collection 1", 
   category: "Ring", 
   price: 200, 
+  originalPrice: 240,
   sale: true, 
   image: "Images/Double Rings 1.jpeg", 
-  desc: "Premium piece. 🛡️" 
+  desc: "Premium piece. 🛡️(price per one)" 
 },
 { 
   id: "single-ring-2", 
   name: "Single Ring Collection 2", 
   category: "Ring", 
   price: 200, 
+  originalPrice: 240,
   sale: true, 
   image: "Images/Double Rings 2.jpeg", 
-  desc: "Premium piece. 🛡️" 
+  desc: "Premium piece. 🛡️(price per one)" 
 },
 { 
   id: "single-ring-3", 
   name: "Single Ring Collection 3", 
   category: "Ring", 
   price: 200, 
+  originalPrice: 240,
   sale: true, 
   image: "Images/Double Rings 3.jpeg", 
-  desc: "Premium piece. 🛡️" 
+  desc: "Premium piece. 🛡️(price per one)" 
 },
 { 
   id: "single-ring-4", 
   name: "Single Ring Collection 4", 
   category: "Ring", 
   price: 200, 
+  originalPrice: 240,
   sale: true, 
   image: "Images/Double Rings 4.jpeg", 
-  desc: "Premium piece. 🛡️" 
+  desc: "Premium piece. 🛡️ (price per one)" 
 },
 
 /* === HAND CHAINS === */
@@ -925,9 +956,9 @@ function showDetail(id) {
   document.getElementById('d-desc').innerText = p.desc;
   
   const pBox = document.getElementById('d-price-container');
-  pBox.innerHTML = p.sale 
-    ? `<span class="detail-old-price">${getOldPrice(p)} L.E</span><span class="detail-price">${p.price} L.E</span>` 
-    : `<span class="detail-price">${p.price} L.E</span>`;
+pBox.innerHTML = p.sale 
+  ? `<span class="detail-old-price" style="text-decoration: line-through; color: gray; margin-right: 10px;">${p.originalPrice} L.E</span><span class="detail-price" style="color: red; font-weight: bold;">${p.price} L.E</span>` 
+  : `<span class="detail-price">${p.price} L.E</span>`;
 
   const wa = document.getElementById('d-wa');
   if(p.outOfStock) {
