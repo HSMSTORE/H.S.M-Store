@@ -224,7 +224,9 @@ const rawProducts = [
   id: "first-bundle", 
   name: "Classic Gift Set Bundle", 
   category: "Bundles", 
-  price: 540, 
+  price: 480,
+  originalPrice: 540,
+  sale: true, 
   image: "Images/first-bundle.jpeg", 
   desc: "Our most exclusive starter pack! Stunning stainless steel. 🎁" 
 },
@@ -1034,7 +1036,7 @@ const rawProducts = [
   id: "ball-chain-earrings", 
   name: "Golden Ball Chain Earrings", 
   category: "Earrings", 
-  price: 200, 
+  price: 180, 
   image: "Images/ball-chain-earrings.jpeg", 
   desc: "Stylish ball chain earrings crafted from high-quality stainless steel, adding a modern shine to any outfit ✨"
 },
@@ -1043,7 +1045,7 @@ const rawProducts = [
   id: "long-star-earrings", 
   name: "Long Star Shine Earrings", 
   category: "Earrings", 
-  price: 200, 
+  price: 180, 
   image: "Images/long-star-earrings.jpeg", 
   desc: "Elegant long star earrings made with durable stainless steel, designed to give your look a celestial sparkle ⭐"
 },
@@ -1052,7 +1054,7 @@ const rawProducts = [
   id: "chain-earrings", 
   name: "Modern Chain Drop Earrings", 
   category: "Earrings", 
-  price: 200, 
+  price: 180, 
   image: "Images/chain-earrings.jpeg", 
   desc: "Trendy chain earrings made from premium stainless steel, offering a bold and fashionable statement ✨"
 },
@@ -1068,7 +1070,7 @@ const rawProducts = [
   id: "butterfly-earrings-studs", 
   name: "Butterfly Earrings", 
   category: "Earrings", 
-  price: 200, 
+  price: 180, 
   image: "Images/Butterfly Earrings 1.jpeg", 
   desc: "Lightweight studs. 🦋" 
 },
@@ -1238,8 +1240,16 @@ pBox.innerHTML = p.sale
     wa.innerText = "Out of Stock"; 
     wa.classList.add('disabled');
   } else {
-    const msg = `Hi! I'd like to order the "${p.name}" (${p.price} L.E) from H.S.M Store. ✨`;
-    const phoneNumber = "201020730112";
+    const imgUrl = window.location.origin + "/" + mainImg;
+
+const msg = `Hi! I'd like to order this product from H.S.M Store:
+
+Product: ${p.name}
+Price: ${p.price} L.E
+
+Image:
+${imgUrl}`;
+    const phoneNumber = "201020730112";p.price} 
     wa.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
     wa.innerText = "🟢 Order via WhatsApp"; 
     wa.classList.remove('disabled');
