@@ -1238,7 +1238,15 @@ if(p.outOfStock) {
 wa.innerText = "Out of Stock"; 
 wa.classList.add('disabled');
 } else {
-const msg = `Hi! I'd like to order the "${p.name}" (${p.price} L.E) from H.S.M Store. ✨`;
+const imgUrl = window.location.origin + "/" + mainImg;
+
+const msg = `Hi! I'd like to order this product from H.S.M Store:
+
+Product: ${p.name}
+Price: ${p.price} L.E
+
+Image:
+${imgUrl}`;
 const phoneNumber = "201020730112";
 wa.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
 wa.innerText = "🟢 Order via WhatsApp"; 
