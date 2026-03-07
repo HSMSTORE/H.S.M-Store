@@ -11,42 +11,58 @@
 body { font-family: "Poppins", sans-serif; background: var(--bg); color: var(--dark); overflow-x: hidden; }
 
 header {
-padding: 15px 20px;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 12px;
-background: rgba(255, 255, 255, 0.9);
-backdrop-filter: blur(10px);
-box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-position: sticky;
-top: 0;
-z-index: 1000;
-transition: transform 0.4s ease-in-out;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: transform 0.4s ease-in-out;
 }
+      padding: 15px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: transform 0.4s ease-in-out;
+    }
 header.hide-header { transform: translateY(-100%); }
-.main-logo {
-height: 70px;
-cursor: pointer;
-display: block;
+    .main-logo {
+  height: 70px;
+  cursor: pointer;
+  display: block;
 }
-.top-controls {
-display: flex;
-flex-direction: column;
-gap: 10px;
-width: 100%;
-max-width: 700px;
+    .top-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 700px;
 }
+    .main-logo { height: 70px; cursor: pointer; display: block; }
+    .top-controls { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 700px; }
 .search-row { display: flex; align-items: center; gap: 10px; }
 .search-wrapper { position: relative; flex: 1; }
 .search-wrapper input { width: 100%; padding: 10px 18px; border-radius: 999px; border: 1px solid #ddd; outline: none; }
-.categories {
-display: flex;
-gap: 8px;
-overflow-x: auto;
-white-space: nowrap;
-padding-bottom: 5px;
+    .categories {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 5px;
 }
+    .categories { display: flex; gap: 8px; overflow-x: auto; white-space: nowrap; padding-bottom: 5px; }
 .cat-btn { border: none; background: #eee; padding: 5px 12px; border-radius: 999px; font-size: 0.75rem; cursor: pointer; transition: 0.3s; }
 .cat-btn.active { background: var(--dark); color: #fff; }
 
@@ -75,27 +91,29 @@ padding-bottom: 5px;
 .card-price { color: var(--gold); font-weight: 600; font-size: 1.1rem; }
 
 .sale-tag { position: absolute; top: 10px; right: 10px; background: var(--red); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; z-index: 5; }
-.out-of-stock-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-10deg); background: rgba(0,0,0,0.8); color: white; padding: 5px 15px; border: 2px solid white; font-weight: bold; z-index: 10; }
+    .out-of-stock-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-10deg); background: rgba(0,0,0,0.8); color: white; padding: 5px 15px; border: 2px solid white; font-weight: bold; z-index: 10; }
 
-.detail-layout {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 30px;
-height: calc(100vh - 120px);
-align-items: center;
+   .detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  height: calc(100vh - 120px);
+  align-items: center;
 }
+    .detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; }
 @media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; } }
 
 .slider-box { background: #fff; border-radius: 20px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
 .slide-window { overflow: hidden; border-radius: 15px; position: relative; }
 .slide-track { display: flex; transition: 0.4s ease-in-out; }
-.slide-track img {
-width: 100%;
-flex-shrink: 0;
-object-fit: contain;
-max-height: 55vh;
-background: #fff;
+    .slide-track img {
+  width: 100%;
+  flex-shrink: 0;
+  object-fit: contain;
+  max-height: 55vh;
+  background: #fff;
 }
+    .slide-track img { width: 100%; flex-shrink: 0; object-fit: contain; max-height: 55vh; background: #fff; }
 
 .slider-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
 .nav-circle { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #ddd; background: #fff; cursor: pointer; }
@@ -109,8 +127,9 @@ background: #fff;
 .detail-price { font-size: 1.8rem; font-weight: 600; color: var(--gold); }
 .detail-old-price { font-size: 1.1rem; text-decoration: line-through; color: var(--red); font-weight: bold; }
 .whatsapp-order { background: #25d366; color: #fff; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; box-shadow: 0 8px 20px rgba(37,211,102,0.3); transition: 0.3s; margin-top: 10px; display: block; }
-.whatsapp-order.disabled { background: #ccc; cursor: not-allowed; pointer-events: none; opacity: 0.6; }
-.whatsapp-order:not(.disabled):hover { transform: translateY(-3px); background: #1ebe5d; }
+    .whatsapp-order.disabled { background: #ccc; cursor: not-allowed; pointer-events: none; opacity: 0.6; }
+    .whatsapp-order:not(.disabled):hover { transform: translateY(-3px); background: #1ebe5d; }
+    .whatsapp-order:hover { transform: translateY(-3px); background: #1ebe5d; }
 
 footer { text-align: center; padding: 40px; color: #888; font-size: 0.8rem; border-top: 1px solid #eee; background: #fff; margin-top: 40px; }
 </style>
@@ -167,6 +186,7 @@ footer { text-align: center; padding: 40px; color: #888; font-size: 0.8rem; bord
 </div>
 </div>
 
+<footer>&copy; 2024 H.S.M Store - Luxury Stainless Steel Jewelry</footer>
 <script>
 const rawProducts = [
 
@@ -224,10 +244,9 @@ desc: "Pure love in white. Anti-tarnish stainless steel beauty. 🤍"
 id: "first-bundle", 
 name: "Classic Gift Set Bundle", 
 category: "Bundles", 
-  price: 540, 
-  price: 480,
-  originalPrice: 540,
-  sale: true, 
+price: 480,
+originalPrice: 540,
+sale: true, 
 image: "Images/first-bundle.jpeg", 
 desc: "Our most exclusive starter pack! Stunning stainless steel. 🎁" 
 },
@@ -522,14 +541,14 @@ desc: "A unique coin ball bracelet crafted from strong stainless steel, blending
 
 { 
 id: "huge-eyecatching-bracelets", 
-name: "Golden Bracelet Set ", 
+name: "Golden Bracelet ", 
 category: "Bracelet", 
 price: 350,
 originalPrice: 400,
 sale: true, 
 image: "Images/huge-eyecatching-bracelets.jpeg", 
 extraImages: ["Images/huge-eyecatching-bracelets 2.jpeg"],
-desc: "Bold and huge eye-catching bracelets collection made from durable stainless steel, perfect for a powerful fashion statement ✨"
+desc: "Bold and huge eye-catching bracelets collection made from durable stainless steel, perfect for a powerful fashion statement ✨ (price per one)"
 },
 
 { 
@@ -553,7 +572,9 @@ desc: "A delicate circle charm bracelet made from durable stainless steel, addin
 id: "gold-bracelets-collection", 
 name: "Gold Bracelets Collection", 
 category: "Bracelet", 
-price: 650, 
+price: 550,
+originalPrice: 650,
+sale: true,
 image: "Images/simple-bracelets 1.jpeg", 
 desc: "A luxurious golden wrap. 💫" 
 },
@@ -585,8 +606,10 @@ desc: "Shine from every angle. 🌟"
 id: "second-couples-bracelet", 
 name: "Braids Couples Bracelets", 
 category: "Bracelet", 
-price: 200,            // The New (Discounted) Price
-originalPrice: 350,    // The Old (Manual) Price to be crossed out
+  price: 200,            // The New (Discounted) Price
+  originalPrice: 350,    // The Old (Manual) Price to be crossed out
+  price: 200,
+  originalPrice: 350,
 sale: true, 
 image: "Images/Second Couples Braclet 2 .jpeg",
 extraImages: ["Images/Second Couples Braclet 3 .jpeg", "Images/Second Couples Braclet 1 .jpeg"], 
@@ -782,6 +805,7 @@ price: 180,
 image: "Images/white-circle-bracelet.jpeg", 
 desc: "Minimalist circle charm. ⚪" 
 },
+
 /* === RINGS === */
 { 
 id: "heart-rings", 
@@ -895,7 +919,7 @@ desc: "Premium piece. 🛡️ (price per one)"
 { 
 id: "black-clover-handchain", 
 name: "Black Clover Charm Handchain", 
-category: "Handchain", 
+category: "Hand Chain", 
 price: 200, 
 image: "Images/black-clover-handchain.jpeg", 
 desc: "A stylish black clover handchain crafted from stainless steel, designed to add a bold and elegant charm to your hand ✨"
@@ -904,7 +928,7 @@ desc: "A stylish black clover handchain crafted from stainless steel, designed t
 { 
 id: "black-heart-handchain", 
 name: "Black Heart Charm Handchain", 
-category: "Handchain", 
+category: "Hand Chain", 
 price: 200, 
 image: "Images/black-heart-handchain.jpeg", 
 desc: "A beautiful black heart handchain made from stainless steel, combining romantic style with modern elegance ❤️"
@@ -913,7 +937,7 @@ desc: "A beautiful black heart handchain made from stainless steel, combining ro
 { 
 id: "snake-handchain", 
 name: "Snake Elegance Handchain", 
-category: "Handchain", 
+category: "Hand Chain", 
 price: 200, 
 image: "Images/snake-handchain.jpeg", 
 desc: "A bold snake design handchain crafted from durable stainless steel, perfect for a unique and powerful fashion statement ✨"
@@ -922,7 +946,7 @@ desc: "A bold snake design handchain crafted from durable stainless steel, perfe
 { 
 id: "white-heart-handchain", 
 name: "White Heart Charm Handchain", 
-category: "Handchain", 
+category: "Hand Chain", 
 price: 200, 
 image: "Images/white-heart-handchain.jpeg", 
 desc: "A delicate white heart handchain made from polished stainless steel, adding a soft romantic touch to your style 🤍"
@@ -1022,298 +1046,414 @@ name: "Midnight Glow Earrings",
 category: "Earrings", 
 price: 180, 
 image: "Images/night-earrings.jpeg", 
-desc: "Mysterious night-inspired earrings crafted from stainless steel, designed to give your evening look a captivating shine 🌙"
+  desc: "Mysterious night-inspired earrings crafted from stainless steel, designed to give your evening look a captivating shine 🌙"
 },
 
 { 
-id: "circle-earrings", 
-name: "Classic Circle Elegance Earrings", 
-category: "Earrings", 
-price: 180, 
-image: "Images/circle-earrings.jpeg", 
-desc: "Timeless circle earrings made from durable stainless steel, offering a clean and elegant look for any occasion ✨"
+  id: "circle-earrings", 
+  name: "Classic Circle Elegance Earrings", 
+  category: "Earrings", 
+  price: 180, 
+  image: "Images/circle-earrings.jpeg", 
+  desc: "Timeless circle earrings made from durable stainless steel, offering a clean and elegant look for any occasion ✨"
 },
 { 
-id: "ball-chain-earrings", 
-name: "Golden Ball Chain Earrings", 
-category: "Earrings", 
-  price: 200, 
+  id: "ball-chain-earrings", 
+  name: "Golden Ball Chain Earrings", 
+  category: "Earrings", 
   price: 180, 
-image: "Images/ball-chain-earrings.jpeg", 
-desc: "Stylish ball chain earrings crafted from high-quality stainless steel, adding a modern shine to any outfit ✨"
+  image: "Images/ball-chain-earrings.jpeg", 
+  desc: "Stylish ball chain earrings crafted from high-quality stainless steel, adding a modern shine to any outfit ✨"
 },
 
 { 
-id: "long-star-earrings", 
-name: "Long Star Shine Earrings", 
-category: "Earrings", 
-  price: 200, 
+  id: "long-star-earrings", 
+  name: "Long Star Shine Earrings", 
+  category: "Earrings", 
   price: 180, 
-image: "Images/long-star-earrings.jpeg", 
-desc: "Elegant long star earrings made with durable stainless steel, designed to give your look a celestial sparkle ⭐"
+  image: "Images/long-star-earrings.jpeg", 
+  desc: "Elegant long star earrings made with durable stainless steel, designed to give your look a celestial sparkle ⭐"
 },
 
 { 
-id: "chain-earrings", 
-name: "Modern Chain Drop Earrings", 
-category: "Earrings", 
-  price: 200, 
+  id: "chain-earrings", 
+  name: "Modern Chain Drop Earrings", 
+  category: "Earrings", 
   price: 180, 
-image: "Images/chain-earrings.jpeg", 
-desc: "Trendy chain earrings made from premium stainless steel, offering a bold and fashionable statement ✨"
+  image: "Images/chain-earrings.jpeg", 
+  desc: "Trendy chain earrings made from premium stainless steel, offering a bold and fashionable statement ✨"
 },
 { 
-id: "butterfly-earrings-coll-set", 
-name: "Butterfly Earrings Collection", 
-category: "Earrings", 
-price: 190, 
-image: "Images/butterfly-earrings.jpeg", 
-desc: "Complete butterfly set. 🦋" 
+  id: "butterfly-earrings-coll-set", 
+  name: "Butterfly Earrings Collection", 
+  category: "Earrings", 
+  price: 190, 
+  image: "Images/butterfly-earrings.jpeg", 
+  desc: "Complete butterfly set. 🦋" 
 },
 { 
-id: "butterfly-earrings-studs", 
-name: "Butterfly Earrings", 
-category: "Earrings", 
-  price: 200, 
+  id: "butterfly-earrings-studs", 
+  name: "Butterfly Earrings", 
+  category: "Earrings", 
   price: 180, 
-image: "Images/Butterfly Earrings 1.jpeg", 
-desc: "Lightweight studs. 🦋" 
+  image: "Images/Butterfly Earrings 1.jpeg", 
+  desc: "Lightweight studs. 🦋" 
 },
 { 
-id: "colored-heart-earrings-pro", 
-name: "Colored Heart Earrings", 
-category: "Earrings", 
-price: 170, 
-image: "Images/Colord Heart earrings 1.jpeg", 
-extraImages: ["Images/Colord Heart earrings 2.jpeg", "Images/Colord Heart earrings 3.jpeg"], 
-desc: "Youthful hearts. ❤️" 
+  id: "colored-heart-earrings-pro", 
+  name: "Colored Heart Earrings", 
+  category: "Earrings", 
+  price: 170, 
+  image: "Images/Colord Heart earrings 1.jpeg", 
+  extraImages: ["Images/Colord Heart earrings 2.jpeg", "Images/Colord Heart earrings 3.jpeg"], 
+  desc: "Youthful hearts. ❤️" 
 },
 { 
-id: "unique-earrings-collection", 
-name: "Unique Earrings Collection", 
-category: "Earrings", 
-price: 190, 
-image: "Images/Earrings Collection 1 .jpeg", 
-desc: "Artistic design. 🎨" 
+  id: "unique-earrings-collection", 
+  name: "Unique Earrings Collection", 
+  category: "Earrings", 
+  price: 190, 
+  image: "Images/Earrings Collection 1 .jpeg", 
+  desc: "Artistic design. 🎨" 
 },
 { 
-id: "triangle-earrings-collection", 
-name: "Triangle Earrings Collection", 
-category: "Earrings", 
-price: 190, 
-image: "Images/Earrings Collection 2 .jpeg", 
-extraImages: ["Images/Earrings Collection 4 .jpeg"], 
-desc: "Sleek geometry. 📐" 
+  id: "triangle-earrings-collection", 
+  name: "Triangle Earrings Collection", 
+  category: "Earrings", 
+  price: 190, 
+  image: "Images/Earrings Collection 2 .jpeg", 
+  extraImages: ["Images/Earrings Collection 4 .jpeg"], 
+  desc: "Sleek geometry. 📐" 
 },
 { 
-id: "stars-earrings-collection", 
-name: "Stars Earrings Collection", 
-category: "Earrings", 
-price: 190, 
-image: "Images/Earrings Collection 3 .jpeg", 
-extraImages: ["Images/Earrings Collection 5 .jpeg"], 
-desc: "Night sky dazzle. 🌟" 
+  id: "stars-earrings-collection", 
+  name: "Stars Earrings Collection", 
+  category: "Earrings", 
+  price: 190, 
+  image: "Images/Earrings Collection 3 .jpeg", 
+  extraImages: ["Images/Earrings Collection 5 .jpeg"], 
+  desc: "Night sky dazzle. 🌟" 
 },
 { 
-id: "heart-earrings-collection", 
-name: "Heart Earrings Collection", 
-category: "Earrings", 
-price: 190, 
-image: "Images/Earrings Collection 6 .jpeg", 
-desc: "Durable hearts. ❤️" 
+  id: "heart-earrings-collection", 
+  name: "Heart Earrings Collection", 
+  category: "Earrings", 
+  price: 190, 
+  image: "Images/Earrings Collection 6 .jpeg", 
+  desc: "Durable hearts. ❤️" 
 },
 { 
-id: "butterfly-earrings-collection-pro", 
-name: "Butterfly Earrings Collection", 
-category: "Earrings", 
-price: 190, 
-image: "Images/Earrings Collection 7 .jpeg", 
-desc: "Elegant butterflies. 🦋" 
+  id: "butterfly-earrings-collection-pro", 
+  name: "Butterfly Earrings Collection", 
+  category: "Earrings", 
+  price: 190, 
+  image: "Images/Earrings Collection 7 .jpeg", 
+  desc: "Elegant butterflies. 🦋" 
 },
 { 
-id: "white-butterfly-earrings-coll", 
-name: "White Butterfly Earrings Collection", 
-category: "Earrings", 
-price: 190, 
-image: "Images/Earrings Collection 8 .jpeg", 
-desc: "Stunning white details. 🤍" 
+  id: "white-butterfly-earrings-coll", 
+  name: "White Butterfly Earrings Collection", 
+  category: "Earrings", 
+  price: 190, 
+  image: "Images/Earrings Collection 8 .jpeg", 
+  desc: "Stunning white details. 🤍" 
 },
 { 
-id: "modern-unique-earrings", 
-name: "Modern Unique Earrings", 
-category: "Earrings", 
-price: 200, 
-image: "Images/Earrings Collection 9 .jpeg", 
-desc: "Modern twist. ✨" 
+  id: "modern-unique-earrings", 
+  name: "Modern Unique Earrings", 
+  category: "Earrings", 
+  price: 200, 
+  image: "Images/Earrings Collection 9 .jpeg", 
+  desc: "Modern twist. ✨" 
 },
 { 
-id: "star-earrings-studs", 
-name: "Star Earrings", 
-category: "Earrings", 
-price: 200, 
-image: "Images/Star Earrings 1.jpeg", 
-desc: "Dainty star studs. 🌟" 
+  id: "star-earrings-studs", 
+  name: "Star Earrings", 
+  category: "Earrings", 
+  price: 200, 
+  image: "Images/Star Earrings 1.jpeg", 
+  desc: "Dainty star studs. 🌟" 
 },
 { 
-id: "big-star-earrings-bold", 
-name: "Big Star Earrings", 
-category: "Earrings", 
-price: 190, 
-image: "Images/star-earrings.jpeg", 
-desc: "Bold statement. 🌟" 
+  id: "big-star-earrings-bold", 
+  name: "Big Star Earrings", 
+  category: "Earrings", 
+  price: 190, 
+  image: "Images/star-earrings.jpeg", 
+  desc: "Bold statement. 🌟" 
 },
 { 
-id: "white-butterfly-earrings-single", 
-name: "White Butterfly Earrings", 
-category: "Earrings", 
-price: 120, 
-image: "Images/white-butterfly-earrings.jpeg", 
-desc: "Pure white wings. 🦋" 
+  id: "white-butterfly-earrings-single", 
+  name: "White Butterfly Earrings", 
+  category: "Earrings", 
+  price: 120, 
+  image: "Images/white-butterfly-earrings.jpeg", 
+  desc: "Pure white wings. 🦋" 
 },
 { 
-id: "single-coin-earrings", 
-name: "Single Coin Earrings", 
-category: "Earrings", 
-price: 100, 
-image: "Images/single-coin-earrings.jpeg", 
-desc: "Vintage coin style. 🪙" 
+  id: "single-coin-earrings", 
+  name: "Single Coin Earrings", 
+  category: "Earrings", 
+  price: 100, 
+  image: "Images/single-coin-earrings.jpeg", 
+  desc: "Vintage coin style. 🪙" 
 },
 { 
-id: "single-butterfly-earrings", 
-name: "Single Butterfly Earrings", 
-category: "Earrings", 
-price: 100, 
-image: "Images/single-butterfly-earrings.jpeg", 
-desc: "Classic butterfly stud. 🦋" 
+  id: "single-butterfly-earrings", 
+  name: "Single Butterfly Earrings", 
+  category: "Earrings", 
+  price: 100, 
+  image: "Images/single-butterfly-earrings.jpeg", 
+  desc: "Classic butterfly stud. 🦋" 
 },
 { 
-id: "butterfly-ball-earrings", 
-name: "Butterfly Ball Earrings", 
-category: "Earrings", 
-price: 100, 
-image: "Images/butterfly-ball-earrings.jpeg", 
-desc: "Playful wing design. ✨" 
+  id: "butterfly-ball-earrings", 
+  name: "Butterfly Ball Earrings", 
+  category: "Earrings", 
+  price: 100, 
+  image: "Images/butterfly-ball-earrings.jpeg", 
+  desc: "Playful wing design. ✨" 
+  desc: "Mysterious night-inspired earrings crafted from stainless steel, designed to give your evening look a chic glow ✨" 
 }
 ];
+  
+  let products = rawProducts;
+  let activeCat = 'All';
+  let slideIdx = 0;
+  let currentPhotos = [];
 
-let products = rawProducts;
-let activeCat = 'All';
-let slideIdx = 0;
-let currentPhotos = [];
+  function getOldPrice(p) { return (p.price + 150); }
+</script>
+<script>
+  let currentCat = 'All';
+  let currentImages = [];
+  let currentIdx = 0;
 
-function getOldPrice(p) { return (p.price + 150); }
-
+  // 1. Core Rendering Function
 function render() {
-const term = document.getElementById('searchInput').value.toLowerCase();
+    const term = document.getElementById('searchInput').value.toLowerCase();
 const grid = document.getElementById('grid');
-grid.innerHTML = '';
-const filtered = products.filter(p => (activeCat === 'All' || p.category === activeCat) && p.name.toLowerCase().includes(term));
-document.getElementById('noResults').style.display = filtered.length ? 'none' : 'block';
+    grid.innerHTML = '';
+    const filtered = products.filter(p => (activeCat === 'All' || p.category === activeCat) && p.name.toLowerCase().includes(term));
+    document.getElementById('noResults').style.display = filtered.length ? 'none' : 'block';
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const noResults = document.getElementById('noResults');
 
-filtered.forEach(p => {
-let imgSrc = p.image.includes('.') ? p.image : p.image + ".jpeg";
-let saleHtml = p.sale ? `<div class="sale-tag">SALE</div>` : '';
-let oosHtml = p.outOfStock ? `<div class="out-of-stock-label">OUT OF STOCK</div>` : '';
-let priceHtml = p.sale ? `<div class="price-stack"><span class="old-price">${getOldPrice(p)} L.E</span><span class="card-price">${p.price} L.E</span></div>` : `<div class="card-price">${p.price} L.E</div>`;
+    filtered.forEach(p => {
+      let imgSrc = p.image.includes('.') ? p.image : p.image + ".jpeg";
+      let saleHtml = p.sale ? `<div class="sale-tag">SALE</div>` : '';
+      let oosHtml = p.outOfStock ? `<div class="out-of-stock-label">OUT OF STOCK</div>` : '';
+      let priceHtml = p.sale ? `<div class="price-stack"><span class="old-price">${getOldPrice(p)} L.E</span><span class="card-price">${p.price} L.E</span></div>` : `<div class="card-price">${p.price} L.E</div>`;
 
-grid.innerHTML += `
-       <div class="product-card" onclick="showDetail('${p.id}')">
-         ${saleHtml} ${oosHtml}
-         <div class="card-img-wrap"><img src="${imgSrc}"></div>
-         <div class="card-body"><div class="card-title">${p.name}</div>${priceHtml}</div>
-       </div>`;
+      grid.innerHTML += `
+        <div class="product-card" onclick="showDetail('${p.id}')">
+          ${saleHtml} ${oosHtml}
+          <div class="card-img-wrap"><img src="${imgSrc}"></div>
+          <div class="card-body"><div class="card-title">${p.name}</div>${priceHtml}</div>
+        </div>`;
+    const filtered = rawProducts.filter(p => {
+      const matchesCat = (currentCat === 'All' || p.category === currentCat);
+      const matchesSearch = p.name.toLowerCase().includes(search);
+      return matchesCat && matchesSearch;
 });
-}
+  }
 
 function showDetail(id) {
-const p = products.find(i => i.id === id);
-document.getElementById('mainHeader').style.display = 'none';
-document.getElementById('gallery-view').style.display = 'none';
-document.getElementById('detail-view').style.display = 'block';
+  const p = products.find(i => i.id === id);
+  document.getElementById('mainHeader').style.display = 'none';
+  document.getElementById('gallery-view').style.display = 'none';
+  document.getElementById('detail-view').style.display = 'block';
+    grid.innerHTML = '';
+    if (filtered.length === 0) {
+      noResults.style.display = 'block';
+    } else {
+      noResults.style.display = 'none';
+      filtered.forEach(p => {
+        grid.innerHTML += `
+          <div class="product-card" onclick="showProduct('${p.id}')">
+            ${p.sale ? '<div class="sale-tag">SALE</div>' : ''}
+            <div class="card-img-wrap">
+              <img src="${p.image}" alt="${p.name}" loading="lazy">
+            </div>
+            <div class="card-body">
+              <div class="card-title">${p.name}</div>
+              <div class="price-stack">
+                ${p.originalPrice ? `<span class="old-price">${p.originalPrice} EGP</span>` : ''}
+                <span class="card-price">${p.price} EGP</span>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+  }
 
-document.getElementById('d-title').innerText = p.name;
-document.getElementById('d-cat').innerText = p.category;
-document.getElementById('d-desc').innerText = p.desc;
-
-const pBox = document.getElementById('d-price-container');
+  document.getElementById('d-title').innerText = p.name;
+  document.getElementById('d-cat').innerText = p.category;
+  document.getElementById('d-desc').innerText = p.desc;
+  
+  const pBox = document.getElementById('d-price-container');
 pBox.innerHTML = p.sale 
-? `<span class="detail-old-price" style="text-decoration: line-through; color: gray; margin-right: 10px;">${p.originalPrice} L.E</span><span class="detail-price" style="color: red; font-weight: bold;">${p.price} L.E</span>` 
-: `<span class="detail-price">${p.price} L.E</span>`;
+  ? `<span class="detail-old-price" style="text-decoration: line-through; color: gray; margin-right: 10px;">${p.originalPrice} L.E</span><span class="detail-price" style="color: red; font-weight: bold;">${p.price} L.E</span>` 
+  : `<span class="detail-price">${p.price} L.E</span>`;
+  // 2. Category Switching
+  function setCat(cat, btn) {
+    currentCat = cat;
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
 
-const wa = document.getElementById('d-wa');
-if(p.outOfStock) {
-wa.innerText = "Out of Stock"; 
-wa.classList.add('disabled');
-} else {
-    const msg = `Hi! I'd like to order the "${p.name}" (${p.price} L.E) from H.S.M Store. ✨`;
-    const phoneNumber = "201020730112";
+  const wa = document.getElementById('d-wa');
+  if(p.outOfStock) {
+    wa.innerText = "Out of Stock"; 
+    wa.classList.add('disabled');
+  } else {
     const imgUrl = window.location.origin + "/" + mainImg;
+  // 3. Navigation
+  function showGallery() {
+    document.getElementById('gallery-view').style.display = 'block';
+    document.getElementById('detail-view').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
 
 const msg = `Hi! I'd like to order this product from H.S.M Store:
+  function showProduct(id) {
+    const p = rawProducts.find(x => x.id === id);
+    if (!p) return;
 
 Product: ${p.name}
 Price: ${p.price} L.E
+    document.getElementById('gallery-view').style.display = 'none';
+    const dv = document.getElementById('detail-view');
+    dv.style.display = 'block';
+    window.scrollTo(0, 0);
 
 Image:
 ${imgUrl}`;
     const phoneNumber = "201020730112";p.price} 
-wa.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
-wa.innerText = "🟢 Order via WhatsApp"; 
-wa.classList.remove('disabled');
+    wa.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
+    wa.innerText = "🟢 Order via WhatsApp"; 
+    wa.classList.remove('disabled');
+  }
+    // Populate Info
+    document.getElementById('d-cat').innerText = p.category;
+    document.getElementById('d-title').innerText = p.name;
+    document.getElementById('d-desc').innerText = p.desc;
+    
+    const priceContainer = document.getElementById('d-price-container');
+    priceContainer.innerHTML = `
+      <span class="detail-price">${p.price} EGP</span>
+      ${p.originalPrice ? `<span class="detail-old-price">${p.originalPrice} EGP</span>` : ''}
+    `;
+
+  const mainImg = p.image.includes('.') ? p.image : p.image + ".jpeg";
+  currentPhotos = [mainImg, ...(p.extraImages || []).map(img => img.includes('.') ? img : img + ".jpeg")];
+  slideIdx = 0; 
+  updateSlider(); 
+  window.scrollTo(0,0);
+}
+    // WhatsApp Link
+    const msg = `Hello H.S.M Store! I would like to order: ${p.name} (ID: ${p.id})`;
+    document.getElementById('d-wa').href = `https://wa.me/201018617300?text=${encodeURIComponent(msg)}`;
+
+  function showGallery() {
+    document.getElementById('mainHeader').style.display = 'flex';
+    document.getElementById('gallery-view').style.display = 'block';
+    document.getElementById('detail-view').style.display = 'none';
+    // Slider Setup
+    currentImages = [p.image, ...(p.extraImages || [])];
+    currentIdx = 0;
+    updateSlider();
 }
 
-const mainImg = p.image.includes('.') ? p.image : p.image + ".jpeg";
-currentPhotos = [mainImg, ...(p.extraImages || []).map(img => img.includes('.') ? img : img + ".jpeg")];
-slideIdx = 0; 
-updateSlider(); 
-window.scrollTo(0,0);
-}
-
-function showGallery() {
-document.getElementById('mainHeader').style.display = 'flex';
-document.getElementById('gallery-view').style.display = 'block';
-document.getElementById('detail-view').style.display = 'none';
-}
-
+  // 4. Image Slider Logic
 function updateSlider() {
-const track = document.getElementById('track'), dots = document.getElementById('dots');
-track.innerHTML = currentPhotos.map(img => `<img src="${img}">`).join('');
-dots.innerHTML = currentPhotos.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
-track.style.transform = `translateX(0%)`;
+    const track = document.getElementById('track'), dots = document.getElementById('dots');
+    track.innerHTML = currentPhotos.map(img => `<img src="${img}">`).join('');
+    dots.innerHTML = currentPhotos.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
+    track.style.transform = `translateX(0%)`;
+    const track = document.getElementById('track');
+    const dots = document.getElementById('dots');
+    
+    track.innerHTML = currentImages.map(img => `<img src="${img}">`).join('');
+    dots.innerHTML = currentImages.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
+    
+    moveSlide();
 }
 
-function nextSlide() { if(currentPhotos.length > 1) { slideIdx = (slideIdx + 1) % currentPhotos.length; move(); } }
-function prevSlide() { if(currentPhotos.length > 1) { slideIdx = (slideIdx - 1 + currentPhotos.length) % currentPhotos.length; move(); } }
-function move() {
-document.getElementById('track').style.transform = `translateX(-${slideIdx * 100}%)`;
-document.querySelectorAll('.dot').forEach((dot, i) => dot.classList.toggle('active', i === slideIdx));
+  function nextSlide() { if(currentPhotos.length > 1) { slideIdx = (slideIdx + 1) % currentPhotos.length; move(); } }
+  function prevSlide() { if(currentPhotos.length > 1) { slideIdx = (slideIdx - 1 + currentPhotos.length) % currentPhotos.length; move(); } }
+  function move() {
+    document.getElementById('track').style.transform = `translateX(-${slideIdx * 100}%)`;
+    document.querySelectorAll('.dot').forEach((dot, i) => dot.classList.toggle('active', i === slideIdx));
+  function moveSlide() {
+    const track = document.getElementById('track');
+    track.style.transform = `translateX(-${currentIdx * 100}%)`;
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === currentIdx);
+    });
 }
 
-function setCat(cat, btn) {
-activeCat = cat;
-document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-btn.classList.add('active'); render();
+  function setCat(cat, btn) {
+    activeCat = cat;
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active'); render();
+  function nextSlide() {
+    currentIdx = (currentIdx + 1) % currentImages.length;
+    moveSlide();
 }
 
-const music = document.getElementById('bgMusic');
-function toggleMusic() {
-if(music.paused) { music.play(); document.getElementById('musicBtn').innerText = '🔊'; }
-else { music.pause(); document.getElementById('musicBtn').innerText = '🔇'; }
+  const music = document.getElementById('bgMusic');
+  function toggleMusic() {
+    if(music.paused) { music.play(); document.getElementById('musicBtn').innerText = '🔊'; }
+    else { music.pause(); document.getElementById('musicBtn').innerText = '🔇'; }
+  function prevSlide() {
+    currentIdx = (currentIdx - 1 + currentImages.length) % currentImages.length;
+    moveSlide();
 }
 
-let lastScrollY = window.scrollY;
-window.addEventListener("scroll", () => {
-const header = document.getElementById("mainHeader");
-if (window.scrollY > lastScrollY && window.scrollY > 150) header.classList.add("hide-header");
-else header.classList.remove("hide-header");
-lastScrollY = window.scrollY;
-});
+  let lastScrollY = window.scrollY;
+  window.addEventListener("scroll", () => {
+    const header = document.getElementById("mainHeader");
+    if (window.scrollY > lastScrollY && window.scrollY > 150) header.classList.add("hide-header");
+    else header.classList.remove("hide-header");
+    lastScrollY = window.scrollY;
+  });
+  // 5. Music Toggle
+  function toggleMusic() {
+    const m = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicBtn');
+    if (m.paused) {
+      m.play();
+      btn.innerText = '🔊';
+    } else {
+      m.pause();
+      btn.innerText = '🔇';
+    }
+  }
 
-const mq = document.getElementById('marquee');
-const mItems = products.slice(0,12).map(p => `<div class="marquee-item"><img src="${p.image.includes('.')?p.image:p.image+'.jpeg'}"><span>${p.name}</span></div>`).join('');
-mq.innerHTML = mItems + mItems;
+  const mq = document.getElementById('marquee');
+  const mItems = products.slice(0,12).map(p => `<div class="marquee-item"><img src="${p.image.includes('.')?p.image:p.image+'.jpeg'}"><span>${p.name}</span></div>`).join('');
+  mq.innerHTML = mItems + mItems;
+  // 6. Marquee Setup
+  function initMarquee() {
+    const marquee = document.getElementById('marquee');
+    const items = rawProducts.slice(0, 10).map(p => `
+      <div class="marquee-item">
+        <img src="${p.image}">
+        <span>Recently Added: ${p.name}</span>
+      </div>
+    `).join('');
+    marquee.innerHTML = items + items; // Double for seamless loop
+  }
 
-render();
+  render();
+  // Initialize on load
+  window.onload = () => {
+    render();
+    initMarquee();
+  };
 </script>
 </body>
 </html>
