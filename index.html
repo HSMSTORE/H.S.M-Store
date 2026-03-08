@@ -892,7 +892,7 @@ desc: "Premium piece. 🛡️ (price per one)"
 { 
   id: "black-clover-handchain", 
   name: "Black Clover Charm Handchain", 
-  category: "Hand chain", 
+  category: "Hand Chain", 
   price: 200, 
   image: "Images/black-clover-handchain.jpeg", 
   desc: "A stylish black clover handchain crafted from stainless steel, designed to add a bold and elegant charm to your hand ✨"
@@ -901,7 +901,7 @@ desc: "Premium piece. 🛡️ (price per one)"
 { 
   id: "black-heart-handchain", 
   name: "Black Heart Charm Handchain", 
-  category: "Hand chain", 
+  category: "Hand Chain", 
   price: 200, 
   image: "Images/black-heart-handchain.jpeg", 
   desc: "A beautiful black heart hand chain made from stainless steel, combining romantic style with modern elegance ❤️"
@@ -910,7 +910,7 @@ desc: "Premium piece. 🛡️ (price per one)"
 { 
   id: "snake-handchain", 
   name: "Snake Elegance Handchain", 
-  category: "Hand chain", 
+  category: "Hand Chain", 
   price: 200, 
   image: "Images/snake-handchain.jpeg", 
   desc: "A bold snake design handchain crafted from durable stainless steel, perfect for a unique and powerful fashion statement ✨"
@@ -919,7 +919,7 @@ desc: "Premium piece. 🛡️ (price per one)"
 { 
   id: "white-heart-handchain", 
   name: "White Heart Charm Handchain", 
-  category: "Hand chain", 
+  category: "Hand Chain", 
   price: 200, 
   image: "Images/white-heart-handchain.jpeg", 
   desc: "A delicate white heart handchain made from polished stainless steel, adding a soft romantic touch to your style 🤍"
@@ -935,7 +935,7 @@ desc: "Finger to wrist magic. 🦋"
 },
 { 
 id: "simple-handchain", 
-name: "Simple Hand Chain", 
+name: "Simple HandChain", 
 category: "Hand Chain", 
 price: 220, 
 image: "Images/simple-handchain.jpeg", 
@@ -1194,7 +1194,9 @@ let activeCat = 'All';
 let slideIdx = 0;
 let currentPhotos = [];
 
-function getOldPrice(p) { return (p.price + 150); }
+function getOldPrice(p) {
+  return p.originalPrice;
+}
 
 function render() {
 const term = document.getElementById('searchInput').value.toLowerCase();
