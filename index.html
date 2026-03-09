@@ -153,9 +153,25 @@ from{transform:scale(.85);opacity:0}
 to{transform:scale(1);opacity:1}
 }
 
-.discount-header video{
-width:100%;
-display:block;
+.discount-banner{
+background:#111;
+color:#fff;
+overflow:hidden;
+padding:12px 0;
+font-weight:600;
+font-size:0.95rem;
+letter-spacing:1px;
+}
+
+.discount-moving{
+display:inline-block;
+white-space:nowrap;
+animation:discountScroll 12s linear infinite;
+}
+
+@keyframes discountScroll{
+0%{transform:translateX(100%)}
+100%{transform:translateX(-100%)}
 }
 
 .discount-close{
@@ -1418,7 +1434,20 @@ return `
 
 <img src="${img}">
 
+<div style="display:flex;flex-direction:column;">
 <div class="discount-item-name">${p.name}</div>
+
+<div style="font-size:0.8rem;">
+<span style="text-decoration:line-through;color:#999;margin-right:6px;">
+${p.originalPrice} L.E
+</span>
+
+<span style="color:#e63946;font-weight:600;">
+${p.price} L.E
+</span>
+</div>
+
+</div>
 
 </div>
 `;
@@ -1462,7 +1491,11 @@ openDiscountPopup();
 <div class="discount-modal">
 
 <div class="discount-header" style="position:relative;">
-<video src="discount-video.mp4" autoplay muted loop></video>
+<div class="discount-banner">
+<div class="discount-moving">
+🔥 BIG SALE • SPECIAL DISCOUNTS • LIMITED OFFER • H.S.M STORE SALE •
+</div>
+</div>
 <button class="discount-close" onclick="closeDiscountPopup()">✕</button>
 </div>
 
