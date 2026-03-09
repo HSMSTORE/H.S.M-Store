@@ -10,6 +10,123 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 <style>
+.promo-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.65);
+backdrop-filter:blur(6px);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0}
+to{opacity:1}
+}
+
+.promo-box{
+background:white;
+width:92%;
+max-width:520px;
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 25px 60px rgba(0,0,0,0.35);
+animation:slideUp .4s ease;
+}
+
+@keyframes slideUp{
+from{transform:translateY(40px);opacity:0}
+to{transform:translateY(0);opacity:1}
+}
+
+.promo-video video{
+width:100%;
+height:200px;
+object-fit:cover;
+display:block;
+}
+
+.promo-content{
+padding:22px;
+}
+
+.promo-content h2{
+font-size:1.4rem;
+margin-bottom:4px;
+font-weight:600;
+}
+
+.promo-sub{
+font-size:.8rem;
+color:#777;
+margin-bottom:15px;
+}
+
+#promoProducts{
+display:flex;
+flex-direction:column;
+gap:10px;
+max-height:250px;
+overflow-y:auto;
+}
+
+.promo-item{
+display:flex;
+align-items:center;
+gap:12px;
+padding:8px;
+border-radius:10px;
+cursor:pointer;
+transition:.25s;
+}
+
+.promo-item:hover{
+background:#f5f5f5;
+transform:scale(1.02);
+}
+
+.promo-item img{
+width:55px;
+height:55px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.promo-info{
+display:flex;
+flex-direction:column;
+font-size:.85rem;
+}
+
+.promo-price{
+font-weight:600;
+color:#b8860b;
+}
+
+.promo-old{
+font-size:.75rem;
+text-decoration:line-through;
+color:#999;
+}
+
+.promo-close{
+position:absolute;
+margin:12px;
+border:none;
+background:white;
+width:32px;
+height:32px;
+border-radius:50%;
+font-size:16px;
+cursor:pointer;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
 :root { --gold: #b8860b; --red: #e63946; --dark: #222; --bg: #fdfbfb; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: "Poppins", sans-serif; background: var(--bg); color: var(--dark); overflow-x: hidden; }
@@ -1285,7 +1402,66 @@ activeCat = cat;
 document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
 btn.classList.add('active'); render();
 }
+function buildPromoProducts(){
 
+const container = document.getElementById("promoProducts")
+
+const saleProducts = products.filter(p => p.sale === true)
+
+container.innerHTML = saleProducts.map(p=>{
+
+let img = p.image.includes('.') ? p.image : p.image + ".jpeg"
+
+return `
+<div class="promo-item" onclick="openPromoProduct('${p.id}')">
+<img src="${img}">
+<div class="promo-info">
+<span>${p.name}</span>
+<div>
+<span class="promo-old">${p.originalPrice || ''} L.E</span>
+<span class="promo-price">${p.price} L.E</span>
+</div>
+</div>
+</div>
+`
+
+}).join("")
+
+}
+
+function openPromoProduct(id){
+
+closePromo()
+
+setTimeout(()=>{
+showDetail(id)
+},200)
+
+}
+
+function closePromo(){
+document.getElementById("promoModal").style.display="none"
+}
+
+window.addEventListener("load",()=>{
+
+if(!sessionStorage.getItem("promoShown")){
+
+buildPromoProducts()
+
+setTimeout(()=>{
+document.getElementById("promoModal").style.display="flex"
+},600)
+
+sessionStorage.setItem("promoShown","true")
+
+}else{
+
+document.getElementById("promoModal").style.display="none"
+
+}
+
+})
 const music = document.getElementById('bgMusic');
 function toggleMusic() {
 if(music.paused) { music.play(); document.getElementById('musicBtn').innerText = '🔊'; }
@@ -1305,6 +1481,26 @@ const mItems = products.slice(0,12).map(p => `<div class="marquee-item"><img src
 mq.innerHTML = mItems + mItems;
 
 render();
+<div id="promoModal" class="promo-overlay">
+  <div class="promo-box">
+
+    <button class="promo-close" onclick="closePromo()">✕</button>
+
+    <div class="promo-video">
+      <video autoplay muted loop playsinline>
+        <source src="sale-video.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="promo-content">
+      <h2>Limited Time Offers</h2>
+      <p class="promo-sub">Exclusive discounts available now</p>
+
+      <div id="promoProducts"></div>
+    </div>
+
+  </div>
+</div>
 </script>
 </body>
 </html>
