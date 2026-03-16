@@ -140,9 +140,6 @@ background: #fff;
 .detail-price-box { display: flex; align-items: baseline; gap: 10px; }
 .detail-price { font-size: 1.8rem; font-weight: 600; color: var(--gold); }
 .detail-old-price { font-size: 1.1rem; text-decoration: line-through; color: var(--red); font-weight: bold; }
-.whatsapp-order { background: #25d366; color: #fff; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; box-shadow: 0 8px 20px rgba(37,211,102,0.3); transition: 0.3s; margin-top: 10px; display: block; }
-.whatsapp-order.disabled { background: #ccc; cursor: not-allowed; pointer-events: none; opacity: 0.6; }
-.whatsapp-order:not(.disabled):hover { transform: translateY(-3px); background: #1ebe5d; }
 
 .add-cart-btn {
 background: var(--dark);
@@ -291,13 +288,6 @@ border: 1px solid #eee;
 border-radius: 12px;
 }
 
-.delivery-fee-note {
-font-size: 0.85rem;
-color: #777;
-margin-top: -4px;
-margin-bottom: 10px;
-}
-
 .checkout-whatsapp {
 background: #25d366;
 color: #fff;
@@ -342,6 +332,7 @@ display: none;
 }
 
 footer { text-align: center; padding: 40px; color: #888; font-size: 0.8rem; border-top: 1px solid #eee; background: #fff; margin-top: 40px; }
+
 /* ===== DISCOUNT POPUP ===== */
 
 .discount-overlay{
@@ -559,7 +550,7 @@ font-weight:500;
 </div>
 </div>
 
-<a href="#" id="cartWhatsappBtn" class="checkout-whatsapp" target="_blank">🟢 Order Cart via WhatsApp</a>
+<a href="#" id="cartWhatsappBtn" class="checkout-whatsapp disabled" target="_blank">🟢 Order Cart via WhatsApp</a>
 </div>
 </div>
 </div>
@@ -1649,6 +1640,16 @@ pBox.innerHTML = p.sale
 
 const addBtn = document.getElementById('addToCartBtn');
 
+if(p.outOfStock) {
+addBtn.disabled = true;
+addBtn.style.opacity = "0.6";
+addBtn.style.cursor = "not-allowed";
+} else {
+addBtn.disabled = false;
+addBtn.style.opacity = "1";
+addBtn.style.cursor = "pointer";
+}
+
 const mainImg = p.image.includes('.') ? p.image : p.image + ".jpeg";
 currentPhotos = [mainImg, ...(p.extraImages || []).map(img => img.includes('.') ? img : img + ".jpeg")];
 slideIdx = 0; 
@@ -1800,38 +1801,39 @@ document.getElementById('addressFieldWrap').style.display = isDelivery ? 'block'
 const btn = document.getElementById('cartWhatsappBtn');
 const phoneNumber = "201020730112";
 
-if(cart.length === 0) {
+const customerName = document.getElementById('customerName').value.trim();
+const customerPhone = document.getElementById('customerPhone').value.trim();
+const customerAddress = document.getElementById('customerAddress').value.trim();
+
+const isFormValid = customerName !== "" && customerPhone !== "" && (!isDelivery || customerAddress !== "");
+
+if(cart.length === 0 || !isFormValid) {
 btn.href = "#";
 btn.classList.add('disabled');
 return;
 }
 
-const customerName = document.getElementById('customerName').value.trim();
-const customerPhone = document.getElementById('customerPhone').value.trim();
-const customerAddress = document.getElementById('customerAddress').value.trim();
-
 const itemsText = cart.map((item, index) => {
 const product = getProductById(item.id);
 if(!product) return '';
-const lineTotal = product.price * item.qty;
 return `${index + 1}. ${product.name}
    Quantity: ${item.qty}
-   Price: ${product.price} L.E
-   Item Total: ${lineTotal} L.E`;
+   Price: ${product.price} L.E`;
 }).join('\n\n');
 
-const customerInfo = `👤 *Customer Name:* ${customerName || "Not entered"}
-📞 *Phone Number:* ${customerPhone || "Not entered"}
-${isDelivery ? `📍 *Address:* ${customerAddress || "Not entered"}` : ''}`;
+const customerInfo = `👤 *Customer Name:* ${customerName}
+📞 *Phone Number:* ${customerPhone}
+${isDelivery ? `📍 *Address:* ${customerAddress}` : ''}`;
+
+const deliveryFeesLine = isDelivery ? `\n🚚 *Delivery Fees:* Extra fees` : ``;
 
 const message = `✨ *H.S.M Store Cart Order*
 
 🛍️ *Items Ordered:*
 ${itemsText}
 
-💰 *Items Total:* ${subtotal} L.E
-🚚 *Delivery Option:* ${deliveryOption}
-${isDelivery ? `🚚 *Delivery Fees:* Extra fees` : `🚚 *Delivery Fees:* 0 L.E`}
+💰 *Total Price:* ${subtotal} L.E
+🚚 *Delivery Option:* ${deliveryOption}${deliveryFeesLine}
 
 ${customerInfo}
 
@@ -1901,6 +1903,7 @@ render();
 updateMusicButton();
 updateCartCount();
 updateCartSummary();
+
 /* ===== DISCOUNT POPUP SYSTEM ===== */
 
 function openDiscountPopup(){
@@ -1971,6 +1974,7 @@ openDiscountPopup();
 
 });
 </script>
+
 <!-- ===== DISCOUNT POPUP ===== -->
 
 <div id="discountPopup" class="discount-overlay" style="display:none;">
