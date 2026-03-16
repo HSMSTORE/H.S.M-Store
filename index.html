@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
 <meta name="google-site-verification" content="AYnwAfq5OV-RRG3n7FRHwB9PE1DSL6PlZcOnfZs_CNY" />
@@ -57,8 +57,33 @@ padding-bottom: 5px;
 .cat-btn { border: none; background: #eee; padding: 5px 12px; border-radius: 999px; font-size: 0.75rem; cursor: pointer; transition: 0.3s; }
 .cat-btn.active { background: var(--dark); color: #fff; }
 
+.header-cart-btn {
+border: none;
+background: var(--dark);
+color: #fff;
+padding: 10px 14px;
+border-radius: 999px;
+cursor: pointer;
+font-size: 0.95rem;
+font-weight: 600;
+white-space: nowrap;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.header-cart-count {
+background: var(--red);
+color: #fff;
+border-radius: 999px;
+padding: 2px 8px;
+font-size: 0.75rem;
+min-width: 24px;
+text-align: center;
+}
+
 .container { max-width: 1100px; margin: 0 auto; padding: 20px 15px; }
 #detail-view { display: none; }
+#cart-view { display: none; }
 
 .marquee-container { background: #1a1a1a; padding: 12px 0; overflow: hidden; display: flex; border-bottom: 2px solid var(--gold); margin-bottom: 20px; }
 .marquee-content { display: flex; animation: scroll 40s linear infinite; }
@@ -91,7 +116,7 @@ gap: 30px;
 height: calc(100vh - 120px);
 align-items: center;
 }
-@media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; height: auto; } }
 
 .slider-box { background: #fff; border-radius: 20px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
 .slide-window { overflow: hidden; border-radius: 15px; position: relative; }
@@ -118,6 +143,185 @@ background: #fff;
 .whatsapp-order { background: #25d366; color: #fff; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: 600; box-shadow: 0 8px 20px rgba(37,211,102,0.3); transition: 0.3s; margin-top: 10px; display: block; }
 .whatsapp-order.disabled { background: #ccc; cursor: not-allowed; pointer-events: none; opacity: 0.6; }
 .whatsapp-order:not(.disabled):hover { transform: translateY(-3px); background: #1ebe5d; }
+
+.add-cart-btn {
+background: var(--dark);
+color: #fff;
+padding: 15px;
+border-radius: 12px;
+border: none;
+cursor: pointer;
+font-weight: 600;
+font-size: 1rem;
+box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+transition: 0.3s;
+}
+.add-cart-btn:hover { transform: translateY(-3px); }
+
+.detail-actions {
+display: flex;
+flex-direction: column;
+gap: 12px;
+margin-top: 10px;
+}
+
+.cart-layout {
+display: grid;
+grid-template-columns: 1.2fr 0.8fr;
+gap: 25px;
+align-items: start;
+}
+@media (max-width: 768px) { .cart-layout { grid-template-columns: 1fr; } }
+
+.cart-box, .checkout-box {
+background: #fff;
+border-radius: 18px;
+padding: 20px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+.cart-items {
+display: flex;
+flex-direction: column;
+gap: 15px;
+}
+
+.cart-item {
+display: grid;
+grid-template-columns: 90px 1fr auto;
+gap: 15px;
+align-items: center;
+padding-bottom: 15px;
+border-bottom: 1px solid #eee;
+}
+
+.cart-item img {
+width: 90px;
+height: 90px;
+object-fit: cover;
+border-radius: 12px;
+background: #fff;
+}
+
+.cart-item-info {
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.cart-item-name {
+font-weight: 600;
+font-size: 0.95rem;
+}
+
+.cart-item-price {
+color: var(--gold);
+font-weight: 600;
+}
+
+.cart-item-actions {
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+gap: 10px;
+}
+
+.qty-box {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.qty-btn {
+width: 32px;
+height: 32px;
+border-radius: 50%;
+border: 1px solid #ddd;
+background: #fff;
+cursor: pointer;
+font-size: 1rem;
+}
+
+.remove-btn {
+border: none;
+background: #fff1f2;
+color: var(--red);
+padding: 8px 12px;
+border-radius: 999px;
+cursor: pointer;
+font-weight: 600;
+}
+
+.cart-empty {
+text-align: center;
+padding: 40px 20px;
+color: #777;
+}
+
+.summary-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 12px;
+font-size: 0.95rem;
+}
+
+.summary-total {
+font-size: 1.15rem;
+font-weight: 700;
+color: var(--dark);
+padding-top: 12px;
+border-top: 1px solid #eee;
+margin-top: 12px;
+}
+
+.delivery-options {
+display: flex;
+flex-direction: column;
+gap: 10px;
+margin: 15px 0;
+}
+
+.delivery-option {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 12px;
+border: 1px solid #eee;
+border-radius: 12px;
+}
+
+.delivery-fee-note {
+font-size: 0.85rem;
+color: #777;
+margin-top: -4px;
+margin-bottom: 10px;
+}
+
+.delivery-fee-input {
+width: 100%;
+padding: 12px 14px;
+border-radius: 12px;
+border: 1px solid #ddd;
+outline: none;
+margin-bottom: 12px;
+}
+
+.checkout-whatsapp {
+background: #25d366;
+color: #fff;
+padding: 15px;
+border-radius: 12px;
+text-decoration: none;
+text-align: center;
+font-weight: 600;
+box-shadow: 0 8px 20px rgba(37,211,102,0.3);
+transition: 0.3s;
+display: block;
+margin-top: 10px;
+}
+.checkout-whatsapp:hover { transform: translateY(-3px); background: #1ebe5d; }
+.checkout-whatsapp.disabled { background: #ccc; cursor: not-allowed; pointer-events: none; opacity: 0.6; }
 
 footer { text-align: center; padding: 40px; color: #888; font-size: 0.8rem; border-top: 1px solid #eee; background: #fff; margin-top: 40px; }
 /* ===== DISCOUNT POPUP ===== */
@@ -241,6 +445,7 @@ font-weight:500;
 <div class="search-row">
 <div class="search-wrapper"><input type="text" id="searchInput" placeholder="Search for jewelry..." oninput="render()"></div>
 <button onclick="toggleMusic()" id="musicBtn" style="border:none; background:none; cursor:pointer; font-size:1.4rem;">🔇</button>
+<button onclick="showCart()" class="header-cart-btn">🛒 Cart <span class="header-cart-count" id="cartCount">0</span></button>
 </div>
 <div class="categories" id="catList">
 <button class="cat-btn active" onclick="setCat('All', this)">All</button>
@@ -277,7 +482,62 @@ font-weight:500;
 <h1 id="d-title"></h1>
 <div class="detail-price-box" id="d-price-container"></div>
 <p id="d-desc" style="color:#555; white-space:pre-line;"></p>
+<div class="detail-actions">
+<button id="addToCartBtn" class="add-cart-btn" onclick="addCurrentProductToCart()">🛒 Add to Cart</button>
 <a href="#" id="d-wa" class="whatsapp-order" target="_blank">🟢 Order via WhatsApp</a>
+</div>
+</div>
+</div>
+</div>
+
+<div id="cart-view">
+<button onclick="showGallery()" style="border:none; background:#eee; padding:10px 20px; border-radius:8px; cursor:pointer; margin-bottom:20px; font-weight:600; color:#555;">← Back to Collection</button>
+<div class="cart-layout">
+<div class="cart-box">
+<h2 style="margin-bottom:20px;">Your Cart</h2>
+<div id="cartItems" class="cart-items"></div>
+</div>
+
+<div class="checkout-box">
+<h2 style="margin-bottom:20px;">Checkout</h2>
+
+<div class="summary-row">
+<span>Items Total</span>
+<span id="itemsSubtotal">0 L.E</span>
+</div>
+
+<div class="summary-row">
+<span>Delivery Fees</span>
+<span id="deliveryFeeText">0 L.E</span>
+</div>
+
+<div class="summary-row summary-total">
+<span>Total</span>
+<span id="grandTotal">0 L.E</span>
+</div>
+
+<div style="margin-top:18px; font-weight:600;">Choose delivery option</div>
+<div class="delivery-options">
+<label class="delivery-option">
+<input type="radio" name="deliveryOption" value="Pickup from Concord Plaza" onchange="updateCartSummary()" checked>
+<span>Pickup from Concord Plaza</span>
+</label>
+
+<label class="delivery-option">
+<input type="radio" name="deliveryOption" value="Pickup from EUE University" onchange="updateCartSummary()">
+<span>Pickup from EUE University</span>
+</label>
+
+<label class="delivery-option">
+<input type="radio" name="deliveryOption" value="Delivery" onchange="updateCartSummary()">
+<span>Delivery</span>
+</label>
+</div>
+
+<div class="delivery-fee-note">For delivery, enter the extra fees below.</div>
+<input type="number" id="deliveryFeeInput" class="delivery-fee-input" placeholder="Enter delivery fees in L.E" min="0" value="0" oninput="updateCartSummary()">
+
+<a href="#" id="cartWhatsappBtn" class="checkout-whatsapp" target="_blank">🟢 Order Cart via WhatsApp</a>
 </div>
 </div>
 </div>
@@ -1311,9 +1571,19 @@ let products = rawProducts;
 let activeCat = 'All';
 let slideIdx = 0;
 let currentPhotos = [];
+let currentProductId = null;
+let cart = [];
 
 function getOldPrice(p) {
 return p.originalPrice;
+}
+
+function getProductById(id) {
+return products.find(i => i.id === id);
+}
+
+function getImageSrc(img) {
+return img.includes('.') ? img : img + ".jpeg";
 }
 
 function render() {
@@ -1340,8 +1610,10 @@ grid.innerHTML += `
 
 function showDetail(id) {
 const p = products.find(i => i.id === id);
+currentProductId = id;
 document.getElementById('mainHeader').style.display = 'none';
 document.getElementById('gallery-view').style.display = 'none';
+document.getElementById('cart-view').style.display = 'none';
 document.getElementById('detail-view').style.display = 'block';
 
 document.getElementById('d-title').innerText = p.name;
@@ -1354,9 +1626,15 @@ pBox.innerHTML = p.sale
 : `<span class="detail-price">${p.price} L.E</span>`;
 
 const wa = document.getElementById('d-wa');
+const addBtn = document.getElementById('addToCartBtn');
+
 if(p.outOfStock) {
 wa.innerText = "Out of Stock"; 
 wa.classList.add('disabled');
+wa.href = "#";
+addBtn.disabled = true;
+addBtn.style.opacity = "0.6";
+addBtn.style.cursor = "not-allowed";
 } else {
 const msg = p.sale
 ? `✨ *H.S.M Store Order*
@@ -1378,6 +1656,9 @@ const phoneNumber = "201020730112";
 wa.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
 wa.innerText = "🟢 Order via WhatsApp"; 
 wa.classList.remove('disabled');
+addBtn.disabled = false;
+addBtn.style.opacity = "1";
+addBtn.style.cursor = "pointer";
 }
 
 const mainImg = p.image.includes('.') ? p.image : p.image + ".jpeg";
@@ -1391,6 +1672,16 @@ function showGallery() {
 document.getElementById('mainHeader').style.display = 'flex';
 document.getElementById('gallery-view').style.display = 'block';
 document.getElementById('detail-view').style.display = 'none';
+document.getElementById('cart-view').style.display = 'none';
+}
+
+function showCart() {
+document.getElementById('mainHeader').style.display = 'flex';
+document.getElementById('gallery-view').style.display = 'none';
+document.getElementById('detail-view').style.display = 'none';
+document.getElementById('cart-view').style.display = 'block';
+renderCart();
+window.scrollTo(0,0);
 }
 
 function updateSlider() {
@@ -1411,6 +1702,153 @@ function setCat(cat, btn) {
 activeCat = cat;
 document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
 btn.classList.add('active'); render();
+}
+
+function addCurrentProductToCart() {
+if(!currentProductId) return;
+addToCart(currentProductId);
+}
+
+function addToCart(id) {
+const product = getProductById(id);
+if(!product || product.outOfStock) return;
+
+const existing = cart.find(item => item.id === id);
+if(existing) {
+existing.qty += 1;
+} else {
+cart.push({
+id: product.id,
+qty: 1
+});
+}
+
+updateCartCount();
+alert(`${product.name} added to cart.`);
+}
+
+function updateCartCount() {
+const count = cart.reduce((sum, item) => sum + item.qty, 0);
+document.getElementById('cartCount').innerText = count;
+}
+
+function changeQty(id, amount) {
+const item = cart.find(i => i.id === id);
+if(!item) return;
+item.qty += amount;
+if(item.qty <= 0) {
+cart = cart.filter(i => i.id !== id);
+}
+renderCart();
+updateCartCount();
+}
+
+function removeFromCart(id) {
+cart = cart.filter(i => i.id !== id);
+renderCart();
+updateCartCount();
+}
+
+function getSelectedDeliveryOption() {
+const selected = document.querySelector('input[name="deliveryOption"]:checked');
+return selected ? selected.value : "Pickup from Concord Plaza";
+}
+
+function getDeliveryFee() {
+const option = getSelectedDeliveryOption();
+if(option !== "Delivery") return 0;
+const inputValue = parseFloat(document.getElementById('deliveryFeeInput').value);
+return isNaN(inputValue) || inputValue < 0 ? 0 : inputValue;
+}
+
+function getCartSubtotal() {
+return cart.reduce((sum, item) => {
+const product = getProductById(item.id);
+return sum + ((product ? product.price : 0) * item.qty);
+}, 0);
+}
+
+function renderCart() {
+const cartItems = document.getElementById('cartItems');
+
+if(cart.length === 0) {
+cartItems.innerHTML = `<div class="cart-empty">Your cart is empty.</div>`;
+updateCartSummary();
+return;
+}
+
+cartItems.innerHTML = cart.map(item => {
+const product = getProductById(item.id);
+if(!product) return '';
+const imgSrc = getImageSrc(product.image);
+const lineTotal = product.price * item.qty;
+
+return `
+<div class="cart-item">
+<img src="${imgSrc}" alt="${product.name}">
+<div class="cart-item-info">
+<div class="cart-item-name">${product.name}</div>
+<div class="cart-item-price">${product.price} L.E</div>
+<div style="font-size:0.85rem; color:#666;">Total: ${lineTotal} L.E</div>
+</div>
+<div class="cart-item-actions">
+<div class="qty-box">
+<button class="qty-btn" onclick="changeQty('${product.id}', -1)">−</button>
+<span>${item.qty}</span>
+<button class="qty-btn" onclick="changeQty('${product.id}', 1)">+</button>
+</div>
+<button class="remove-btn" onclick="removeFromCart('${product.id}')">Remove</button>
+</div>
+</div>
+`;
+}).join('');
+
+updateCartSummary();
+}
+
+function updateCartSummary() {
+const subtotal = getCartSubtotal();
+const deliveryFee = getDeliveryFee();
+const total = subtotal + deliveryFee;
+
+document.getElementById('itemsSubtotal').innerText = `${subtotal} L.E`;
+document.getElementById('deliveryFeeText').innerText = `${deliveryFee} L.E`;
+document.getElementById('grandTotal').innerText = `${total} L.E`;
+
+const btn = document.getElementById('cartWhatsappBtn');
+const phoneNumber = "201020730112";
+
+if(cart.length === 0) {
+btn.href = "#";
+btn.classList.add('disabled');
+return;
+}
+
+const deliveryOption = getSelectedDeliveryOption();
+const itemsText = cart.map((item, index) => {
+const product = getProductById(item.id);
+if(!product) return '';
+const lineTotal = product.price * item.qty;
+return `${index + 1}. ${product.name}
+   Quantity: ${item.qty}
+   Price: ${product.price} L.E
+   Item Total: ${lineTotal} L.E`;
+}).join('\n\n');
+
+const message = `✨ *H.S.M Store Cart Order*
+
+🛍️ *Items Ordered:*
+${itemsText}
+
+💰 *Items Total:* ${subtotal} L.E
+🚚 *Delivery Option:* ${deliveryOption}
+${deliveryOption === "Delivery" ? `🚚 *Delivery Fees:* ${deliveryFee} L.E` : `🚚 *Delivery Fees:* 0 L.E`}
+🧾 *Grand Total:* ${total} L.E
+
+Please confirm availability. Thank you!`;
+
+btn.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+btn.classList.remove('disabled');
 }
 
 const music = document.getElementById('bgMusic');
@@ -1471,6 +1909,8 @@ mq.innerHTML = mItems + mItems;
 
 render();
 updateMusicButton();
+updateCartCount();
+updateCartSummary();
 /* ===== DISCOUNT POPUP SYSTEM ===== */
 
 function openDiscountPopup(){
