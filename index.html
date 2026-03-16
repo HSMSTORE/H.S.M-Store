@@ -298,15 +298,6 @@ margin-top: -4px;
 margin-bottom: 10px;
 }
 
-.delivery-fee-input {
-width: 100%;
-padding: 12px 14px;
-border-radius: 12px;
-border: 1px solid #ddd;
-outline: none;
-margin-bottom: 12px;
-}
-
 .checkout-whatsapp {
 background: #25d366;
 color: #fff;
@@ -322,6 +313,33 @@ margin-top: 10px;
 }
 .checkout-whatsapp:hover { transform: translateY(-3px); background: #1ebe5d; }
 .checkout-whatsapp.disabled { background: #ccc; cursor: not-allowed; pointer-events: none; opacity: 0.6; }
+
+.customer-form {
+display: flex;
+flex-direction: column;
+gap: 12px;
+margin-top: 18px;
+}
+
+.customer-form input,
+.customer-form textarea {
+width: 100%;
+padding: 12px 14px;
+border-radius: 12px;
+border: 1px solid #ddd;
+outline: none;
+font-family: "Poppins", sans-serif;
+font-size: 0.95rem;
+}
+
+.customer-form textarea {
+min-height: 90px;
+resize: vertical;
+}
+
+#addressFieldWrap {
+display: none;
+}
 
 footer { text-align: center; padding: 40px; color: #888; font-size: 0.8rem; border-top: 1px solid #eee; background: #fff; margin-top: 40px; }
 /* ===== DISCOUNT POPUP ===== */
@@ -484,7 +502,6 @@ font-weight:500;
 <p id="d-desc" style="color:#555; white-space:pre-line;"></p>
 <div class="detail-actions">
 <button id="addToCartBtn" class="add-cart-btn" onclick="addCurrentProductToCart()">🛒 Add to Cart</button>
-<a href="#" id="d-wa" class="whatsapp-order" target="_blank">🟢 Order via WhatsApp</a>
 </div>
 </div>
 </div>
@@ -508,7 +525,7 @@ font-weight:500;
 
 <div class="summary-row">
 <span>Delivery Fees</span>
-<span id="deliveryFeeText">0 L.E</span>
+<span id="deliveryFeeText">Extra fees</span>
 </div>
 
 <div class="summary-row summary-total">
@@ -530,12 +547,17 @@ font-weight:500;
 
 <label class="delivery-option">
 <input type="radio" name="deliveryOption" value="Delivery" onchange="updateCartSummary()">
-<span>Delivery</span>
+<span>Delivery (extra fees)</span>
 </label>
 </div>
 
-<div class="delivery-fee-note">For delivery, enter the extra fees below.</div>
-<input type="number" id="deliveryFeeInput" class="delivery-fee-input" placeholder="Enter delivery fees in L.E" min="0" value="0" oninput="updateCartSummary()">
+<div class="customer-form">
+<input type="text" id="customerName" placeholder="Your name" oninput="updateCartSummary()">
+<input type="tel" id="customerPhone" placeholder="Your phone number" oninput="updateCartSummary()">
+<div id="addressFieldWrap">
+<textarea id="customerAddress" placeholder="Your address" oninput="updateCartSummary()"></textarea>
+</div>
+</div>
 
 <a href="#" id="cartWhatsappBtn" class="checkout-whatsapp" target="_blank">🟢 Order Cart via WhatsApp</a>
 </div>
@@ -1625,41 +1647,7 @@ pBox.innerHTML = p.sale
 ? `<span class="detail-old-price" style="text-decoration: line-through; color: gray; margin-right: 10px;">${p.originalPrice} L.E</span><span class="detail-price" style="color: red; font-weight: bold;">${p.price} L.E</span>` 
 : `<span class="detail-price">${p.price} L.E</span>`;
 
-const wa = document.getElementById('d-wa');
 const addBtn = document.getElementById('addToCartBtn');
-
-if(p.outOfStock) {
-wa.innerText = "Out of Stock"; 
-wa.classList.add('disabled');
-wa.href = "#";
-addBtn.disabled = true;
-addBtn.style.opacity = "0.6";
-addBtn.style.cursor = "not-allowed";
-} else {
-const msg = p.sale
-? `✨ *H.S.M Store Order*
-
-🛍️ Product: ${p.name}
-
-🔥 Discount Price: ${p.price} L.E
-💰 Original Price: ${p.originalPrice} L.E
-
-Please confirm availability. Thank you!`
-: `✨ *H.S.M Store Order*
-
-🛍️ Product: ${p.name}
-
-💰 Price: ${p.price} L.E
-
-Please confirm availability. Thank you!`;
-const phoneNumber = "201020730112";
-wa.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
-wa.innerText = "🟢 Order via WhatsApp"; 
-wa.classList.remove('disabled');
-addBtn.disabled = false;
-addBtn.style.opacity = "1";
-addBtn.style.cursor = "pointer";
-}
 
 const mainImg = p.image.includes('.') ? p.image : p.image + ".jpeg";
 currentPhotos = [mainImg, ...(p.extraImages || []).map(img => img.includes('.') ? img : img + ".jpeg")];
@@ -1676,7 +1664,7 @@ document.getElementById('cart-view').style.display = 'none';
 }
 
 function showCart() {
-document.getElementById('mainHeader').style.display = 'flex';
+document.getElementById('mainHeader').style.display = 'none';
 document.getElementById('gallery-view').style.display = 'none';
 document.getElementById('detail-view').style.display = 'none';
 document.getElementById('cart-view').style.display = 'block';
@@ -1754,13 +1742,6 @@ const selected = document.querySelector('input[name="deliveryOption"]:checked');
 return selected ? selected.value : "Pickup from Concord Plaza";
 }
 
-function getDeliveryFee() {
-const option = getSelectedDeliveryOption();
-if(option !== "Delivery") return 0;
-const inputValue = parseFloat(document.getElementById('deliveryFeeInput').value);
-return isNaN(inputValue) || inputValue < 0 ? 0 : inputValue;
-}
-
 function getCartSubtotal() {
 return cart.reduce((sum, item) => {
 const product = getProductById(item.id);
@@ -1808,12 +1789,13 @@ updateCartSummary();
 
 function updateCartSummary() {
 const subtotal = getCartSubtotal();
-const deliveryFee = getDeliveryFee();
-const total = subtotal + deliveryFee;
+const deliveryOption = getSelectedDeliveryOption();
+const isDelivery = deliveryOption === "Delivery";
 
 document.getElementById('itemsSubtotal').innerText = `${subtotal} L.E`;
-document.getElementById('deliveryFeeText').innerText = `${deliveryFee} L.E`;
-document.getElementById('grandTotal').innerText = `${total} L.E`;
+document.getElementById('deliveryFeeText').innerText = isDelivery ? `Extra fees` : `0 L.E`;
+document.getElementById('grandTotal').innerText = isDelivery ? `${subtotal} L.E + extra fees` : `${subtotal} L.E`;
+document.getElementById('addressFieldWrap').style.display = isDelivery ? 'block' : 'none';
 
 const btn = document.getElementById('cartWhatsappBtn');
 const phoneNumber = "201020730112";
@@ -1824,7 +1806,10 @@ btn.classList.add('disabled');
 return;
 }
 
-const deliveryOption = getSelectedDeliveryOption();
+const customerName = document.getElementById('customerName').value.trim();
+const customerPhone = document.getElementById('customerPhone').value.trim();
+const customerAddress = document.getElementById('customerAddress').value.trim();
+
 const itemsText = cart.map((item, index) => {
 const product = getProductById(item.id);
 if(!product) return '';
@@ -1835,6 +1820,10 @@ return `${index + 1}. ${product.name}
    Item Total: ${lineTotal} L.E`;
 }).join('\n\n');
 
+const customerInfo = `👤 *Customer Name:* ${customerName || "Not entered"}
+📞 *Phone Number:* ${customerPhone || "Not entered"}
+${isDelivery ? `📍 *Address:* ${customerAddress || "Not entered"}` : ''}`;
+
 const message = `✨ *H.S.M Store Cart Order*
 
 🛍️ *Items Ordered:*
@@ -1842,8 +1831,9 @@ ${itemsText}
 
 💰 *Items Total:* ${subtotal} L.E
 🚚 *Delivery Option:* ${deliveryOption}
-${deliveryOption === "Delivery" ? `🚚 *Delivery Fees:* ${deliveryFee} L.E` : `🚚 *Delivery Fees:* 0 L.E`}
-🧾 *Grand Total:* ${total} L.E
+${isDelivery ? `🚚 *Delivery Fees:* Extra fees` : `🚚 *Delivery Fees:* 0 L.E`}
+
+${customerInfo}
 
 Please confirm availability. Thank you!`;
 
