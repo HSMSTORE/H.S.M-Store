@@ -81,6 +81,34 @@ min-width: 24px;
 text-align: center;
 }
 
+.header-cart-btn.cart-attention {
+animation: cartPulse 0.9s ease, cartGlow 1.4s ease-in-out 2;
+}
+
+.header-cart-btn.cart-attention .header-cart-count {
+animation: cartBadgeBounce 0.7s ease;
+}
+
+@keyframes cartPulse {
+0% { transform: scale(1); }
+25% { transform: scale(1.06) translateY(-1px); }
+50% { transform: scale(1.02); }
+75% { transform: scale(1.05); }
+100% { transform: scale(1); }
+}
+
+@keyframes cartGlow {
+0%, 100% { box-shadow: 0 0 0 rgba(184, 134, 11, 0); }
+50% { box-shadow: 0 0 0 8px rgba(184, 134, 11, 0.18); }
+}
+
+@keyframes cartBadgeBounce {
+0% { transform: scale(1); }
+35% { transform: scale(1.22); }
+65% { transform: scale(0.96); }
+100% { transform: scale(1); }
+}
+
 .container { max-width: 1100px; margin: 0 auto; padding: 20px 15px; }
 #detail-view { display: none; }
 #cart-view { display: none; }
@@ -116,7 +144,7 @@ gap: 30px;
 height: calc(100vh - 120px);
 align-items: center;
 }
-@media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; height: auto; gap: 18px; } .slider-box { padding: 8px; } .slide-track img { max-height: 40vh; } .info-box { gap: 12px; } .detail-price { font-size: 1.45rem; } .add-cart-btn { width: 100%; } }
+@media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; height: auto; gap: 14px; align-items: start; } .slider-box { padding: 8px; } .slide-track img { max-height: 28vh; } .slider-nav { margin-top: 10px; } .info-box { gap: 10px; } .detail-price { font-size: 1.45rem; } .add-cart-btn { width: 100%; } .detail-actions { gap: 10px; margin-top: 2px; } #d-title { font-size: 1.35rem; line-height: 1.35; } #d-desc { font-size: 0.95rem; } }
 
 .slider-box { background: #fff; border-radius: 20px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
 .slide-window { overflow: hidden; border-radius: 15px; position: relative; }
@@ -507,6 +535,93 @@ box-shadow: 0 16px 34px rgba(37,211,102,0.42);
 font-size: 0.92rem;
 }
 
+.contact-overlay {
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.62);
+display: none;
+align-items: center;
+justify-content: center;
+padding: 20px;
+z-index: 1350;
+}
+
+.contact-modal {
+background: #fff;
+width: 100%;
+max-width: 560px;
+border-radius: 22px;
+box-shadow: 0 25px 70px rgba(0,0,0,0.28);
+overflow: hidden;
+animation: popup .3s ease;
+}
+
+.contact-header {
+position: relative;
+padding: 22px 22px 14px;
+border-bottom: 1px solid #eee;
+}
+
+.contact-close {
+position: absolute;
+right: 16px;
+top: 14px;
+width: 36px;
+height: 36px;
+border-radius: 50%;
+border: none;
+background: #f5f5f5;
+cursor: pointer;
+font-size: 1rem;
+}
+
+.contact-body {
+padding: 22px;
+display: flex;
+flex-direction: column;
+gap: 14px;
+}
+
+.contact-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+}
+
+.contact-grid input,
+.contact-body textarea,
+.contact-body select {
+width: 100%;
+padding: 12px 14px;
+border-radius: 12px;
+border: 1px solid #ddd;
+outline: none;
+font-family: "Poppins", sans-serif;
+font-size: 0.95rem;
+}
+
+.contact-body textarea {
+min-height: 120px;
+resize: vertical;
+}
+
+.contact-help {
+font-size: 0.86rem;
+color: #777;
+margin-top: -4px;
+}
+
+.contact-actions {
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+.contact-body { padding: 18px; }
+.contact-grid { grid-template-columns: 1fr; }
+}
+
 .post-order-overlay {
 position: fixed;
 inset: 0;
@@ -715,7 +830,6 @@ border-radius: 50%;
 </div>
 
 <button id="confirmOrderBtn" class="add-cart-btn" onclick="saveOrderToDatabase()">✅ Confirm Order on Website</button>
-<div class="checkout-note">Your order is confirmed on the website first. WhatsApp support stays optional after confirmation.</div>
 </div>
 </div>
 </div>
@@ -723,8 +837,8 @@ border-radius: 50%;
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = "https://zkuuqttvvfdrjqekedcx.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_9p-ZjcjP7XMP3hzDt14yJg_NAHTVwie";
+const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR_PUBLISHABLE_KEY_HERE";
 const WHATSAPP_PHONE = "201020730112";
 const supabaseClient = (window.supabase && SUPABASE_URL.includes("supabase.co") && !SUPABASE_URL.includes("YOUR_PROJECT_ID") && SUPABASE_ANON_KEY !== "YOUR_PUBLISHABLE_KEY_HERE")
 ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
@@ -1886,7 +2000,19 @@ qty: 1
 }
 
 updateCartCount();
+triggerCartAttention();
 alert(`${product.name} added to cart.`);
+}
+
+function triggerCartAttention() {
+const cartBtn = document.querySelector('.header-cart-btn');
+if(!cartBtn) return;
+cartBtn.classList.remove('cart-attention');
+void cartBtn.offsetWidth;
+cartBtn.classList.add('cart-attention');
+setTimeout(() => {
+cartBtn.classList.remove('cart-attention');
+}, 2200);
 }
 
 function updateCartCount() {
@@ -2037,14 +2163,86 @@ function getDeliveryFeeValue(deliveryOption) {
 return 0;
 }
 
-function getGeneralWhatsAppMessage() {
-return encodeURIComponent('Hello H.S.M Store, I would like to ask about your products.');
+function updateContactPlaceholder() {
+const reason = document.getElementById('contactReason')?.value || 'Issue';
+const box = document.getElementById('contactMessageBox');
+if(box) {
+box.placeholder = reason === 'Issue' ? 'Write your issue here' : 'Write your question here';
+}
+}
+
+function setContactMessage(type, message) {
+const feedback = document.getElementById('contactFeedback');
+if(!feedback) return;
+if(!message) {
+feedback.style.display = 'none';
+feedback.className = 'checkout-feedback';
+feedback.innerText = '';
+return;
+}
+feedback.style.display = 'block';
+feedback.className = `checkout-feedback ${type}`;
+feedback.innerText = message;
+}
+
+function openContactModal(prefill = {}) {
+const overlay = document.getElementById('contactOverlay');
+document.getElementById('contactName').value = prefill.name || '';
+document.getElementById('contactPhone').value = prefill.phone || '';
+document.getElementById('contactReason').value = prefill.reason || 'Issue';
+document.getElementById('contactMessageBox').value = prefill.message || '';
+document.getElementById('contactPhoneHint').style.color = '#777';
+updateContactPlaceholder();
+setContactMessage('', '');
+overlay.style.display = 'flex';
+}
+
+function closeContactModal() {
+document.getElementById('contactOverlay').style.display = 'none';
+}
+
+function buildGeneralContactWhatsAppMessage(name, phone, reason, details) {
+return `Hello H.S.M Store, I want to contact you from the website.
+
+Name: ${name}
+Phone Number: ${phone}
+Type: ${reason}
+Details: ${details}`;
+}
+
+function submitContactWhatsApp() {
+const name = document.getElementById('contactName').value.trim();
+const phone = document.getElementById('contactPhone').value.trim();
+const reason = document.getElementById('contactReason').value;
+const details = document.getElementById('contactMessageBox').value.trim();
+const phoneHint = document.getElementById('contactPhoneHint');
+phoneHint.style.color = phone.length === 0 || isValidEgyptPhone(phone) ? '#777' : 'var(--red)';
+
+if(name === '') {
+setContactMessage('error', 'Please enter your name.');
+return;
+}
+
+if(!isValidEgyptPhone(phone)) {
+setContactMessage('error', 'Phone number must be exactly 11 digits.');
+return;
+}
+
+if(details === '') {
+setContactMessage('error', `Please write your ${reason.toLowerCase()}.`);
+return;
+}
+
+setContactMessage('', '');
+const waMessage = buildGeneralContactWhatsAppMessage(name, phone, reason, details);
+window.open(`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(waMessage)}`, '_blank', 'noopener');
+closeContactModal();
 }
 
 function updateFloatingWhatsAppLink() {
-const floatingLink = document.getElementById('floatingWhatsappLink');
-if(floatingLink) {
-floatingLink.href = `https://wa.me/${WHATSAPP_PHONE}?text=${getGeneralWhatsAppMessage()}`;
+const floatingButton = document.getElementById('floatingWhatsappButton');
+if(floatingButton) {
+floatingButton.onclick = () => openContactModal();
 }
 }
 
@@ -2230,7 +2428,17 @@ render();
 updateMusicButton();
 updateCartCount();
 updateCartSummary();
+window.addEventListener('DOMContentLoaded', () => {
 updateFloatingWhatsAppLink();
+updateContactPlaceholder();
+
+window.addEventListener('click', (event) => {
+const postOrderOverlay = document.getElementById('postOrderOverlay');
+const contactOverlay = document.getElementById('contactOverlay');
+if(event.target === postOrderOverlay) closePostOrderModal();
+if(event.target === contactOverlay) closeContactModal();
+});
+});
 
 /* ===== DISCOUNT POPUP SYSTEM ===== */
 
@@ -2304,9 +2512,36 @@ openDiscountPopup();
 </script>
 
 
-<a id="floatingWhatsappLink" class="floating-whatsapp" target="_blank" rel="noopener noreferrer" href="#">
+<button id="floatingWhatsappButton" class="floating-whatsapp" type="button" onclick="openContactModal()">
 <span>💬</span><span>Contact Us on WhatsApp</span>
-</a>
+</button>
+
+
+<div id="contactOverlay" class="contact-overlay">
+<div class="contact-modal">
+<div class="contact-header">
+<button class="contact-close" onclick="closeContactModal()">✕</button>
+<div style="font-size:1.35rem; font-weight:700; color:var(--dark);">Contact Us on WhatsApp</div>
+</div>
+<div class="contact-body">
+<div class="contact-grid">
+<input type="text" id="contactName" placeholder="Your name">
+<input type="tel" id="contactPhone" placeholder="Your phone number">
+</div>
+<div class="contact-help" id="contactPhoneHint">Phone number must be exactly 11 digits.</div>
+<select id="contactReason" onchange="updateContactPlaceholder()">
+<option value="Issue">I have an issue</option>
+<option value="Question">I want to ask a question</option>
+</select>
+<textarea id="contactMessageBox" placeholder="Write your issue here"></textarea>
+<div id="contactFeedback" class="checkout-feedback" style="display:none;"></div>
+<div class="contact-actions">
+<button class="add-cart-btn" type="button" onclick="submitContactWhatsApp()">💬 Contact Now</button>
+<button class="add-cart-btn secondary-btn" type="button" onclick="closeContactModal()">Close</button>
+</div>
+</div>
+</div>
+</div>
 
 <div id="postOrderOverlay" class="post-order-overlay">
 <div class="post-order-modal">
