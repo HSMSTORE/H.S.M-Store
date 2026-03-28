@@ -116,7 +116,7 @@ gap: 30px;
 height: calc(100vh - 120px);
 align-items: center;
 }
-@media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; height: auto; } }
+@media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; height: auto; gap: 18px; } .slider-box { padding: 8px; } .slide-track img { max-height: 40vh; } .info-box { gap: 12px; } .detail-price { font-size: 1.45rem; } .add-cart-btn { width: 100%; } }
 
 .slider-box { background: #fff; border-radius: 20px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
 .slide-window { overflow: hidden; border-radius: 15px; position: relative; }
@@ -442,6 +442,167 @@ border-radius:8px;
 font-size:.9rem;
 font-weight:500;
 }
+
+.field-hint {
+font-size: 0.82rem;
+color: #777;
+margin-top: -6px;
+}
+
+.checkout-note {
+margin-top: 10px;
+font-size: 0.84rem;
+color: #666;
+line-height: 1.6;
+}
+
+.checkout-feedback {
+border-radius: 12px;
+padding: 12px 14px;
+font-size: 0.9rem;
+line-height: 1.5;
+}
+
+.checkout-feedback.error {
+background: #fff1f2;
+color: var(--red);
+border: 1px solid #ffd5db;
+}
+
+.checkout-feedback.success {
+background: #eefbf3;
+color: #137a43;
+border: 1px solid #c8f0d7;
+}
+
+.confirm-btn-disabled {
+opacity: 0.65;
+cursor: not-allowed;
+}
+
+.floating-whatsapp {
+position: fixed;
+right: 18px;
+bottom: 18px;
+z-index: 1200;
+display: inline-flex;
+align-items: center;
+gap: 10px;
+background: #25d366;
+color: #fff;
+text-decoration: none;
+padding: 13px 18px;
+border-radius: 999px;
+font-weight: 600;
+box-shadow: 0 12px 28px rgba(37,211,102,0.35);
+transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.floating-whatsapp:hover {
+transform: translateY(-3px);
+box-shadow: 0 16px 34px rgba(37,211,102,0.42);
+}
+
+.floating-whatsapp span:last-child {
+font-size: 0.92rem;
+}
+
+.post-order-overlay {
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.6);
+display: none;
+align-items: center;
+justify-content: center;
+padding: 20px;
+z-index: 1400;
+}
+
+.post-order-modal {
+background: #fff;
+width: 100%;
+max-width: 560px;
+border-radius: 22px;
+box-shadow: 0 25px 70px rgba(0,0,0,0.28);
+overflow: hidden;
+animation: popup .3s ease;
+}
+
+.post-order-header {
+position: relative;
+padding: 22px 22px 14px;
+border-bottom: 1px solid #eee;
+}
+
+.post-order-close {
+position: absolute;
+right: 16px;
+top: 14px;
+width: 36px;
+height: 36px;
+border: none;
+border-radius: 50%;
+background: #f4f4f4;
+cursor: pointer;
+font-size: 1rem;
+}
+
+.post-order-body {
+padding: 22px;
+display: flex;
+flex-direction: column;
+gap: 14px;
+}
+
+.post-order-id {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: #fff7e8;
+color: #8a6200;
+padding: 10px 14px;
+border-radius: 999px;
+font-weight: 600;
+width: fit-content;
+}
+
+.post-order-list {
+background: #fafafa;
+border: 1px solid #eee;
+border-radius: 16px;
+padding: 14px 16px;
+}
+
+.post-order-list ul {
+padding-left: 18px;
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+
+.post-order-actions {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.post-order-actions .secondary-btn {
+background: #fff;
+color: var(--dark);
+border: 1px solid #ddd;
+}
+
+@media (max-width: 640px) {
+.floating-whatsapp span:last-child {
+display: none;
+}
+
+.floating-whatsapp {
+padding: 14px;
+border-radius: 50%;
+}
+}
+
 </style>
 </head>
 <body>
@@ -543,20 +704,32 @@ font-weight:500;
 </div>
 
 <div class="customer-form">
-<input type="text" id="customerName" placeholder="Your name" oninput="updateCartSummary()">
-<input type="tel" id="customerPhone" placeholder="Your phone number" oninput="updateCartSummary()">
+<input type="text" id="customerName" placeholder="Your full name" oninput="updateCartSummary()">
+<input type="tel" id="customerPhone" placeholder="Your phone number (11 digits)" maxlength="11" inputmode="numeric" oninput="handlePhoneInput(event)">
+<div id="phoneHint" class="field-hint">Phone number must be exactly 11 digits.</div>
 <div id="addressFieldWrap">
 <textarea id="customerAddress" placeholder="Your address" oninput="updateCartSummary()"></textarea>
 </div>
+<div id="checkoutError" class="checkout-feedback error" style="display:none;"></div>
+<div id="checkoutSuccess" class="checkout-feedback success" style="display:none;"></div>
 </div>
 
-<a href="#" id="cartWhatsappBtn" class="checkout-whatsapp disabled" target="_blank">🟢 Order Cart via WhatsApp</a>
+<button id="confirmOrderBtn" class="add-cart-btn" onclick="saveOrderToDatabase()">✅ Confirm Order on Website</button>
+<div class="checkout-note">Your order is confirmed on the website first. WhatsApp support stays optional after confirmation.</div>
 </div>
 </div>
 </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL = "https://zkuuqttvvfdrjqekedcx.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_9p-ZjcjP7XMP3hzDt14yJg_NAHTVwie";
+const WHATSAPP_PHONE = "201020730112";
+const supabaseClient = (window.supabase && SUPABASE_URL.includes("supabase.co") && !SUPABASE_URL.includes("YOUR_PROJECT_ID") && SUPABASE_ANON_KEY !== "YOUR_PUBLISHABLE_KEY_HERE")
+? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+: null;
+
 const rawProducts = [
 
 /* === BUNDLES === */
@@ -1750,6 +1923,131 @@ return sum + ((product ? product.price : 0) * item.qty);
 }, 0);
 }
 
+function getCustomerFormData() {
+return {
+name: document.getElementById('customerName').value.trim(),
+phone: document.getElementById('customerPhone').value.trim(),
+address: document.getElementById('customerAddress').value.trim(),
+deliveryOption: getSelectedDeliveryOption()
+};
+}
+
+function handlePhoneInput(event) {
+const cleaned = event.target.value.replace(/\D/g, '').slice(0, 11);
+event.target.value = cleaned;
+updateCartSummary();
+}
+
+function isValidEgyptPhone(phone) {
+return /^\d{11}$/.test(phone);
+}
+
+function setCheckoutMessage(type, message) {
+const errorBox = document.getElementById('checkoutError');
+const successBox = document.getElementById('checkoutSuccess');
+errorBox.style.display = 'none';
+successBox.style.display = 'none';
+errorBox.innerText = '';
+successBox.innerText = '';
+
+if(!message) return;
+
+const target = type === 'success' ? successBox : errorBox;
+target.innerText = message;
+target.style.display = 'block';
+}
+
+function validateCheckoutForm(showMessage = false) {
+const { name, phone, address, deliveryOption } = getCustomerFormData();
+const isDelivery = deliveryOption === 'Delivery';
+
+if(cart.length === 0) {
+if(showMessage) setCheckoutMessage('error', 'Your cart is empty. Please add at least one item.');
+return false;
+}
+
+if(!name) {
+if(showMessage) setCheckoutMessage('error', 'Please enter your full name.');
+return false;
+}
+
+if(!isValidEgyptPhone(phone)) {
+if(showMessage) setCheckoutMessage('error', 'Please enter a valid 11-digit phone number.');
+return false;
+}
+
+if(isDelivery && !address) {
+if(showMessage) setCheckoutMessage('error', 'Please enter your address for delivery orders.');
+return false;
+}
+
+if(showMessage) setCheckoutMessage('', '');
+return true;
+}
+
+function buildOrderItemsForDatabase() {
+return cart.map(item => {
+const product = getProductById(item.id);
+return {
+id: item.id,
+name: product ? product.name : item.id,
+price: product ? product.price : 0,
+qty: item.qty,
+line_total: (product ? product.price : 0) * item.qty
+};
+});
+}
+
+function buildOrderWhatsAppMessage(orderId, orderData) {
+const itemsText = orderData.items.map((item, index) => {
+return `${index + 1}. ${item.name}
+   Quantity: ${item.qty}
+   Price: ${item.price} L.E
+   Line Total: ${item.line_total} L.E`;
+}).join('\n\n');
+
+return `Hello H.S.M Store, I want to follow up on my confirmed order.
+
+Order ID: #${orderId}
+Customer Name: ${orderData.customer_name}
+Phone Number: ${orderData.customer_phone}
+Delivery Option: ${orderData.delivery_option}${orderData.customer_address ? `
+Address: ${orderData.customer_address}` : ''}
+
+Items:
+${itemsText}
+
+Total: ${orderData.grand_total} L.E`;
+}
+
+function openPostOrderModal(orderId, orderData) {
+const overlay = document.getElementById('postOrderOverlay');
+document.getElementById('postOrderId').innerText = `#${orderId}`;
+document.getElementById('postOrderProducts').innerHTML = orderData.items.map(item => `<li>${item.name} × ${item.qty}</li>`).join('');
+const waLink = document.getElementById('postOrderWhatsappLink');
+waLink.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(buildOrderWhatsAppMessage(orderId, orderData))}`;
+overlay.style.display = 'flex';
+}
+
+function closePostOrderModal() {
+document.getElementById('postOrderOverlay').style.display = 'none';
+}
+
+function getDeliveryFeeValue(deliveryOption) {
+return 0;
+}
+
+function getGeneralWhatsAppMessage() {
+return encodeURIComponent('Hello H.S.M Store, I would like to ask about your products.');
+}
+
+function updateFloatingWhatsAppLink() {
+const floatingLink = document.getElementById('floatingWhatsappLink');
+if(floatingLink) {
+floatingLink.href = `https://wa.me/${WHATSAPP_PHONE}?text=${getGeneralWhatsAppMessage()}`;
+}
+}
+
 function renderCart() {
 const cartItems = document.getElementById('cartItems');
 
@@ -1791,56 +2089,85 @@ updateCartSummary();
 function updateCartSummary() {
 const subtotal = getCartSubtotal();
 const deliveryOption = getSelectedDeliveryOption();
-const isDelivery = deliveryOption === "Delivery";
+const isDelivery = deliveryOption === 'Delivery';
+const deliveryFee = getDeliveryFeeValue(deliveryOption);
+const totalText = deliveryFee > 0 ? `${subtotal + deliveryFee} L.E` : (isDelivery ? `${subtotal} L.E + extra fees` : `${subtotal} L.E`);
+
+const { name, phone, address } = getCustomerFormData();
+const isFormValid = name !== '' && isValidEgyptPhone(phone) && (!isDelivery || address !== '');
+
+const confirmBtn = document.getElementById('confirmOrderBtn');
+const phoneHint = document.getElementById('phoneHint');
+
+phoneHint.style.color = phone.length === 0 || isValidEgyptPhone(phone) ? '#777' : 'var(--red)';
 
 document.getElementById('itemsSubtotal').innerText = `${subtotal} L.E`;
-document.getElementById('deliveryFeeText').innerText = isDelivery ? `Extra fees` : `0 L.E`;
-document.getElementById('grandTotal').innerText = isDelivery ? `${subtotal} L.E + extra fees` : `${subtotal} L.E`;
+document.getElementById('deliveryFeeText').innerText = isDelivery ? (deliveryFee > 0 ? `${deliveryFee} L.E` : 'Extra fees') : '0 L.E';
+document.getElementById('grandTotal').innerText = totalText;
 document.getElementById('addressFieldWrap').style.display = isDelivery ? 'block' : 'none';
 
-const btn = document.getElementById('cartWhatsappBtn');
-const phoneNumber = "201020730112";
+confirmBtn.disabled = cart.length === 0 || !isFormValid;
+confirmBtn.classList.toggle('confirm-btn-disabled', confirmBtn.disabled);
+}
 
-const customerName = document.getElementById('customerName').value.trim();
-const customerPhone = document.getElementById('customerPhone').value.trim();
-const customerAddress = document.getElementById('customerAddress').value.trim();
+async function saveOrderToDatabase() {
+if(!validateCheckoutForm(true)) return;
 
-const isFormValid = customerName !== "" && customerPhone !== "" && (!isDelivery || customerAddress !== "");
-
-if(cart.length === 0 || !isFormValid) {
-btn.href = "#";
-btn.classList.add('disabled');
+if(!supabaseClient) {
+setCheckoutMessage('error', 'Please add your Supabase project URL and publishable key first.');
 return;
 }
 
-const itemsText = cart.map((item, index) => {
-const product = getProductById(item.id);
-if(!product) return '';
-return `${index + 1}. ${product.name}
-   Quantity: ${item.qty}
-   Price: ${product.price} L.E`;
-}).join('\n\n');
+const confirmBtn = document.getElementById('confirmOrderBtn');
+confirmBtn.disabled = true;
+confirmBtn.innerText = 'Saving Order...';
+setCheckoutMessage('', '');
 
-const customerInfo = `👤 *Customer Name:* ${customerName}
-📞 *Phone Number:* ${customerPhone}
-${isDelivery ? `📍 *Address:* ${customerAddress}` : ''}`;
+const { name, phone, address, deliveryOption } = getCustomerFormData();
+const items = buildOrderItemsForDatabase();
+const subtotal = getCartSubtotal();
+const deliveryFee = getDeliveryFeeValue(deliveryOption);
+const grandTotal = subtotal + deliveryFee;
 
-const deliveryFeesLine = isDelivery ? `\n🚚 *Delivery Fees:* Extra fees` : ``;
+const orderPayload = {
+customer_name: name,
+customer_phone: phone,
+customer_address: deliveryOption === 'Delivery' ? address : null,
+delivery_option: deliveryOption,
+items,
+items_subtotal: subtotal,
+delivery_fee: deliveryFee,
+grand_total: grandTotal,
+status: 'new'
+};
 
-const message = `✨ *H.S.M Store Cart Order*
+try {
+const { data, error } = await supabaseClient
+.from('orders')
+.insert([orderPayload])
+.select('id')
+.single();
 
-🛍️ *Items Ordered:*
-${itemsText}
+if(error) throw error;
 
-💰 *Total Price:* ${subtotal} L.E
-🚚 *Delivery Option:* ${deliveryOption}${deliveryFeesLine}
+const orderId = data?.id || Math.floor(Math.random() * 900000) + 100000;
+setCheckoutMessage('success', `Order #${orderId} confirmed successfully.`);
+openPostOrderModal(orderId, orderPayload);
 
-${customerInfo}
-
-Please confirm availability. Thank you!`;
-
-btn.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-btn.classList.remove('disabled');
+cart = [];
+document.getElementById('customerName').value = '';
+document.getElementById('customerPhone').value = '';
+document.getElementById('customerAddress').value = '';
+document.querySelector('input[name="deliveryOption"][value="Pickup from Concord Plaza"]').checked = true;
+renderCart();
+updateCartCount();
+} catch (error) {
+console.error(error);
+setCheckoutMessage('error', error.message ? `Could not save the order: ${error.message}` : 'Could not save the order. Please try again.');
+} finally {
+confirmBtn.innerText = '✅ Confirm Order on Website';
+updateCartSummary();
+}
 }
 
 const music = document.getElementById('bgMusic');
@@ -1903,6 +2230,7 @@ render();
 updateMusicButton();
 updateCartCount();
 updateCartSummary();
+updateFloatingWhatsAppLink();
 
 /* ===== DISCOUNT POPUP SYSTEM ===== */
 
@@ -1974,6 +2302,32 @@ openDiscountPopup();
 
 });
 </script>
+
+
+<a id="floatingWhatsappLink" class="floating-whatsapp" target="_blank" rel="noopener noreferrer" href="#">
+<span>💬</span><span>Contact Us on WhatsApp</span>
+</a>
+
+<div id="postOrderOverlay" class="post-order-overlay">
+<div class="post-order-modal">
+<div class="post-order-header">
+<button class="post-order-close" onclick="closePostOrderModal()">✕</button>
+<div style="font-size:1.35rem; font-weight:700; color:var(--dark);">Order Confirmed</div>
+<div style="margin-top:8px; color:#666; line-height:1.6;">Track your order, request changes, or ask any questions on WhatsApp using the button below.</div>
+</div>
+<div class="post-order-body">
+<div class="post-order-id">Order ID <span id="postOrderId"></span></div>
+<div class="post-order-list">
+<div style="font-weight:600; margin-bottom:10px;">Products in this order</div>
+<ul id="postOrderProducts"></ul>
+</div>
+<div class="post-order-actions">
+<a id="postOrderWhatsappLink" class="checkout-whatsapp" target="_blank" rel="noopener noreferrer" href="#">💬 Contact Us on WhatsApp</a>
+<button class="add-cart-btn secondary-btn" onclick="closePostOrderModal()">Close</button>
+</div>
+</div>
+</div>
+</div>
 
 <!-- ===== DISCOUNT POPUP ===== -->
 
