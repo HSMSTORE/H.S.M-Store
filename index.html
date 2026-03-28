@@ -836,8 +836,8 @@ border-radius: 50%;
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = "https://zkuuqttvvfdrjqekedcx.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_9p-ZjcjP7XMP3hzDt14yJg_NAHTVwie";
+const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR_PUBLISHABLE_KEY_HERE";
 const WHATSAPP_PHONE = "201020730112";
 const supabaseClient = (window.supabase && SUPABASE_URL.includes("supabase.co") && !SUPABASE_URL.includes("YOUR_PROJECT_ID") && SUPABASE_ANON_KEY !== "YOUR_PUBLISHABLE_KEY_HERE")
 ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
@@ -2317,6 +2317,31 @@ confirmBtn.disabled = cart.length === 0 || !isFormValid;
 confirmBtn.classList.toggle('confirm-btn-disabled', confirmBtn.disabled);
 }
 
+
+async function sendTelegramNotification(orderId) {
+const BOT_TOKEN = "8505225339:AAHPb6sK7iIRQd-UuHuzV_mIL5JIKsM60i0";
+const CHAT_ID = "8695245537";
+
+if(!BOT_TOKEN || BOT_TOKEN === 'YOUR_BOT_TOKEN') return;
+
+const message = `🛒 New Order!
+Order #${orderId}
+Check your dashboard.`;
+
+try {
+await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+chat_id: CHAT_ID,
+text: message
+})
+});
+} catch (telegramError) {
+console.error('Telegram notification failed:', telegramError);
+}
+}
+
 async function saveOrderToDatabase() {
 if(!validateCheckoutForm(true)) return;
 
@@ -2358,6 +2383,7 @@ const { data, error } = await supabaseClient
 if(error) throw error;
 
 const orderId = data?.id || Math.floor(Math.random() * 900000) + 100000;
+await sendTelegramNotification(orderId);
 setCheckoutMessage('success', `Order #${orderId} confirmed successfully.`);
 openPostOrderModal(orderId, orderPayload);
 
