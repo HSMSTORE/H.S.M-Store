@@ -82,31 +82,30 @@ text-align: center;
 }
 
 .header-cart-btn.cart-attention {
-animation: cartPulse 0.9s ease, cartGlow 1.4s ease-in-out 2;
+animation: cartPulseLoop 1.25s ease-in-out infinite, cartGlowLoop 1.7s ease-in-out infinite;
 }
 
 .header-cart-btn.cart-attention .header-cart-count {
-animation: cartBadgeBounce 0.7s ease;
+animation: cartBadgeBounceLoop 1s ease-in-out infinite;
 }
 
-@keyframes cartPulse {
+@keyframes cartPulseLoop {
 0% { transform: scale(1); }
-25% { transform: scale(1.06) translateY(-1px); }
+25% { transform: scale(1.05) translateY(-1px); }
 50% { transform: scale(1.02); }
-75% { transform: scale(1.05); }
+75% { transform: scale(1.06); }
 100% { transform: scale(1); }
 }
 
-@keyframes cartGlow {
-0%, 100% { box-shadow: 0 0 0 rgba(184, 134, 11, 0); }
-50% { box-shadow: 0 0 0 8px rgba(184, 134, 11, 0.18); }
+@keyframes cartGlowLoop {
+0%, 100% { box-shadow: 0 8px 20px rgba(0,0,0,0.12), 0 0 0 rgba(184, 134, 11, 0); }
+50% { box-shadow: 0 10px 26px rgba(0,0,0,0.16), 0 0 0 10px rgba(184, 134, 11, 0.15); }
 }
 
-@keyframes cartBadgeBounce {
-0% { transform: scale(1); }
-35% { transform: scale(1.22); }
+@keyframes cartBadgeBounceLoop {
+0%, 100% { transform: scale(1); }
+35% { transform: scale(1.18); }
 65% { transform: scale(0.96); }
-100% { transform: scale(1); }
 }
 
 .container { max-width: 1100px; margin: 0 auto; padding: 20px 15px; }
@@ -144,7 +143,7 @@ gap: 30px;
 height: calc(100vh - 120px);
 align-items: center;
 }
-@media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; height: auto; gap: 14px; align-items: start; } .slider-box { padding: 8px; } .slide-track img { max-height: 28vh; } .slider-nav { margin-top: 10px; } .info-box { gap: 10px; } .detail-price { font-size: 1.45rem; } .add-cart-btn { width: 100%; } .detail-actions { gap: 10px; margin-top: 2px; } #d-title { font-size: 1.35rem; line-height: 1.35; } #d-desc { font-size: 0.95rem; } }
+@media (max-width: 768px) { .detail-layout { grid-template-columns: 1fr; height: auto; gap: 12px; align-items: start; } .slider-box { padding: 8px; max-width: 100%; } .slide-track img { max-height: 22vh; } .slider-nav { margin-top: 8px; } .info-box { gap: 9px; } .detail-price { font-size: 1.4rem; } .detail-old-price { font-size: 1rem; } .add-cart-btn { width: 100%; padding: 13px; } .detail-actions { gap: 8px; margin-top: 2px; } #d-title { font-size: 1.2rem; line-height: 1.3; } #d-desc { font-size: 0.92rem; } .detail-cat { font-size: 0.72rem; padding: 4px 10px; } }
 
 .slider-box { background: #fff; border-radius: 20px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
 .slide-window { overflow: hidden; border-radius: 15px; position: relative; }
@@ -1956,6 +1955,7 @@ document.getElementById('mainHeader').style.display = 'none';
 document.getElementById('gallery-view').style.display = 'none';
 document.getElementById('detail-view').style.display = 'none';
 document.getElementById('cart-view').style.display = 'block';
+clearCartAttention();
 renderCart();
 window.scrollTo(0,0);
 }
@@ -2007,17 +2007,19 @@ alert(`${product.name} added to cart.`);
 function triggerCartAttention() {
 const cartBtn = document.querySelector('.header-cart-btn');
 if(!cartBtn) return;
-cartBtn.classList.remove('cart-attention');
-void cartBtn.offsetWidth;
 cartBtn.classList.add('cart-attention');
-setTimeout(() => {
+}
+
+function clearCartAttention() {
+const cartBtn = document.querySelector('.header-cart-btn');
+if(!cartBtn) return;
 cartBtn.classList.remove('cart-attention');
-}, 2200);
 }
 
 function updateCartCount() {
 const count = cart.reduce((sum, item) => sum + item.qty, 0);
 document.getElementById('cartCount').innerText = count;
+if(count === 0) clearCartAttention();
 }
 
 function changeQty(id, amount) {
@@ -2167,7 +2169,13 @@ function updateContactPlaceholder() {
 const reason = document.getElementById('contactReason')?.value || 'Issue';
 const box = document.getElementById('contactMessageBox');
 if(box) {
-box.placeholder = reason === 'Issue' ? 'Write your issue here' : 'Write your question here';
+if(reason === 'Issue') {
+box.placeholder = 'Write your issue here';
+} else if(reason === 'Question') {
+box.placeholder = 'Write your question here';
+} else {
+box.placeholder = 'Write your message here';
+}
 }
 }
 
@@ -2229,7 +2237,8 @@ return;
 }
 
 if(details === '') {
-setContactMessage('error', `Please write your ${reason.toLowerCase()}.`);
+const messageLabel = reason === 'Other' ? 'message' : reason.toLowerCase();
+setContactMessage('error', `Please write your ${messageLabel}.`);
 return;
 }
 
@@ -2525,15 +2534,16 @@ openDiscountPopup();
 </div>
 <div class="contact-body">
 <div class="contact-grid">
-<input type="text" id="contactName" placeholder="Your name">
-<input type="tel" id="contactPhone" placeholder="Your phone number">
+<input type="text" id="contactName" placeholder="Your name" maxlength="60">
+<input type="tel" id="contactPhone" placeholder="Your phone number" inputmode="numeric" maxlength="11" oninput="this.value=this.value.replace(/\D/g,'').slice(0,11)">
 </div>
-<div class="contact-help" id="contactPhoneHint">Phone number must be exactly 11 digits.</div>
+<div class="contact-help" id="contactPhoneHint">Enter your name, an 11-digit phone number, and your message.</div>
 <select id="contactReason" onchange="updateContactPlaceholder()">
 <option value="Issue">I have an issue</option>
 <option value="Question">I want to ask a question</option>
+<option value="Other">Other</option>
 </select>
-<textarea id="contactMessageBox" placeholder="Write your issue here"></textarea>
+<textarea id="contactMessageBox" placeholder="Write your issue here" maxlength="1000"></textarea>
 <div id="contactFeedback" class="checkout-feedback" style="display:none;"></div>
 <div class="contact-actions">
 <button class="add-cart-btn" type="button" onclick="submitContactWhatsApp()">💬 Contact Now</button>
