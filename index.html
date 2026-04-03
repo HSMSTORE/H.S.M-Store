@@ -121,7 +121,7 @@ animation: cartBadgeBounceLoop 1s ease-in-out infinite;
 .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(4, 1fr); } }
 
-.product-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; position: relative; }
+.product-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: default; transition: 0.3s; position: relative; }
 .product-card:hover { transform: translateY(-5px); }
 .card-img-wrap { padding-top: 100%; position: relative; }
 .card-img-wrap img { position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -717,6 +717,215 @@ border-radius: 50%;
 }
 }
 
+
+
+.header-brand-row {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.header-nav-btn {
+  border: 1px solid rgba(184,134,11,0.22);
+  background: linear-gradient(135deg, #fff, #fbf6ea);
+  color: var(--dark);
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.92rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.header-nav-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  border-color: rgba(184,134,11,0.45);
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.brand-copy strong {
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+
+.brand-copy span {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.site-footer {
+  margin-top: 60px;
+  background: linear-gradient(180deg, #151515 0%, #0c0c0c 100%);
+  color: #f5f5f5;
+  border-top: 1px solid rgba(184,134,11,0.25);
+}
+
+.footer-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 20px 26px;
+}
+
+.footer-top-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 24px;
+}
+
+.footer-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 18px 36px rgba(0,0,0,0.18);
+  backdrop-filter: blur(8px);
+}
+
+.footer-kicker {
+  color: #d4af37;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.footer-card h2,
+.footer-card h3 {
+  margin-bottom: 14px;
+}
+
+.footer-card p,
+.footer-card li,
+.footer-card a,
+.footer-card span {
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+}
+
+.footer-links,
+.faq-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a,
+.social-link,
+.contact-link {
+  text-decoration: none;
+}
+
+.social-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.social-link,
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.social-link:hover,
+.contact-link:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(212,175,55,0.55);
+}
+
+.faq-item {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-item strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.footer-bottom-bar {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.footer-mini-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-mini-links a {
+  color: rgba(255,255,255,0.82);
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 900px) {
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-brand-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-nav {
+    justify-content: center;
+  }
+
+  .brand-copy {
+    align-items: center;
+    text-align: center;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -724,7 +933,19 @@ border-radius: 50%;
 <audio id="bgMusic" loop><source src="Love Story.mp3" type="audio/mpeg"></audio>
 
 <header id="mainHeader">
+<div class="header-brand-row">
+<div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
 <img src="Images/hsmlogo.png" class="main-logo" onclick="showGallery()">
+<div class="brand-copy">
+<strong>H.S.M Store</strong>
+<span>Luxury stainless steel jewelry with timeless elegance.</span>
+</div>
+</div>
+<div class="header-nav">
+<button class="header-nav-btn" type="button" onclick="scrollToSection('about-us-section')">About Us</button>
+<button class="header-nav-btn" type="button" onclick="scrollToSection('faq-section')">FAQ</button>
+</div>
+</div>
 <div class="top-controls">
 <div class="search-row">
 <div class="search-wrapper"><input type="text" id="searchInput" placeholder="Search for jewelry..." oninput="render()"></div>
@@ -1447,8 +1668,9 @@ desc: "A bold stainless steel cuff bracelet created for powerful style, modern s
 id: "multi-chains-bracelet", 
 name: "Multi Chain Bracelet", 
 category: "Bracelet", 
-price: 200, 
-image: "Images/big=bracelets 4.jpeg", 
+price: 250, 
+image: "Images/big=bracelets 4.jpeg",
+extraImages: ["Images/multi-chains-bracelet.jpeg","Images/multi-chains-bracelet 2.jpeg"], 
 desc: "A layered stainless steel chain bracelet that delivers texture, shine, and a bold fashion-forward edge. ⛓️" 
 },
 { 
@@ -1472,12 +1694,12 @@ desc: "A clean stainless steel circle bracelet with white detail, minimal beauty
 id: "heart-rings", 
 name: "Heart Rings", 
 category: "Ring", 
-price: 120, 
-originalPrice: 200,
+price: 200, 
+originalPrice: 300,
 sale: true, 
 image: "Images/heart-rings.jpeg", 
-extraImages: ["Images/First Rings .jpeg"], 
-desc: "Beautiful stainless steel heart rings designed with romantic charm, polished shine, and a cute stylish finish. ❤️" 
+extraImages: ["Images/First Rings .jpeg","Images/heart-rings 2 .jpeg"], 
+desc: "Beautiful stainless steel heart rings designed with romantic charm, polished shine, and a cute stylish finish. ❤️(price per one)" 
 },
 { 
 id: "infinite-knot-ring", 
@@ -1912,9 +2134,25 @@ let priceHtml = p.sale ? `<div class="price-stack"><span class="old-price">${get
 grid.innerHTML += `
       <div class="product-card" onclick="showDetail('${p.id}')">
         ${saleHtml} ${oosHtml}
-        <div class="card-img-wrap"><img src="${imgSrc}"></div>
-        <div class="card-body"><div class="card-title">${p.name}</div>${priceHtml}</div>
+        <div class="card-img-wrap"><img src="${imgSrc}" alt="${p.name}"></div>
+        <div class="card-body">
+          <div class="card-title">${p.name}</div>
+          ${priceHtml}
+          <button class="add-cart-btn" style="margin-top:10px; padding:10px 12px; font-size:0.9rem; width:100%;" onclick="event.stopPropagation(); addToCart('${p.id}')">🛒 Add to Cart</button>
+        </div>
       </div>`;
+});
+}
+
+function scrollToSection(sectionId) {
+showGallery();
+requestAnimationFrame(() => {
+  const target = document.getElementById(sectionId);
+  if (!target) return;
+  const header = document.getElementById('mainHeader');
+  const headerOffset = header ? header.offsetHeight + 20 : 20;
+  const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+  window.scrollTo({ top: targetPosition, behavior: 'smooth' });
 });
 }
 
@@ -1925,6 +2163,7 @@ document.getElementById('mainHeader').style.display = 'none';
 document.getElementById('gallery-view').style.display = 'none';
 document.getElementById('cart-view').style.display = 'none';
 document.getElementById('detail-view').style.display = 'block';
+document.getElementById('footerSection').style.display = 'none';
 
 document.getElementById('d-title').innerText = p.name;
 document.getElementById('d-cat').innerText = p.category;
@@ -1959,6 +2198,7 @@ document.getElementById('mainHeader').style.display = 'flex';
 document.getElementById('gallery-view').style.display = 'block';
 document.getElementById('detail-view').style.display = 'none';
 document.getElementById('cart-view').style.display = 'none';
+document.getElementById('footerSection').style.display = 'block';
 }
 
 function showCart() {
@@ -1966,6 +2206,7 @@ document.getElementById('mainHeader').style.display = 'none';
 document.getElementById('gallery-view').style.display = 'none';
 document.getElementById('detail-view').style.display = 'none';
 document.getElementById('cart-view').style.display = 'block';
+document.getElementById('footerSection').style.display = 'none';
 clearCartAttention();
 renderCart();
 window.scrollTo(0,0);
@@ -2583,8 +2824,65 @@ openDiscountPopup();
 </script>
 
 
+<footer class="site-footer" id="footerSection">
+<div class="footer-shell">
+<div class="footer-top-grid">
+<section class="footer-card" id="about-us-section">
+<div class="footer-kicker">About H.S.M Store</div>
+<h2>Jewelry that feels elegant every day.</h2>
+<p>At H.S.M Store, we curate luxury-inspired stainless steel jewelry designed for women who love pieces that are stylish, durable, and easy to wear. Our collections are chosen to give you a polished look for everyday outfits, special occasions, and thoughtful gifting moments.</p>
+<p>We focus on timeless shine, feminine details, and pieces that help you express your style with confidence. From necklaces and bracelets to rings, earrings, and bundles, every item is selected to bring beauty, simplicity, and lasting charm to your collection.</p>
+</section>
+
+<section class="footer-card" id="faq-section">
+<div class="footer-kicker">Frequently Asked Questions</div>
+<h3>FAQ</h3>
+<div class="faq-list">
+<div class="faq-item">
+<strong>How do I place an order?</strong>
+<span>Add your favorite items to the cart, fill in your details, and confirm your order directly on the website.</span>
+</div>
+<div class="faq-item">
+<strong>How can I contact H.S.M Store?</strong>
+<span>You can chat with us on WhatsApp at 01020730112 or message us on Instagram for quick support.</span>
+</div>
+<div class="faq-item">
+<strong>Do you offer delivery and pickup?</strong>
+<span>Yes. You can choose delivery or select one of the available pickup options during checkout.</span>
+</div>
+<div class="faq-item">
+<strong>What products do you offer?</strong>
+<span>We offer stainless steel necklaces, bracelets, rings, earrings, hand chains, and curated bundles.</span>
+</div>
+</div>
+</section>
+
+<section class="footer-card">
+<div class="footer-kicker">Stay Connected</div>
+<h3>Contact & Social</h3>
+<p>We are always happy to help with orders, questions, and product recommendations.</p>
+<div class="social-stack">
+<a class="contact-link" href="https://wa.me/201020730112" target="_blank" rel="noopener noreferrer">💬 WhatsApp Chat: 01020730112</a>
+<a class="social-link" href="https://www.instagram.com/h.s.m_store?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer">📸 Instagram: @h.s.m_store</a>
+</div>
+</section>
+</div>
+
+<div class="footer-bottom-bar">
+<div>© 2026 H.S.M Store. Crafted with style, elegance, and care.</div>
+<div class="footer-mini-links">
+<a href="javascript:void(0)" onclick="scrollToSection('about-us-section')">About Us</a>
+<a href="javascript:void(0)" onclick="scrollToSection('faq-section')">FAQ</a>
+<a href="https://wa.me/201020730112" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+<a href="https://www.instagram.com/h.s.m_store?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer">Instagram</a>
+</div>
+</div>
+</div>
+</footer>
+
+
 <button id="floatingWhatsappButton" class="floating-whatsapp" type="button" onclick="openContactModal()">
-<span>💬</span><span>Contact Us on WhatsApp</span>
+<span>💬</span><span>WhatsApp 01020730112</span>
 </button>
 
 
