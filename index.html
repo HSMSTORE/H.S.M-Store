@@ -911,18 +911,189 @@ html {
 }
 
 @media (max-width: 768px) {
+  header {
+    padding: 12px 12px 10px;
+    gap: 10px;
+  }
+
+  .main-logo {
+    height: 54px;
+  }
+
   .header-brand-row {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
 
-  .header-nav {
+  .header-brand-row > div:first-child {
     justify-content: center;
+    gap: 10px !important;
   }
 
   .brand-copy {
     align-items: center;
     text-align: center;
+  }
+
+  .brand-copy strong {
+    font-size: 0.96rem;
+  }
+
+  .brand-copy span {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  .header-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .header-nav-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 12px;
+    font-size: 0.82rem;
+  }
+
+  .top-controls {
+    gap: 8px;
+  }
+
+  .search-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .search-wrapper input {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+
+  #musicBtn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f7f7f7 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-cart-btn {
+    padding: 10px 12px;
+    font-size: 0.86rem;
+  }
+
+  .header-cart-count {
+    min-width: 22px;
+    padding: 2px 6px;
+  }
+
+  .categories {
+    gap: 6px;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  .categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cat-btn {
+    font-size: 0.72rem;
+    padding: 7px 10px;
+  }
+
+  .site-footer {
+    margin-top: 36px;
+  }
+
+  .footer-shell {
+    padding: 26px 14px 18px;
+  }
+
+  .footer-top-grid {
+    gap: 14px;
+  }
+
+  .footer-card {
+    padding: 16px 14px;
+    border-radius: 18px;
+  }
+
+  .footer-kicker {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+
+  .footer-card h2,
+  .footer-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.02rem;
+  }
+
+  .footer-card p,
+  .footer-card li,
+  .footer-card a,
+  .footer-card span {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .faq-list,
+  .footer-links,
+  .social-stack {
+    gap: 10px;
+  }
+
+  .faq-item {
+    padding: 10px 0;
+  }
+
+  .social-link,
+  .contact-link {
+    width: 100%;
+    justify-content: center;
+    padding: 11px 14px;
+    font-size: 0.88rem;
+  }
+
+  .footer-bottom-bar {
+    margin-top: 18px;
+    padding-top: 16px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .footer-bottom-bar > div:first-child {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .footer-mini-links {
+    justify-content: center;
+    gap: 10px 12px;
+  }
+
+  .footer-mini-links a {
+    font-size: 0.84rem;
+  }
+
+  .floating-whatsapp span:last-child {
+    display: none;
+  }
+
+  .floating-whatsapp {
+    padding: 14px;
+    border-radius: 50%;
   }
 }
 
@@ -1668,9 +1839,8 @@ desc: "A bold stainless steel cuff bracelet created for powerful style, modern s
 id: "multi-chains-bracelet", 
 name: "Multi Chain Bracelet", 
 category: "Bracelet", 
-price: 250, 
-image: "Images/big=bracelets 4.jpeg",
-extraImages: ["Images/multi-chains-bracelet.jpeg","Images/multi-chains-bracelet 2.jpeg"], 
+price: 200, 
+image: "Images/big=bracelets 4.jpeg", 
 desc: "A layered stainless steel chain bracelet that delivers texture, shine, and a bold fashion-forward edge. ⛓️" 
 },
 { 
@@ -1694,12 +1864,12 @@ desc: "A clean stainless steel circle bracelet with white detail, minimal beauty
 id: "heart-rings", 
 name: "Heart Rings", 
 category: "Ring", 
-price: 200, 
-originalPrice: 300,
+price: 120, 
+originalPrice: 200,
 sale: true, 
 image: "Images/heart-rings.jpeg", 
-extraImages: ["Images/First Rings .jpeg","Images/heart-rings 2 .jpeg"], 
-desc: "Beautiful stainless steel heart rings designed with romantic charm, polished shine, and a cute stylish finish. ❤️(price per one)" 
+extraImages: ["Images/First Rings .jpeg"], 
+desc: "Beautiful stainless steel heart rings designed with romantic charm, polished shine, and a cute stylish finish. ❤️" 
 },
 { 
 id: "infinite-knot-ring", 
