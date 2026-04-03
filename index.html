@@ -1320,6 +1320,146 @@ html {
 }
 </style>
 
+
+<style>
+@media (max-width: 768px){
+  header#mainHeader{
+    padding: 10px 12px 8px !important;
+    gap: 8px !important;
+    align-items: stretch !important;
+  }
+
+  .mobile-smart-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    width:100%;
+  }
+
+  .mobile-smart-logo{
+    display:flex;
+    align-items:center;
+    min-width:0;
+    flex:1 1 auto;
+  }
+
+  .mobile-smart-logo .main-logo{
+    height:42px !important;
+    margin:0 !important;
+  }
+
+  .mobile-smart-actions{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:6px;
+    position:relative;
+    flex:0 0 auto;
+  }
+
+  .mobile-smart-actions #mobileMenuBtn,
+  .mobile-smart-actions #musicBtn{
+    width:36px !important;
+    height:36px !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    border:none !important;
+    border-radius:12px !important;
+    background:#f4f4f4 !important;
+    color:#222 !important;
+    box-shadow:0 6px 14px rgba(0,0,0,0.08) !important;
+    font-size:1rem !important;
+    cursor:pointer !important;
+    position:static !important;
+    margin:0 !important;
+  }
+
+  .mobile-smart-actions .header-cart-btn{
+    min-height:36px !important;
+    padding:8px 11px !important;
+    font-size:0.8rem !important;
+    gap:5px !important;
+    border-radius:12px !important;
+    box-shadow:0 8px 16px rgba(0,0,0,0.10) !important;
+  }
+
+  .mobile-smart-actions .header-cart-count{
+    min-width:18px !important;
+    padding:2px 6px !important;
+    font-size:0.68rem !important;
+  }
+
+  .mobile-smart-search,
+  .mobile-smart-cats{
+    width:100%;
+  }
+
+  .mobile-smart-search .search-wrapper{
+    width:100% !important;
+  }
+
+  .mobile-smart-search .search-wrapper input{
+    width:100% !important;
+    padding:10px 14px !important;
+    font-size:0.86rem !important;
+    border-radius:14px !important;
+  }
+
+  .mobile-smart-cats .categories{
+    display:flex !important;
+    gap:6px !important;
+    overflow-x:auto !important;
+    white-space:nowrap !important;
+    padding-bottom:2px !important;
+    margin-top:0 !important;
+  }
+
+  .mobile-smart-cats .cat-btn{
+    padding:5px 10px !important;
+    font-size:0.7rem !important;
+    border-radius:999px !important;
+    flex:0 0 auto !important;
+  }
+
+  .header-brand-row,
+  .top-controls{
+    display:none !important;
+  }
+
+  .brand-copy,
+  .header-nav{
+    display:none !important;
+  }
+
+  .mobile-smart-actions #mobileMenuPanel{
+    position:absolute !important;
+    top:44px !important;
+    right:0 !important;
+    left:auto !important;
+    min-width:145px !important;
+    border-radius:16px !important;
+    box-shadow:0 16px 36px rgba(0,0,0,0.14) !important;
+    padding:8px !important;
+    z-index:1400 !important;
+  }
+
+  .mobile-smart-actions #mobileMenuPanel a{
+    font-size:0.84rem !important;
+    padding:10px 12px !important;
+  }
+}
+
+@media (min-width: 769px){
+  .mobile-smart-top,
+  .mobile-smart-search,
+  .mobile-smart-cats{
+    display:none !important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -3375,5 +3515,63 @@ openDiscountPopup();
 
 </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  if (window.innerWidth > 768) return;
+
+  const header = document.getElementById('mainHeader');
+  if (!header || header.dataset.mobileHeaderBuilt === '1') return;
+
+  const logo = header.querySelector('.main-logo');
+  const menuBtn = document.getElementById('mobileMenuBtn');
+  const menuPanel = document.getElementById('mobileMenuPanel');
+  const searchWrapper = header.querySelector('.search-wrapper');
+  const musicBtn = document.getElementById('musicBtn');
+  const cartBtn = header.querySelector('.header-cart-btn');
+  const categories = document.getElementById('catList');
+  const brandRow = header.querySelector('.header-brand-row');
+  const topControls = header.querySelector('.top-controls');
+
+  if (!logo || !searchWrapper || !musicBtn || !cartBtn || !categories) return;
+
+  const topRow = document.createElement('div');
+  topRow.className = 'mobile-smart-top';
+
+  const logoWrap = document.createElement('div');
+  logoWrap.className = 'mobile-smart-logo';
+
+  const actionsWrap = document.createElement('div');
+  actionsWrap.className = 'mobile-smart-actions';
+
+  const searchArea = document.createElement('div');
+  searchArea.className = 'mobile-smart-search';
+
+  const catsArea = document.createElement('div');
+  catsArea.className = 'mobile-smart-cats';
+
+  logoWrap.appendChild(logo);
+  if (menuBtn) actionsWrap.appendChild(menuBtn);
+  actionsWrap.appendChild(musicBtn);
+  actionsWrap.appendChild(cartBtn);
+  if (menuPanel) actionsWrap.appendChild(menuPanel);
+
+  searchArea.appendChild(searchWrapper);
+  catsArea.appendChild(categories);
+
+  header.insertBefore(topRow, brandRow);
+  topRow.appendChild(logoWrap);
+  topRow.appendChild(actionsWrap);
+
+  header.insertBefore(searchArea, brandRow);
+  header.insertBefore(catsArea, brandRow);
+
+  if (brandRow) brandRow.style.display = 'none';
+  if (topControls) topControls.style.display = 'none';
+
+  header.dataset.mobileHeaderBuilt = '1';
+});
+</script>
+
 </body>
 </html>
