@@ -1244,6 +1244,82 @@ html {
 }
 </style>
 
+
+<style>
+@media (max-width:768px){
+  .header-nav{display:none !important;}
+}
+</style>
+
+
+<style>
+#mobileMenuBtn{
+  border:none;
+  background:#f4f4f4;
+  color:#222;
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:1.1rem;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+
+#mobileMenuPanel{
+  position:absolute;
+  top:58px;
+  left:12px;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:16px;
+  box-shadow:0 16px 36px rgba(0,0,0,0.12);
+  padding:8px;
+  min-width:150px;
+  z-index:1205;
+}
+
+#mobileMenuPanel a{
+  display:block;
+  text-decoration:none;
+  color:#222;
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:0.85rem;
+  font-weight:600;
+}
+
+#mobileMenuPanel a:hover{
+  background:#f7f7f7;
+}
+
+@media (max-width:768px){
+  header#mainHeader{
+    position:sticky !important;
+  }
+  #mobileMenuBtn{
+    display:inline-flex !important;
+    position:absolute;
+    left:12px;
+    top:10px;
+  }
+  .main-logo{
+    margin-left:48px !important;
+    height:42px !important;
+  }
+  .header-nav{
+    display:none !important;
+  }
+}
+
+@media (min-width:769px){
+  #mobileMenuBtn, #mobileMenuPanel{
+    display:none !important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -1253,6 +1329,13 @@ html {
 <div class="header-brand-row">
 <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
 <img src="Images/hsmlogo.png" class="main-logo" onclick="showGallery()">
+
+<button id="mobileMenuBtn" aria-label="Open menu" onclick="toggleMobileMenu()" style="display:none;">☰</button>
+<div id="mobileMenuPanel" style="display:none;">
+  <a href="#about-us-section" onclick="closeMobileMenu()">About Us</a>
+  <a href="#faq-section" onclick="closeMobileMenu()">FAQ</a>
+</div>
+
 <div class="brand-copy">
 <strong>H.S.M Store</strong>
 <span>Luxury stainless steel jewelry with timeless elegance.</span>
@@ -1372,7 +1455,26 @@ html {
 </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+function toggleMobileMenu(){
+  const panel = document.getElementById('mobileMenuPanel');
+  if(!panel) return;
+  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+}
+function closeMobileMenu(){
+  const panel = document.getElementById('mobileMenuPanel');
+  if(panel) panel.style.display = 'none';
+}
+document.addEventListener('click', function(e){
+  const btn = document.getElementById('mobileMenuBtn');
+  const panel = document.getElementById('mobileMenuPanel');
+  if(!btn || !panel) return;
+  if(!panel.contains(e.target) && !btn.contains(e.target)){
+    panel.style.display = 'none';
+  }
+});
+
+</script>
 <script>
 const SUPABASE_URL = "https://zkuuqttvvfdrjqekedcx.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_9p-ZjcjP7XMP3hzDt14yJg_NAHTVwie";
