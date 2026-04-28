@@ -1501,3 +1501,73 @@ html {
   }
 
 }
+/* ===== LARGE SCREENS (LAPTOPS) ===== */
+@media (min-width: 1200px) {
+
+  .container {
+    max-width: 1300px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+}
+
+/* ===== FULL HD (1920px) ===== */
+@media (min-width: 1600px) {
+
+  .container {
+    max-width: 1500px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 30px;
+  }
+
+  .card-title {
+    font-size: 1.05rem;
+  }
+
+  .card-price {
+    font-size: 1.25rem;
+  }
+
+}
+
+/* ===== 2K / LARGE MONITORS ===== */
+@media (min-width: 2000px) {
+
+  .container {
+    max-width: 1800px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 35px;
+  }
+
+  body {
+    font-size: 18px;
+  }
+
+}
+
+/* ===== ULTRA WIDE / 4K ===== */
+@media (min-width: 2560px) {
+
+  .container {
+    max-width: 2100px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 40px;
+  }
+
+  body {
+    font-size: 19px;
+  }
+
+}
